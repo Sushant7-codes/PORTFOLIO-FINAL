@@ -1,0 +1,769 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+    #projects {
+        position: relative;
+        width: 100%;
+        padding: 5rem 0 6.5rem;
+        background: transparent;
+        z-index: 20;
+        font-family: 'Space Grotesk', sans-serif;
+        overflow: hidden;
+    }
+
+    .projects-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    /* ---------- SHARED HEADER STYLE ---------- */
+    .section-header {
+        margin-bottom: 2.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .section-tagline {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 3.5px;
+        color: #a855f7;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+    }
+
+    .section-tagline-line {
+        height: 1px;
+        width: 48px;
+        background: linear-gradient(90deg, rgba(168, 85, 247, 0.7), transparent);
+    }
+
+    .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+        letter-spacing: -1.2px;
+    }
+
+    .section-subtitle {
+        font-size: 1.02rem;
+        font-weight: 300;
+        color: #94a3b8;
+        max-width: 640px;
+        line-height: 1.65;
+        margin-top: 0.35rem;
+    }
+
+    /* =========================================================
+       SECTION 1 — PROJECTS GRID (3-COLUMN RESPONSIVE)
+       ========================================================= */
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 6.5rem;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .projects-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+    }
+
+    /* ---- PROJECT CARD BASE ---- */
+    .project-card {
+        position: relative;
+        background: rgba(8, 12, 24, 0.72);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .project-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), transparent 50%);
+        opacity: 0;
+        transition: opacity 0.45s;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Cyber Scanner Beam */
+    .scanner-beam {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #a855f7;
+        box-shadow: 0 0 15px #a855f7, 0 0 30px #a855f7;
+        opacity: 0;
+        z-index: 10;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+
+    .project-card.flagship .scanner-beam {
+        background: #34d399;
+        box-shadow: 0 0 15px #34d399, 0 0 30px #34d399;
+    }
+
+    @keyframes scanDown {
+        0% { top: 0%; opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { top: 100%; opacity: 0; }
+    }
+
+    .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.32), 0 24px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(168, 85, 247, 0.1);
+    }
+
+    .project-card:hover::before {
+        opacity: 1;
+    }
+
+    .project-card:hover .scanner-beam {
+        animation: scanDown 2.5s ease-in-out infinite;
+    }
+
+    /* Flagship emphasis */
+    .project-card.flagship {
+        box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.15), 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-card.flagship:hover {
+        box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.4), 0 24px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(52, 211, 153, 0.12);
+    }
+
+    /* Top accent bar */
+    .project-accent {
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(90deg, #3b82f6, #a855f7);
+    }
+
+    .project-card.flagship .project-accent {
+        background: linear-gradient(90deg, #34d399, #3b82f6, #a855f7);
+    }
+
+    /* Browser chrome mock */
+    .browser-chrome {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.1rem;
+        background: rgba(4, 8, 16, 0.7);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .browser-dots { display: flex; gap: 6px; }
+    .browser-dots span {
+        width: 9px; height: 9px; border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+    }
+    .browser-dots span:nth-child(1) { background: #ef4444; opacity: 0.7; }
+    .browser-dots span:nth-child(2) { background: #eab308; opacity: 0.7; }
+    .browser-dots span:nth-child(3) { background: #22c55e; opacity: 0.7; }
+
+    .browser-url {
+        flex: 1;
+        margin-left: 0.6rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 6px;
+        padding: 0.28rem 0.7rem;
+        font-size: 0.72rem;
+        color: #94a3b8;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Card body */
+    .project-body {
+        padding: 1.6rem 1.7rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .project-meta {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 0.8rem; flex-wrap: wrap;
+    }
+
+    .project-badge {
+        font-family: 'Orbitron', sans-serif; font-size: 0.6rem;
+        letter-spacing: 1.2px; padding: 0.28rem 0.65rem;
+        border-radius: 5px; text-transform: uppercase;
+    }
+
+    .project-badge.live {
+        background: rgba(52, 211, 153, 0.12); color: #34d399;
+        border: 1px solid rgba(52, 211, 153, 0.28);
+        position: relative; padding-right: 1.3rem;
+    }
+
+    .project-badge.live::after {
+        content: ''; position: absolute; top: 50%; right: 0.55rem;
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #34d399; transform: translateY(-50%);
+        box-shadow: 0 0 8px #34d399;
+        animation: livePulse 1.8s infinite;
+    }
+
+    @keyframes livePulse {
+        0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+        50% { opacity: 0.4; transform: translateY(-50%) scale(0.85); }
+    }
+
+    .project-badge.major {
+        background: rgba(168, 85, 247, 0.12); color: #c084fc;
+        border: 1px solid rgba(168, 85, 247, 0.28);
+    }
+
+    .project-badge.collab {
+        background: rgba(245, 158, 11, 0.12); color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.28);
+    }
+
+    .project-title {
+        font-family: 'Orbitron', sans-serif; font-size: 1.35rem;
+        font-weight: 700; color: #f8fafc; margin: 0;
+        line-height: 1.3; letter-spacing: -0.3px;
+    }
+
+    .project-desc {
+        font-size: 0.92rem; color: #94a3b8; line-height: 1.65;
+        margin: 0; font-weight: 300;
+    }
+
+    /* Tech stack pills */
+    .project-stack {
+        display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem;
+    }
+
+    .stack-pill {
+        font-size: 0.7rem; color: #cbd5e1;
+        background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.15);
+        padding: 0.22rem 0.55rem; border-radius: 5px; transition: all 0.25s;
+    }
+
+    .project-card:hover .stack-pill {
+        border-color: rgba(56, 189, 248, 0.32); background: rgba(56, 189, 248, 0.11);
+    }
+
+    /* Action row */
+    .project-actions {
+        display: flex; align-items: center; gap: 0.8rem;
+        margin-top: auto; padding-top: 1.5rem;
+    }
+
+    .btn-live {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.55rem 1.15rem; border-radius: 8px;
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.15));
+        border: 1px solid rgba(168, 85, 247, 0.4);
+        color: #e9d5ff; font-size: 0.82rem; font-weight: 500;
+        text-decoration: none; transition: all 0.3s;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .btn-live:hover {
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(59, 130, 246, 0.25));
+        border-color: rgba(168, 85, 247, 0.6); color: #fff;
+        transform: translateY(-1px); box-shadow: 0 6px 18px rgba(168, 85, 247, 0.25);
+    }
+
+    .project-card.flagship .btn-live {
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.18), rgba(59, 130, 246, 0.12));
+        border-color: rgba(52, 211, 153, 0.35); color: #a7f3d0;
+    }
+
+    .project-card.flagship .btn-live:hover {
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.3), rgba(59, 130, 246, 0.2));
+        border-color: rgba(52, 211, 153, 0.55); color: #fff;
+        box-shadow: 0 6px 18px rgba(52, 211, 153, 0.2);
+    }
+
+    /* Interactive glowing numbers */
+    .project-num {
+        position: absolute; right: 1.4rem; bottom: 1rem;
+        font-family: 'Orbitron', sans-serif; font-size: 4.2rem;
+        font-weight: 900; color: rgba(255, 255, 255, 0.025);
+        line-height: 1; pointer-events: none; user-select: none;
+        z-index: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .project-card:hover .project-num {
+        color: rgba(168, 85, 247, 0.12);
+        text-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+        transform: scale(1.15) rotate(-4deg) translateY(-5px);
+    }
+
+    .project-card.flagship:hover .project-num {
+        color: rgba(52, 211, 153, 0.12);
+        text-shadow: 0 0 25px rgba(52, 211, 153, 0.3);
+    }
+
+    /* =========================================================
+       SECTION 2 — SKILLS / ARSENAL
+       ========================================================= */
+
+    .skills-section { position: relative; }
+
+    /* Top featured strip */
+    .skills-highlight {
+        position: relative; padding: 1.3rem 1.7rem; margin-bottom: 2.8rem;
+        background: linear-gradient(135deg, rgba(12, 18, 36, 0.75), rgba(8, 12, 24, 0.6));
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(168, 85, 247, 0.18); border-radius: 14px;
+        overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem;
+    }
+
+    .skills-highlight::before {
+        content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+        background: linear-gradient(to bottom, #a855f7, #3b82f6, #34d399);
+        border-radius: 3px 0 0 3px;
+    }
+
+    .skills-highlight-label {
+        font-family: 'Orbitron', sans-serif; font-size: 0.68rem;
+        letter-spacing: 1.6px; color: #a855f7; text-transform: uppercase; white-space: nowrap;
+    }
+
+    .skills-highlight-pills {
+        display: flex; flex-wrap: wrap; gap: 0.45rem; flex: 1;
+    }
+
+    .hl-pill {
+        font-size: 0.78rem; color: #e2e8f0; padding: 0.28rem 0.7rem;
+        background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.25);
+        border-radius: 6px; transition: all 0.25s;
+    }
+
+    .hl-pill:hover {
+        background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.45);
+        transform: translateY(-2px); box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    }
+
+    /* Category grid */
+    .skills-matrix {
+        display: grid; grid-template-columns: 1fr; gap: 1.4rem;
+    }
+
+    @media (min-width: 700px) { .skills-matrix { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1050px) { .skills-matrix { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Skill category card */
+    .skill-cat {
+        position: relative; padding: 1.35rem 1.4rem 1.3rem;
+        background: rgba(8, 12, 24, 0.65); backdrop-filter: blur(14px);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); border-radius: 16px;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1); overflow: hidden;
+    }
+
+    .skill-cat::before {
+        content: ''; position: absolute; top: 0; left: 50%;
+        width: 0; height: 2px;
+        background: #a855f7;
+        transition: all 0.4s ease; transform: translateX(-50%);
+        box-shadow: 0 0 10px #a855f7;
+    }
+
+    .skill-cat:hover::before { width: 100%; }
+    
+    .skill-cat:nth-child(2):hover::before { background: #60a5fa; box-shadow: 0 0 10px #60a5fa; }
+    .skill-cat:nth-child(3):hover::before { background: #34d399; box-shadow: 0 0 10px #34d399; }
+    .skill-cat:nth-child(4):hover::before { background: #fb923c; box-shadow: 0 0 10px #fb923c; }
+    .skill-cat:nth-child(5):hover::before { background: #f472b6; box-shadow: 0 0 10px #f472b6; }
+    .skill-cat:nth-child(6):hover::before { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+
+    .skill-cat:hover {
+        box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.25), 0 16px 36px rgba(0, 0, 0, 0.3), 0 0 24px rgba(168, 85, 247, 0.07);
+        transform: translateY(-4px);
+    }
+
+    .skill-cat-header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+
+    .skill-cat-icon {
+        width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+        background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .skill-cat:nth-child(2) .skill-cat-icon { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-color: rgba(59, 130, 246, 0.2); }
+    .skill-cat:nth-child(3) .skill-cat-icon { background: rgba(52, 211, 153, 0.1); color: #34d399; border-color: rgba(52, 211, 153, 0.2); }
+    .skill-cat:nth-child(4) .skill-cat-icon { background: rgba(249, 115, 22, 0.1); color: #fb923c; border-color: rgba(249, 115, 22, 0.2); }
+    .skill-cat:nth-child(5) .skill-cat-icon { background: rgba(236, 72, 153, 0.1); color: #f472b6; border-color: rgba(236, 72, 153, 0.2); }
+    .skill-cat:nth-child(6) .skill-cat-icon { background: rgba(14, 165, 233, 0.1); color: #38bdf8; border-color: rgba(14, 165, 233, 0.2); }
+    .skill-cat:nth-child(7) .skill-cat-icon { background: rgba(168, 85, 247, 0.1); color: #c084fc; border-color: rgba(168, 85, 247, 0.2); }
+    .skill-cat:nth-child(8) .skill-cat-icon { background: rgba(234, 179, 8, 0.1); color: #facc15; border-color: rgba(234, 179, 8, 0.2); }
+    .skill-cat:nth-child(9) .skill-cat-icon { background: rgba(52, 211, 153, 0.1); color: #34d399; border-color: rgba(52, 211, 153, 0.2); }
+
+    .skill-cat-title {
+        font-family: 'Orbitron', sans-serif; font-size: 0.82rem; font-weight: 600;
+        color: #f1f5f9; letter-spacing: 0.4px; margin: 0;
+    }
+
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .skill-pill {
+        font-size: 0.73rem; color: #cbd5e1; padding: 0.28rem 0.6rem;
+        background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 5px; transition: all 0.25s; cursor: default;
+    }
+
+    .skill-pill:hover {
+        background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.3);
+        color: #e9d5ff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(168, 85, 247, 0.15);
+    }
+
+    .skill-cat.soft .skill-pill:hover {
+        background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.28);
+        color: #a7f3d0; box-shadow: 0 4px 10px rgba(52, 211, 153, 0.15);
+    }
+
+    @media (max-width: 600px) {
+        .project-body { padding: 1.3rem 1.25rem 1.25rem; }
+        .project-title { font-size: 1.15rem; }
+        .browser-url { font-size: 0.65rem; }
+        .skill-cat { padding: 1.15rem 1.15rem; }
+    }
+</style>
+
+<section id="projects">
+    <div class="projects-container">
+
+        <!-- ===================== HEADER ===================== -->
+        <div class="section-header">
+            <div class="section-tagline">
+                <span>Selected Work</span>
+                <div class="section-tagline-line"></div>
+            </div>
+            <h1 class="section-title">Projects & Skills</h1>
+            <p class="section-subtitle">A selection of projects that highlight my experience with backend development, full-stack applications, and the tools I use.</p>
+        </div>
+
+        <!-- ===================== PROJECTS GRID ===================== -->
+        <div class="projects-grid">
+
+            <!-- FLAGSHIP: Retail POS -->
+            <article class="project-card flagship">
+                <div class="scanner-beam"></div>
+                <div class="project-accent"></div>
+                <div class="browser-chrome">
+                    <div class="browser-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="browser-url">final-retail-pos.onrender.com</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-badge major">Major Project</span>
+                        <span class="project-badge live">Live</span>
+                    </div>
+                    <h3 class="project-title">Retail POS Management System</h3>
+                    <p class="project-desc">
+                        A full-stack retail POS application that manages inventory, sales, billing, and user roles. This project showcases my backend development skills with Django while demonstrating my ability to build complete web applications.
+                    </p>
+                    <div class="project-stack">
+                        <span class="stack-pill">Python</span>
+                        <span class="stack-pill">Django</span>
+                        <span class="stack-pill">PostgreSQL</span>
+                        <span class="stack-pill">REST APIs</span>
+                        <span class="stack-pill">Tailwind CSS + DaisyUI</span>
+                        <span class="stack-pill">Cloudinary</span>
+                        <span class="stack-pill">Render</span>
+                        <span class="stack-pill">Auth & Role-Based Access Control (RBAC)</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://final-retail-pos.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn-live">
+                            <i class="fas fa-external-link-alt"></i> View Live System
+                        </a>
+                    </div>
+                    <div class="project-num">01</div>
+                </div>
+            </article>
+
+            <!-- SECOND: E-commerce Sports -->
+            <article class="project-card">
+                <div class="scanner-beam"></div>
+                <div class="project-accent"></div>
+                <div class="browser-chrome">
+                    <div class="browser-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="browser-url">sushantpahari.pythonanywhere.com</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-badge" style="background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.25);">E-Commerce</span>
+                        <span class="project-badge live">Live</span>
+                    </div>
+                    <h3 class="project-title">Sports E-Commerce Platform</h3>
+                    <p class="project-desc">
+                        An e-commerce web application built with Django for browsing sports products, managing a shopping cart, and placing orders. Designed with a responsive interface and deployed on PythonAnywhere.
+                    </p>
+                    <div class="project-stack">
+                        <span class="stack-pill">Python</span>
+                        <span class="stack-pill">Django</span>
+                        <span class="stack-pill">SQLite</span>
+                        <span class="stack-pill">HTML</span>
+                        <span class="stack-pill">Tailwind CSS</span>
+                        <span class="stack-pill">JavaScript</span>
+                        <span class="stack-pill">Django Templates</span>
+                        <span class="stack-pill">PythonAnywhere</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://sushantpahari.pythonanywhere.com/home/" target="_blank" rel="noopener noreferrer" class="btn-live">
+                            <i class="fas fa-external-link-alt"></i> View Live Store
+                        </a>
+                    </div>
+                    <div class="project-num">02</div>
+                </div>
+            </article>
+
+            <!-- THIRD: Event Management System (Collaborative) -->
+            <article class="project-card">
+                <div class="scanner-beam"></div>
+                <div class="project-accent"></div>
+                <div class="browser-chrome">
+                    <div class="browser-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="browser-url">ems.sushanta.me</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-badge collab">College Project</span>
+                        <span class="project-badge live">Live</span>
+                    </div>
+                    <h3 class="project-title">Event Management System</h3>
+                    <p class="project-desc">
+                        A team project developed during my 7th semester. The platform allows users to create, manage, and register for events while handling authentication and attendee information. I mainly worked on the database design as part of a three-member team.
+                    </p>
+                    <div class="project-stack">
+                        <span class="stack-pill">Database Design</span>
+                        <span class="stack-pill">SQL</span>
+                        <span class="stack-pill">PostgreSQL</span>
+                        <span class="stack-pill">Next.js (Frontend)</span>
+                        <span class="stack-pill">Node.js (Backend)</span>
+                        <span class="stack-pill">Team Collaboration</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://ems.sushanta.me" target="_blank" rel="noopener noreferrer" class="btn-live">
+                            <i class="fas fa-external-link-alt"></i> View Live System
+                        </a>
+                    </div>
+                    <div class="project-num">03</div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- ===================== SKILLS SECTION ===================== -->
+        <div class="skills-section">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <div class="section-tagline">
+                    <span>Technical Skills</span>
+                    <div class="section-tagline-line"></div>
+                </div>
+                <h2 class="section-title" style="font-size: clamp(1.7rem, 3.5vw, 2.4rem);">Languages & Technologies</h2>
+                <p class="section-subtitle">The languages, frameworks, databases, and tools I've worked with throughout my projects.</p>
+            </div>
+
+            <!-- Highlight strip -->
+            <div class="skills-highlight">
+                <span class="skills-highlight-label">Core Stack</span>
+                <div class="skills-highlight-pills">
+                    <span class="hl-pill">Python</span>
+                    <span class="hl-pill">Django</span>
+                    <span class="hl-pill">JavaScript</span>
+                    <span class="hl-pill">PostgreSQL</span>
+                    <span class="hl-pill">Tailwind CSS</span>
+                    <span class="hl-pill">Git & GitHub</span>
+                </div>
+            </div>
+
+            <!-- Category Matrix -->
+            <div class="skills-matrix">
+
+
+                <!-- 2. Backend Development -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-server"></i></div>
+                        <h3 class="skill-cat-title">Backend Development</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Django</span>
+                        <span class="skill-pill">Django ORM</span>
+                        <span class="skill-pill">Authentication & Authorization</span>
+                        <span class="skill-pill">Custom User Model</span>
+                        <span class="skill-pill">Role-Based Access Control(RBAC)</span>
+                    </div>
+                </div>
+
+                <!-- 3. Frontend -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-desktop"></i></div>
+                        <h3 class="skill-cat-title">Frontend</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Tailwind CSS</span>
+                        <span class="skill-pill">DaisyUI</span>
+                        <span class="skill-pill">JavaScript</span>
+                        <span class="skill-pill">Django Templates</span>
+                        <span class="skill-pill">Responsive Design</span>
+                    </div>
+                </div>
+
+                <!-- 4. Databases -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-database"></i></div>
+                        <h3 class="skill-cat-title">Databases</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">PostgreSQL</span>
+                        <span class="skill-pill">SQLite</span>
+                        <span class="skill-pill">SQL Queries</span>
+                        <span class="skill-pill">Database Design</span>
+                        <span class="skill-pill">Database Migrations</span>
+                    </div>
+                </div>
+
+                <!-- 5. APIs & Integrations -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-plug"></i></div>
+                        <h3 class="skill-cat-title">APIs & Integrations</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">REST API Basics</span>
+                        <span class="skill-pill">JSON</span>
+                        <span class="skill-pill">HTTP </span>
+                        <span class="skill-pill">Cloudinary</span>
+                        <span class="skill-pill">Resend Email API</span>
+                    </div>
+                </div>
+
+                <!-- 6. DevOps & Deployment -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h3 class="skill-cat-title">Deployment & Tools</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Render</span>
+                        <span class="skill-pill">WhiteNoise</span>
+                        <span class="skill-pill">Environment Variables</span>
+                        <span class="skill-pill">Static File Management</span>
+                    </div>
+                </div>
+
+                <!-- 8. Core CS Concepts -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-brain"></i></div>
+                        <h3 class="skill-cat-title">Computer Science</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Object-Oriented Programming (OOP)</span>
+                        <span class="skill-pill">Data Structures</span>
+                        <span class="skill-pill">Algorithms</span>
+                        <span class="skill-pill">Exception Handling</span>
+                        <span class="skill-pill">Debugging</span>
+                        <span class="skill-pill">Problem Solving</span>
+                    </div>
+                </div>
+
+                                <!-- 7. Version Control -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fab fa-git-alt"></i></div>
+                        <h3 class="skill-cat-title">Collaboration</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Git</span>
+                        <span class="skill-pill">GitHub</span>
+                        <span class="skill-pill">Branching</span>
+                        <span class="skill-pill">Merge Conflict Resolution</span>
+                        <span class="skill-pill">Team Collaboration</span>
+                    </div>
+                </div>
+
+                <!-- 9. Soft Skills -->
+                <div class="skill-cat soft">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fas fa-users"></i></div>
+                        <h3 class="skill-cat-title">Soft Skills</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <span class="skill-pill">Problem Solving</span>
+                        <span class="skill-pill">Team Collaboration</span>
+                        <span class="skill-pill">Communication</span>
+                        <span class="skill-pill">Adaptability</span>
+                        <span class="skill-pill">Time Management</span>
+                    </div>
+                </div>
+
+                <!-- 10. Content Creation -->
+                <div class="skill-cat">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon"><i class="fab fa-youtube"></i></div>
+                        <h3 class="skill-cat-title">Content Creation</h3>
+                    </div>
+                    <div class="skill-pills">
+                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="skill-pill" style="text-decoration: none;">
+                            YouTube (20K+)
+                        </a>
+                        <a href="https://www.tiktok.com/@efootball.plays7" target="_blank" rel="noopener noreferrer" class="skill-pill" style="text-decoration: none;">
+                            TikTok (70K+)
+                        </a>
+                        <span class="skill-pill">Video Editing</span>
+                        <span class="skill-pill">Thumbnail Design</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{% include 'core/education.html' %}

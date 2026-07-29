@@ -1,0 +1,787 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap');
+
+    #education {
+        position: relative;
+        width: 100%;
+        padding: 5rem 0;
+        background: transparent; /* FIXED: now respects the portfolio background theme */
+        z-index: 20;
+        font-family: 'Space Grotesk', sans-serif;
+        color: #f8fafc;
+        overflow: hidden;
+    }
+
+    /* Ambient Cyber Background Gradients */
+    #education::before {
+        content: '';
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+    }
+
+    #education::after {
+        content: '';
+        position: absolute;
+        bottom: -10%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+    }
+
+    .education-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        box-sizing: border-box;
+    }
+
+    /* Top HUD / System Header */
+    .edu-hud-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(168, 85, 247, 0.25);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        margin-bottom: 2rem;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        backdrop-filter: blur(10px);
+    }
+
+    .hud-status {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .hud-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 10px #34d399;
+        animation: pulse 2s infinite;
+    }
+
+    /* Header Section */
+    .education-header {
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .education-tagline {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        color: #a855f7;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .education-tagline-line {
+        height: 1px;
+        width: 50px;
+        background: linear-gradient(90deg, #a855f7, transparent);
+    }
+
+    .education-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+        letter-spacing: -1px;
+        text-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    }
+
+    .education-subtitle {
+        font-size: 1rem;
+        font-weight: 300;
+        color: #94a3b8;
+        max-width: 800px;
+        line-height: 1.6;
+        margin-top: 0.2rem;
+    }
+
+    /* Summary Card */
+    .edu-summary-card {
+        background: rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 14px;
+        padding: 1.2rem 1.8rem;
+        margin-bottom: 3.5rem;
+        position: relative;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .edu-summary-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, #a855f7, #3b82f6);
+        border-radius: 4px 0 0 4px;
+    }
+
+    .edu-summary-card p {
+        color: #cbd5e1;
+        font-size: 0.98rem;
+        font-weight: 300;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* HORIZONTAL TIMELINE TRACK */
+    .horizontal-timeline-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        padding: 2.5rem 0;
+        scroll-behavior: smooth;
+    }
+
+    .horizontal-timeline-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .horizontal-timeline-wrapper::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+    }
+
+    .horizontal-timeline-wrapper::-webkit-scrollbar-thumb {
+        background: linear-gradient(90deg, #3b82f6, #a855f7, #34d399);
+        border-radius: 10px;
+    }
+
+    .horizontal-timeline-track {
+        display: flex;
+        gap: 2.5rem;
+        min-width: max-content;
+        position: relative;
+        padding-top: 2.5rem;
+    }
+
+    /* Laser Guide Line */
+    .horizontal-timeline-track::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #3b82f6 0%, #a855f7 60%, #34d399 100%);
+        box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+    }
+
+    /* 3D CARD CONTAINER */
+    .h-timeline-item {
+        width: 390px;
+        height: 490px;
+        perspective: 1200px;
+        position: relative;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform-style: preserve-3d;
+        cursor: pointer;
+        /* Mobile Highlight Removal */
+        -webkit-tap-highlight-color: transparent; 
+    }
+
+    /* SMART FLIP LOGIC */
+    /* 1. Desktop Hover Trigger */
+    @media (hover: hover) and (pointer: fine) {
+        .h-timeline-item:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+    }
+    /* 2. Mobile/JS Click Trigger */
+    .flip-card-inner.is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    /* Interactive Timeline Nodes */
+    .h-timeline-node {
+        position: absolute;
+        top: -2.85rem;
+        left: 2rem;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(8, 12, 24, 0.95);
+        border: 2px solid #a855f7;
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+        transition: all 0.3s ease;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .h-timeline-node::after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #a855f7;
+        transition: all 0.3s ease;
+    }
+
+    .h-timeline-item:hover .h-timeline-node {
+        background: #a855f7;
+        box-shadow: 0 0 25px #a855f7;
+        transform: scale(1.3);
+    }
+
+    .h-timeline-item:hover .h-timeline-node::after {
+        background: #ffffff;
+    }
+
+    .h-timeline-item.active .h-timeline-node {
+        border-color: #34d399;
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.8);
+    }
+
+    .h-timeline-item.active .h-timeline-node::after {
+        background: #34d399;
+    }
+
+    /* Front & Back Card Faces */
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 18px;
+        padding: 1.8rem;
+        box-sizing: border-box;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .flip-card-front::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .flip-card-back {
+        transform: rotateY(180deg);
+        background: rgba(10, 15, 30, 0.95);
+        border-color: rgba(168, 85, 247, 0.4);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(168, 85, 247, 0.15);
+    }
+
+    /* Flip Hint Bar */
+    .flip-hint {
+        margin-top: auto;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.68rem;
+        color: #a855f7;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.8rem;
+        border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .flip-hint.back-hint {
+        color: #64748b;
+        flex-direction: row-reverse;
+    }
+
+    .flip-hint.back-hint i {
+        animation: none;
+    }
+
+    .flip-hint i {
+        animation: flipPulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes flipPulse {
+        0%, 100% { transform: translateX(0); opacity: 0.6; }
+        50% { transform: translateX(5px); opacity: 1; }
+    }
+
+    /* Content Styling */
+    .phase-tag {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 1.5px;
+        color: #64748b;
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .phase-badge {
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: rgba(168, 85, 247, 0.12);
+        color: #c084fc;
+        border: 1px solid rgba(168, 85, 247, 0.25);
+    }
+
+    .phase-badge.current {
+        background: rgba(52, 211, 153, 0.12);
+        color: #34d399;
+        border-color: rgba(52, 211, 153, 0.3);
+    }
+
+    .h-card-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.18rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin: 0 0 0.4rem 0;
+        line-height: 1.35;
+    }
+
+    .h-card-institution {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .h-card-institution i { color: #38bdf8; }
+
+    .h-gpa-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        color: #cbd5e1;
+        font-size: 0.82rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .h-gpa-badge span {
+        color: #38bdf8;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 600;
+    }
+
+    /* 8-Semester Interactive Grid */
+    .bachelor-sem-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+
+    .sem-mini-chip {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 0.4rem 0.3rem;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.68rem;
+        transition: all 0.2s ease;
+    }
+
+    .sem-mini-chip:hover {
+        background: rgba(168, 85, 247, 0.15);
+        border-color: rgba(168, 85, 247, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .sem-mini-chip .s-label { color: #64748b; font-size: 0.6rem; }
+    .sem-mini-chip .s-val { color: #f1f5f9; font-weight: 600; margin-top: 1px; }
+    .sem-mini-chip.active-sem { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.08); }
+    .sem-mini-chip.active-sem .s-val { color: #34d399; }
+
+    /* Focus Pills */
+    .focus-areas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+
+    .focus-pill {
+        font-size: 0.72rem;
+        color: #cbd5e1;
+        background: rgba(56, 189, 248, 0.06);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        padding: 0.25rem 0.6rem;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .focus-pill:hover {
+        border-color: #38bdf8;
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+
+    /* Back Face Terminal & Pipeline */
+    .back-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.85rem;
+        color: #a855f7;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .capstone-terminal {
+        background: rgba(4, 8, 16, 0.9);
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        border-radius: 10px;
+        padding: 0.85rem;
+        margin-bottom: 1rem;
+        font-size: 0.78rem;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    .terminal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #34d399;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.4rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .terminal-body {
+        color: #94a3b8;
+        line-height: 1.5;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.72rem;
+    }
+
+    .terminal-body strong { color: #38bdf8; }
+
+    .pipeline-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+    }
+
+    .pipeline-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 0.45rem 0.65rem;
+        border-radius: 6px;
+        font-size: 0.72rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.2s ease;
+    }
+
+    .pipeline-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .pipeline-theory {
+        color: #38bdf8;
+        font-weight: 600;
+    }
+
+    .pipeline-code {
+        color: #94a3b8;
+        font-size: 0.7rem;
+        font-family: 'Fira Code', monospace;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.4; }
+        100% { opacity: 1; }
+    }
+</style>
+
+<section id="education">
+    <div class="education-container">
+
+        <!-- Header -->
+        <div class="education-header">
+            <div class="education-tagline">
+                <span>Academic Journey</span>
+                <div class="education-tagline-line"></div>
+            </div>
+            <h1 class="education-title">Education</h1>
+        </div>
+
+        <!-- Summary Note -->
+        <div class="edu-summary-card">
+            <p>My computer science studies have given me a strong foundation in programming, databases, algorithms, and software engineering. Alongside my coursework, I apply what I learn by building real-world web applications and personal projects.</p>
+        </div>
+
+        <!-- HORIZONTAL TIMELINE TRACK -->
+        <div class="horizontal-timeline-wrapper">
+            <div class="horizontal-timeline-track">
+
+                <!-- CARD 01: SEE -->
+                <div class="h-timeline-item">
+                    <div class="h-timeline-node"></div>
+                    <div class="flip-card-inner">
+                        
+                        <!-- FRONT FACE -->
+                        <div class="flip-card-front">
+                            <div class="phase-tag">
+                                <span>PHASE 01</span>
+                                <span class="phase-badge">2020</span>
+                            </div>
+                            <h3 class="h-card-title">Secondary Education Examination (SEE)</h3>
+                            <div class="h-card-institution">
+                                <i class="fas fa-graduation-cap"></i> Smile Small Heaven Academy
+                            </div>
+                            <div class="h-gpa-badge">
+                                Final Score: <span>GPA 3.95</span>
+                            </div>
+
+                            <div class="flip-hint">
+                                <span>TAP TO FLIP FOR DETAILS</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="flip-card-back">
+                            <div class="back-title"><i class="fas fa-award"></i> Phase 01 Highlights</div>
+                            <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.6; margin-top: 0;">
+                                Completed the Secondary Education Examination (SEE) with a 3.95 GPA, building a solid foundation in mathematics, computer science, and logical reasoning.
+                            </p>
+                            <div class="focus-areas">
+                                <span class="focus-pill">Mathematics</span>
+                                <span class="focus-pill">Computer Science</span>
+                                <span class="focus-pill">Logical Reasoning</span>
+                            </div>
+                            
+                            <!-- Return Hint -->
+                            <div class="flip-hint back-hint">
+                                <span>TAP TO FLIP BACK</span>
+                                <i class="fas fa-undo"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD 02: HIGHER SECONDARY (+2) -->
+                <div class="h-timeline-item">
+                    <div class="h-timeline-node"></div>
+                    <div class="flip-card-inner">
+                        
+                        <!-- FRONT FACE -->
+                        <div class="flip-card-front">
+                            <div class="phase-tag">
+                                <span>PHASE 02</span>
+                                <span class="phase-badge">2020 – 2022</span>
+                            </div>
+                            <h3 class="h-card-title">Higher Secondary (+2 Science)</h3>
+                            <div class="h-card-institution">
+                                <i class="fas fa-school"></i> Shree Amarsingh Secondary School
+                            </div>
+                            <div class="h-gpa-badge">
+                                Final Score: <span>GPA 3.44</span>
+                            </div>
+                            <div class="focus-areas">
+                                <span class="focus-pill">Physics</span>
+                                <span class="focus-pill">Chemistry</span>
+                                <span class="focus-pill">Mathematics</span>
+                                <span class="focus-pill">Biology</span>
+                                <span class="focus-pill">C Programming</span>
+                                <span class="focus-pill">Web Development Basics</span>
+                            </div>
+
+                            <div class="flip-hint">
+                                <span>TAP TO FLIP FOR DETAILS</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="flip-card-back">
+                            <div class="back-title"><i class="fas fa-laptop-house"></i> Science & Early Programming</div>
+                                        
+                            <p style="color: #94a3b8; font-size: 0.75rem; line-height: 1.4; margin: 0 0 0.6rem 0;">
+                                During my +2 studies, I built a strong foundation in science while beginning to learn programming on my own during the COVID-19 lockdown. This was where my interest in software development started to grow.
+                            </p>
+                        
+                            <div class="pipeline-grid">
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">Independent Learning</span>
+                                    <span class="pipeline-code">Started learning programming during lockdown</span>
+                                </div>
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">Programming <br> Basics</span>
+                                    <span class="pipeline-code">C language & web fundamentals</span>
+                                </div>
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">Problem Solving</span>
+                                    <span class="pipeline-code">Built logical thinking through coding</span>
+                                </div>
+                            </div>
+
+                            <!-- Return Hint -->
+                            <div class="flip-hint back-hint">
+                                <span>TAP TO FLIP BACK</span>
+                                <i class="fas fa-undo"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD 03: B.SC CSIT (ACTIVE) -->
+                <div class="h-timeline-item active">
+                    <div class="h-timeline-node"></div>
+                    <div class="flip-card-inner">
+                        
+                        <!-- FRONT FACE -->
+                        <div class="flip-card-front">
+                            <div class="phase-tag">
+                                <span>PHASE 03 // UNDERGRAD</span>
+                                <span class="phase-badge current">2023 – PRESENT</span>
+                            </div>
+                            <h3 class="h-card-title">B.Sc. Computer Science & Information Technology</h3>
+                            <div class="h-card-institution">
+                                <i class="fas fa-university"></i> Prithvi Narayan Campus &bull; TU
+                            </div>
+
+                            <div class="h-gpa-badge" style="border-color: rgba(52, 211, 153, 0.25);">
+                                Status: <span style="color: #34d399;">8th Sem Active</span>
+                            </div>
+
+                            <!-- 8-Semester Grid -->
+                            <div class="bachelor-sem-grid">
+                                <div class="sem-mini-chip"><span class="s-label">Sem 1</span><span class="s-val">3.46</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 2</span><span class="s-val">3.24</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 3</span><span class="s-val">3.24</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 4</span><span class="s-val">3.32</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 5</span><span class="s-val">3.43</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 6</span><span class="s-val">3.27</span></div>
+                                <div class="sem-mini-chip"><span class="s-label">Sem 7</span><span class="s-val">Awaited</span></div>
+                                <div class="sem-mini-chip active-sem"><span class="s-label">Sem 8</span><span class="s-val">Active</span></div>
+                            </div>
+
+                            <div class="flip-hint" style="color: #34d399;">
+                                <span>TAP TO FLIP FOR CAPSTONE</span>
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="flip-card-back">
+                            <!-- Capstone Terminal -->
+                            <div class="capstone-terminal">
+                                <div class="terminal-header">
+                                    <span><i class="fas fa-terminal"></i> 8th Sem Capstone</span>
+                                    <span>Active</span>
+                                </div>
+                                <div class="terminal-body">
+                                    <strong>Major Project:</strong> Retail-POS Management System <br>
+                                    <strong>Primary Stack:</strong> Python, Django, JS, PostgreSQL
+                                </div>
+                            </div>
+
+                            <!-- Theory to Code Pipeline -->
+                            <div class="back-title" style="margin-bottom: 0.4rem;"><i class="fas fa-code-branch"></i> Theory &rarr; Code</div>
+                            <div class="pipeline-grid">
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">DBMS</span>
+                                    <span class="pipeline-code">Django ORM / SQL</span>
+                                </div>
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">Web Tech</span>
+                                    <span class="pipeline-code">UI & Async JS</span>
+                                </div>
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">OOP</span>
+                                    <span class="pipeline-code">Modular Python Code</span>
+                                </div>
+                                <div class="pipeline-item">
+                                    <span class="pipeline-theory">Networks</span>
+                                    <span class="pipeline-code">RESTful APIs</span>
+                                </div>
+                            </div>
+
+                            <!-- Return Hint -->
+                            <div class="flip-hint back-hint" style="color: rgba(52, 211, 153, 0.8);">
+                                <span>TAP TO FLIP BACK</span>
+                                <i class="fas fa-undo"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MOBILE FLIP SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flipCards = document.querySelectorAll('.flip-card-inner');
+            
+            flipCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Toggle the 'is-flipped' class on tap/click
+                    this.classList.toggle('is-flipped');
+                });
+            });
+        });
+    </script>
+</section>
+
+{% include 'core/contact.html' %}

@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sushant Pahari | Full Stack Django Developer{% endblock %}
+
+{% block content %}
+<!-- FontAwesome for fallback tech icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+    /* Global Responsive Container */
+    .hero-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem 3rem; 
+        gap: 3rem;
+        box-sizing: border-box;
+    }
+
+    @media (min-width: 1024px) {
+        .hero-container {
+            flex-direction: row;
+            padding: 0.5rem 2rem 4rem;
+            gap: 2rem;
+        }
+    }
+
+    /* Left Text Column: Auto-centers on mobile, snaps left on desktop */
+    .hero-left {
+        flex: 1.2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+        z-index: 10;
+        width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+        .hero-left {
+            align-items: flex-start;
+            text-align: left;
+        }
+    }
+
+    .hero-badge-intro {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        color: #a855f7;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .hero-badge-line {
+        height: 1px;
+        width: 40px;
+        background: rgba(168, 85, 247, 0.4);
+    }
+
+    .hero-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.8rem, 8vw, 4.8rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 0;
+        background: linear-gradient(135deg, #c084fc, #6366f1, #38bdf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.1rem, 4vw, 1.65rem);
+        font-weight: 600;
+        color: #f1f5f9;
+        margin: 0.2rem 0 0;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-desc {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(0.95rem, 3vw, 1.1rem);
+        font-weight: 300;
+        color: #94a3b8;
+        line-height: 1.7;
+        max-width: 550px;
+        margin: 0;
+    }
+
+    /* Right Side Tech Wrapper: Adapts from grid (mobile) to free-float (desktop) */
+    .hero-right {
+        flex: 0.8;
+        position: relative;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .hero-right {
+            max-width: 500px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .hero-right {
+            display: flex;
+            height: 480px;
+            max-width: none;
+            margin-top: 0;
+        }
+    }
+
+    /* Cyber Badge Base Engine */
+    .cyber-badge {
+        background: rgba(10, 15, 30, 0.7);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 14px;
+        padding: 0.8rem 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        width: max-content; 
+        min-width: 165px;   
+        box-sizing: border-box;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 1024px) {
+        .cyber-badge {
+            position: absolute;
+            padding: 0.9rem 1.3rem;
+        }
+    }
+
+    /* Color-coded glow styles */
+    .cyber-badge.python { border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.05); }
+    .cyber-badge.django { border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.05); }
+    .cyber-badge.tailwind { border: 1px solid rgba(6, 182, 212, 0.3); box-shadow: 0 10px 25px rgba(6, 182, 212, 0.05); }
+    .cyber-badge.postgres { border: 1px solid rgba(51, 103, 145, 0.3); box-shadow: 0 10px 25px rgba(51, 103, 145, 0.05); }
+
+    /* Interactive Hover Glows */
+    .cyber-badge:hover {
+        transform: scale(1.05) translateY(-4px) !important;
+    }
+    .cyber-badge.python:hover { border-color: #3b82f6; box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3), inset 0 0 12px rgba(59, 130, 246, 0.15); }
+    .cyber-badge.django:hover { border-color: #10b981; box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3), inset 0 0 12px rgba(16, 185, 129, 0.15); }
+    .cyber-badge.tailwind:hover { border-color: #06b6d4; box-shadow: 0 15px 35px rgba(6, 182, 212, 0.3), inset 0 0 12px rgba(6, 182, 212, 0.15); }
+    .cyber-badge.postgres:hover { border-color: #336791; box-shadow: 0 15px 35px rgba(51, 103, 145, 0.3), inset 0 0 12px rgba(51, 103, 145, 0.15); }
+
+    .cyber-icon-box {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        background: rgba(255, 255, 255, 0.02);
+        flex-shrink: 0;
+    }
+
+    .cyber-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        overflow: hidden;
+    }
+
+    .cyber-tag {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.58rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        opacity: 0.4;
+        color: #fff;
+    }
+
+    .cyber-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem; 
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    /* Floating Keyframe Engine (Active on Desktop Only) */
+    @keyframes float-w1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1.5deg); } }
+    @keyframes float-w2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-22px) rotate(-2deg); } }
+    @keyframes float-w3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-13px) rotate(1deg); } }
+    @keyframes float-w4 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-18px) translateX(6px); } }
+
+    @media (min-width: 1024px) {
+        .pos-1 { animation: float-w1 6.5s ease-in-out infinite; top: 12%; left: 8%; }
+        .pos-2 { animation: float-w2 7.5s ease-in-out infinite; top: 32%; right: 4%; }
+        .pos-3 { animation: float-w3 5.5s ease-in-out infinite; bottom: 32%; left: 4%; }
+        .pos-4 { animation: float-w4 8.5s ease-in-out infinite; bottom: 12%; right: 12%; }
+    }
+</style>
+
+<section id="home">
+<div class="hero-container">
+    
+    <!-- Left Side Content -->
+    <div class="hero-left">
+        <div class="hero-badge-intro">
+            <span>Hello, I'm</span>
+            <div class="hero-badge-line"></div>
+        </div>
+        
+        <h1 class="hero-name">
+            Sushant<br>Pahari
+        </h1>
+        
+        <h2 class="hero-title">
+            Full Stack Django Developer
+        </h2>
+        
+        <p class="hero-desc">
+            I build scalable and efficient web applications with Django, Python and modern technologies.
+        </p>
+    </div>
+
+    <!-- Right Side Content: Upgraded to Postgresql & Responsive Layout Grid -->
+    <div class="hero-right">
+        
+        <!-- Python -->
+        <div class="cyber-badge python pos-1">
+            <div class="cyber-icon-box" style="color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2)">
+                <i class="fab fa-python"></i>
+            </div>
+            <div class="cyber-meta">
+                <span class="cyber-tag">Language</span>
+                <span class="cyber-label">Python</span>
+            </div>
+        </div>
+
+        <!-- Django -->
+        <div class="cyber-badge django pos-2">
+            <div class="cyber-icon-box" style="color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); font-family: sans-serif; font-weight: 900; font-size: 0.8rem;">
+                dj
+            </div>
+            <div class="cyber-meta">
+                <span class="cyber-tag">Framework</span>
+                <span class="cyber-label">Django</span>
+            </div>
+        </div>
+
+        <!-- Tailwind CSS -->
+        <div class="cyber-badge tailwind pos-3">
+            <div class="cyber-icon-box" style="color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.2);">
+                <i class="fab fa-css3-alt"></i>
+            </div>
+            <div class="cyber-meta">
+                <span class="cyber-tag">Design</span>
+                <span class="cyber-label">Tailwind</span>
+            </div>
+        </div>
+
+        <div class="cyber-badge postgres pos-4">
+            <div class="cyber-icon-box" style="color: #74a2c8; border: 1px solid rgba(51, 103, 145, 0.2);">
+                <i class="fas fa-database"></i>
+            </div>
+            <div class="cyber-meta">
+                <span class="cyber-tag">Database</span>
+                <span class="cyber-label">PostgreSQL</span>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const nav = document.querySelector(".navigation-vault");        
+        const indicator = document.getElementById("navbar-glow-line");      
+        const desktopLinks = document.querySelectorAll(".links-nexus .nexus-item");     
+        const mobileLinks = document.querySelectorAll(".responsive-matrix .nexus-item");        
+        const sections = document.querySelectorAll("section[id]");      
+        let activeSection = "home";     
+        function moveIndicator(link){       
+            if(!link) return;       
+            if(window.innerWidth < 1024){       
+                indicator.style.opacity = "0";      
+                return;     
+            }       
+            indicator.style.display = "block";      
+            const navRect = nav.getBoundingClientRect();        
+            const rect = link.getBoundingClientRect();      
+            indicator.style.left = (rect.left - navRect.left) + "px";       
+            indicator.style.width = rect.width + "px";      
+            indicator.style.opacity = "1";      
+        }   
+        
+        function moveMobileIndicator(link){
+            if(!link) return;
+            const parent =
+            link.parentElement.getBoundingClientRect();
+            const rect =
+            link.getBoundingClientRect();
+            mobileIndicator.style.top =
+            (rect.top-parent.top)+"px";
+            mobileIndicator.style.height=
+            rect.height+"px";
+        }
+
+        function setActive(id){     
+            activeSection = id;     
+            desktopLinks.forEach(link=>{        
+                link.classList.toggle(      
+                    "active-nav",       
+                    link.getAttribute("href")==="#" + id        
+                );      
+            });     
+            mobileLinks.forEach(link=>{     
+                link.classList.toggle(      
+                    "active-nav",       
+                    link.getAttribute("href")==="#" + id        
+                );      
+            });     
+            const desktop = document.querySelector(     
+                `.links-nexus a[href="#${id}"]`     
+            );      
+            moveIndicator(desktop);   
+            
+            const mobile = document.querySelector(  
+            `.responsive-matrix a[href="#${id}"]`
+            );
+            moveMobileIndicator(mobile);
+        }
+
+        const observer = new IntersectionObserver(      
+            (entries)=>{        
+                entries.forEach(entry=>{        
+                    if(entry.isIntersecting){       
+                        setActive(entry.target.id);     
+                    }       
+                });     
+            },      
+            {       
+                rootMargin:"-45% 0px -45% 0px",     
+                threshold:0     
+            }       
+        );      
+        sections.forEach(section=>observer.observe(section));       
+        desktopLinks.forEach(link=>{        
+            link.addEventListener("click",()=>{     
+                activeSection =     
+                link.getAttribute("href").replace("#","");      
+            });     
+        });     
+        mobileLinks.forEach(link=>{     
+            link.addEventListener("click",()=>{     
+                activeSection =     
+                link.getAttribute("href").replace("#","");      
+            });     
+        });     
+        window.addEventListener("resize",()=>{      
+            if(window.innerWidth >= 1024){      
+                indicator.style.display="block";        
+            }       
+            requestAnimationFrame(()=>{     
+                setActive(activeSection);       
+            });     
+        });     
+        window.addEventListener("load",()=>{        
+            requestAnimationFrame(()=>{     
+                setActive(activeSection);       
+            });     
+        });     
+    });
+</script>
+{% include 'core/about.html' %}
+{% endblock content %}
