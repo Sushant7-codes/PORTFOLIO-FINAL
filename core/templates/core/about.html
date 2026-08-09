@@ -1,218 +1,146 @@
 <style>
     /* ── ABOUT ──────────────────────────────────────────────── */
-    #about {
-        padding: 6rem 1.5rem 5rem;
-        position: relative;
-        z-index: 10;
-    }
+    #about { padding: 6rem 1.5rem 5rem; position: relative; z-index: 10; }
     @media (min-width: 1024px) { #about { padding: 8rem 2.5rem 6rem; } }
+    .about-wrap { max-width: 1320px; margin: 0 auto; }
 
-    .about-wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-    }
-
-    /* header row */
+    /* Section heading — slides up, accent left-border */
     .about-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 4rem;
-        padding-bottom: 1.5rem;
+        display: flex; align-items: baseline; gap: 1.5rem;
+        margin-bottom: 3.5rem;
+        padding-bottom: 1.25rem;
         border-bottom: 1px solid var(--border);
+    }
+    .about-kicker {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .62rem; color: var(--accent); letter-spacing: .1em;
+        text-transform: uppercase; padding-top: .08rem;
     }
     .about-heading {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1;
-        letter-spacing: -.02em;
-    }
-    .about-number {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: .72rem;
-        color: var(--text-3);
-        letter-spacing: .06em;
-        flex-shrink: 0;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-weight: 700; color: var(--text-1);
+        line-height: 1; letter-spacing: -.03em;
     }
 
-    /* two-column layout */
+    /* two-col layout */
     .about-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem 5rem;
+        display: grid; grid-template-columns: 1fr; gap: 3rem 5rem;
     }
     @media (min-width: 900px) {
-        .about-grid { grid-template-columns: 1.1fr 1fr; }
+        .about-grid { grid-template-columns: 1.15fr 1fr; }
     }
 
-    /* left — text */
-    .about-text {
-        display: flex;
-        flex-direction: column;
-        gap: 1.4rem;
-    }
+    /* left: text column — each paragraph has its own slide-left delay */
+    .about-text { display: flex; flex-direction: column; gap: 1.4rem; }
     .about-text p {
-        font-size: clamp(.95rem, 1.8vw, 1.05rem);
-        font-weight: 300;
-        color: var(--text-2);
-        line-height: 1.8;
+        font-size: clamp(.93rem, 1.72vw, 1.02rem);
+        font-weight: 300; color: var(--text-2); line-height: 1.82;
     }
-    .about-text p strong {
-        color: var(--text-1);
-        font-weight: 500;
-    }
+    .about-text p strong { color: var(--text-1); font-weight: 500; }
     .about-text a {
-        color: var(--text-2);
-        text-decoration: underline;
-        text-decoration-color: var(--border-hi);
-        text-underline-offset: 3px;
+        color: var(--text-2); text-decoration: underline;
+        text-decoration-color: var(--border-hi); text-underline-offset: 3px;
         transition: color .2s, text-decoration-color .2s;
     }
-    .about-text a:hover {
-        color: var(--text-1);
-        text-decoration-color: var(--text-2);
-    }
+    .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
-    /* right — details */
-    .about-details {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
-
+    /* right: detail rows — each clips in independently */
+    .about-details { display: flex; flex-direction: column; }
     .detail-row {
-        display: grid;
-        grid-template-columns: 130px 1fr;
-        gap: .5rem 1.5rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--border);
-        align-items: baseline;
+        display: grid; grid-template-columns: 118px 1fr;
+        gap: .4rem 1.25rem; padding: .88rem 0;
+        border-bottom: 1px solid var(--border); align-items: baseline;
     }
     .detail-row:first-child { padding-top: 0; }
     .detail-row:last-child  { border-bottom: none; }
-
     .detail-key {
-        font-size: .72rem;
-        font-weight: 500;
-        letter-spacing: .08em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        padding-top: .05rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+        color: var(--text-3); text-transform: uppercase; padding-top: .05rem;
     }
-    .detail-val {
-        font-size: .92rem;
-        color: var(--text-2);
-        line-height: 1.6;
-    }
-    .detail-val strong {
-        color: var(--text-1);
-        font-weight: 500;
-    }
+    .detail-val { font-size: .9rem; color: var(--text-2); line-height: 1.6; }
+    .detail-val strong { color: var(--text-1); font-weight: 500; }
     .detail-val a {
-        color: var(--text-2);
-        text-decoration: underline;
-        text-decoration-color: var(--border-hi);
-        text-underline-offset: 3px;
+        color: var(--text-2); text-decoration: underline;
+        text-decoration-color: var(--border-hi); text-underline-offset: 3px;
         transition: color .2s;
     }
-    .detail-val a:hover { color: var(--text-1); }
+    .detail-val a:hover { color: var(--accent); }
 
-    /* stack chips — small inline tags */
-    .chip-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: .35rem;
-        margin-top: .3rem;
-    }
+    /* chips */
+    .chip-row { display: flex; flex-wrap: wrap; gap: .28rem; margin-top: .22rem; }
     .chip {
-        font-size: .7rem;
-        color: var(--text-2);
-        border: 1px solid var(--border-hi);
-        padding: .18rem .55rem;
-        border-radius: 4px;
-        transition: color .2s, border-color .2s;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .67rem; color: var(--text-3);
+        border: 1px solid var(--border); padding: .14rem .5rem; border-radius: 4px;
+        transition: color .2s, border-color .2s, background .2s;
     }
     .chip:hover {
         color: var(--accent);
-        border-color: rgba(201,169,110,0.35);
+        border-color: rgba(56,189,248,0.3);
+        background: rgba(56,189,248,0.06);
     }
-
-    .link-plain {
-        text-decoration: none;
-        color: var(--text-2);
-        transition: color .2s;
-    }
-    .link-plain:hover {
-        color: var(--text-1);
-    }
+    .link-plain { text-decoration: none; color: var(--text-2); transition: color .2s; }
+    .link-plain:hover { color: var(--accent); }
 </style>
 
 <section id="about">
     <div class="about-wrap">
 
-        <div class="about-header reveal">
-            <h2 class="about-heading">About</h2>
-            <span class="about-number">01 / 05</span>
+        <!-- header: fade-up -->
+        <div class="about-header rv-fade-up">
+            <span class="about-kicker">// about</span>
+            <h2 class="about-heading">Who I am</h2>
         </div>
 
         <div class="about-grid">
 
-            <!-- left: story — each paragraph fades in separately -->
+            <!-- text column: each paragraph slides in from left with irregular delays -->
             <div class="about-text">
-                <p class="reveal rv-d1">
-                    I'm Sushant - a <strong>B.Sc. CSIT student</strong> in my final year at
-                    Prithvi Narayan Campus, Pokhara. My work centres on backend development:
-                    writing Django applications that are structured well enough to maintain and
-                    scale, with databases that make sense.
+                <p class="rv-slide-left sd-1">
+                    I'm Sushant — final year <strong>B.Sc. CSIT student</strong> at
+                    Prithvi Narayan Campus, Pokhara. Most of my time goes into backend work:
+                    Django applications that are structured well enough to maintain, with
+                    databases that actually make sense.
                 </p>
-                <p class="reveal rv-d2">
-                    Firstly, I started with C,
-                    picked up Python, and haven't stopped since. Most of what I know came from
-                    building real things: a retail POS system, an e-commerce store, and a
-                    college event management platform with teammates.
+                <p class="rv-slide-left sd-3">
+                    Started with C, moved to Python, and haven't looked back. What I know
+                    mostly came from building real things — a retail POS system, an
+                    e-commerce store, a college event platform with teammates.
                 </p>
-                <p class="reveal rv-d3">
-                    Outside of code, I run an
+                <p class="rv-slide-left sd-6">
+                    Outside code I run an
                     <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">eFootball YouTube channel</a>
-                    with over 20K subscribers - which taught me more about video editing,
-                    thumbnails, and audience attention spans than any tutorial ever could.
+                    with 22K+ subscribers. Taught me more about editing, thumbnails, and
+                    holding attention spans than any course ever could.
                 </p>
-                <p class="reveal rv-d4">
-                    Right now I'm focused on finishing my Bachelor's degree, deepening my knowledge of
-                    <strong>Django REST Framework</strong> and modern deployment practices, and
-                    finding an opportunity where I can contribute to real backend work.
+                <p class="rv-slide-left sd-7">
+                    Right now I'm finishing my degree, going deeper on
+                    <strong>Django REST Framework</strong> and deployment practices, and
+                    looking for a place to do real backend work.
                 </p>
             </div>
 
-            <!-- right: each row fades in with its own delay -->
+            <!-- detail rows: each clips in with its own delay (rv-clip) -->
             <div class="about-details">
-
-                <div class="detail-row reveal rv-d1">
+                <div class="detail-row rv-clip sd-1">
                     <span class="detail-key">Status</span>
-                    <span class="detail-val">
-                        <strong>Open to internships</strong> &amp; junior roles
-                    </span>
+                    <span class="detail-val"><strong>Open to internships</strong> &amp; junior roles</span>
                 </div>
-
-                <div class="detail-row reveal rv-d2">
+                <div class="detail-row rv-clip sd-2">
                     <span class="detail-key">Degree</span>
-                    <span class="detail-val">B.Sc. CSIT - 8th Semester</span>
+                    <span class="detail-val">B.Sc. CSIT — 8th Semester</span>
                 </div>
-
-                <div class="detail-row reveal rv-d3">
+                <div class="detail-row rv-clip sd-3">
                     <span class="detail-key">University</span>
                     <span class="detail-val">Tribhuvan University<br>Prithvi Narayan Campus</span>
                 </div>
-
-                <div class="detail-row reveal rv-d4">
+                <div class="detail-row rv-clip sd-4">
                     <span class="detail-key">Location</span>
                     <span class="detail-val">Pokhara-32, Nepal</span>
                 </div>
-
-                <div class="detail-row reveal rv-d5">
+                <div class="detail-row rv-clip sd-5">
                     <span class="detail-key">Focus</span>
                     <div class="detail-val">
                         <div class="chip-row">
@@ -224,8 +152,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="detail-row reveal rv-d6">
+                <div class="detail-row rv-clip sd-6">
                     <span class="detail-key">Learning</span>
                     <div class="detail-val">
                         <div class="chip-row">
@@ -235,22 +162,15 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="detail-row reveal rv-d6">
+                <div class="detail-row rv-clip sd-7">
                     <span class="detail-key">Side project</span>
                     <span class="detail-val">
-                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">
-                            YouTube - 22K+ subscribers
-                        </a><br>
-                        <a href="https://www.tiktok.com/@efootball.plays7" target="_blank" rel="noopener noreferrer" class="link-plain">
-                            TikTok - 71K+ followers
-                        </a>
+                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">YouTube — 22K+ subscribers</a><br>
+                        <a href="https://www.tiktok.com/@efootball.plays7" target="_blank" rel="noopener noreferrer" class="link-plain">TikTok — 71K+ followers</a>
                     </span>
                 </div>
-
             </div>
         </div>
-
     </div>
 </section>
 

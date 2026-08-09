@@ -1,324 +1,199 @@
 <style>
     /* ── CONTACT ────────────────────────────────────────────── */
-    #contact {
-        padding: 6rem 1.5rem 0;
-        position: relative;
-        z-index: 10;
-    }
+    #contact { padding: 6rem 1.5rem 0; position: relative; z-index: 10; }
     @media (min-width: 1024px) { #contact { padding: 8rem 2.5rem 0; } }
-
-    .contact-wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-    }
+    .contact-wrap { max-width: 1320px; margin: 0 auto; }
 
     .contact-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 4rem;
-        padding-bottom: 1.5rem;
+        display: flex; align-items: baseline; gap: 1.5rem;
+        margin-bottom: 3.5rem; padding-bottom: 1.25rem;
         border-bottom: 1px solid var(--border);
     }
-    .contact-heading {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1;
-        letter-spacing: -.02em;
-    }
-    .contact-number {
+    .contact-kicker {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .72rem;
-        color: var(--text-3);
-        letter-spacing: .06em;
-        flex-shrink: 0;
+        font-size: .62rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+    }
+    .contact-heading {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em;
     }
 
-    /* grid */
     .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem 5rem;
+        display: grid; grid-template-columns: 1fr; gap: 3rem 5rem;
     }
     @media (min-width: 860px) {
         .contact-grid { grid-template-columns: 1fr 1.3fr; align-items: start; }
     }
 
-    /* ── LEFT: info ─────────────────────────────────────────── */
-    .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1.75rem;
-    }
-
+    /* ── LEFT ── */
+    .contact-info { display: flex; flex-direction: column; gap: 1.75rem; }
     .contact-pitch {
-        font-size: clamp(1rem, 2vw, 1.1rem);
-        font-weight: 300;
-        color: var(--text-2);
-        line-height: 1.8;
+        font-size: clamp(.95rem, 1.85vw, 1.05rem);
+        font-weight: 300; color: var(--text-2); line-height: 1.82;
     }
-    .contact-pitch strong {
-        color: var(--text-1);
-        font-weight: 400;
-    }
+    .contact-pitch strong { color: var(--text-1); font-weight: 400; }
 
-    .contact-direct {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
-
+    .contact-direct { display: flex; flex-direction: column; }
     .contact-row {
-        display: grid;
-        grid-template-columns: 90px 1fr;
-        gap: .4rem 1rem;
-        padding: .85rem 0;
-        border-bottom: 1px solid var(--border);
-        align-items: baseline;
+        display: grid; grid-template-columns: 88px 1fr;
+        gap: .38rem 1rem; padding: .82rem 0;
+        border-bottom: 1px solid var(--border); align-items: baseline;
     }
     .contact-row:first-child { padding-top: 0; }
     .contact-row:last-child  { border-bottom: none; padding-bottom: 0; }
-
     .contact-key {
-        font-size: .68rem;
-        font-weight: 500;
-        letter-spacing: .1em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        padding-top: .05rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .66rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--text-3); text-transform: uppercase; padding-top: .04rem;
     }
-    .contact-val {
-        font-size: .9rem;
-        color: var(--text-2);
-    }
-    .contact-val a {
-        color: var(--text-2);
-        text-decoration: none;
-        transition: color .2s;
-    }
-    .contact-val a:hover { color: var(--text-1); }
+    .contact-val { font-size: .9rem; color: var(--text-2); }
+    .contact-val a { color: var(--text-2); text-decoration: none; transition: color .2s; }
+    .contact-val a:hover { color: var(--accent); }
 
-    /* social links */
-    .social-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: .5rem;
-        margin-top: .25rem;
-    }
+    .social-list { display: flex; flex-wrap: wrap; gap: .42rem; margin-top: .18rem; }
     .social-item {
-        display: inline-flex;
-        align-items: center;
-        gap: .4rem;
-        font-size: .78rem;
-        color: var(--text-3);
-        text-decoration: none;
-        border: 1px solid var(--border);
-        padding: .3rem .75rem;
-        border-radius: 5px;
-        transition: color .2s, border-color .2s;
+        display: inline-flex; align-items: center; gap: .36rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .74rem; font-weight: 500;
+        color: var(--text-3); text-decoration: none;
+        border: 1px solid var(--border); padding: .26rem .7rem; border-radius: 5px;
+        transition: color .2s, border-color .2s, background .2s, transform .15s;
     }
     .social-item:hover {
-        color: var(--accent);
-        border-color: rgba(201,169,110,0.35);
+        color: var(--accent); border-color: rgba(56,189,248,0.35);
+        background: rgba(56,189,248,0.05); transform: translateY(-1px);
     }
-    .social-item i { font-size: .8rem; }
+    .social-item i { font-size: .76rem; }
 
-    /* ── RIGHT: form ────────────────────────────────────────── */
-    .contact-form-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
+    /* ── RIGHT: form — micro-interactions ── */
+    .contact-form-wrap { display: flex; flex-direction: column; }
 
-    .form-group {
-        margin-bottom: 1.1rem;
-    }
+    .form-group { margin-bottom: .95rem; }
     .form-group:last-of-type { margin-bottom: 0; }
 
     .form-label {
         display: block;
-        font-size: .7rem;
-        font-weight: 500;
-        letter-spacing: .08em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        margin-bottom: .45rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .67rem; font-weight: 600; letter-spacing: .09em;
+        color: var(--text-3); text-transform: uppercase; margin-bottom: .38rem;
+        transition: color .2s;
+    }
+    /* label brightens when its input is focused — micro-interaction */
+    .form-group:focus-within .form-label { color: var(--accent); }
+
+    .form-input, .form-textarea {
+        width: 100%; background: var(--surface); border: 1px solid var(--border);
+        border-radius: 7px; padding: .62rem .88rem;
+        font-size: .9rem; font-family: 'Inter', sans-serif; color: var(--text-1);
+        outline: none; box-sizing: border-box; -webkit-appearance: none;
+        transition: border-color .22s, background .22s, box-shadow .22s;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
+    .form-input:focus, .form-textarea:focus {
+        border-color: rgba(56,189,248,0.5);
+        background: rgba(56,189,248,0.03);
+        box-shadow: 0 0 0 3px rgba(56,189,248,0.08);
+    }
+    /* invalid state */
+    .form-input:user-invalid, .form-textarea:user-invalid {
+        border-color: rgba(248,113,113,0.5);
+        box-shadow: 0 0 0 3px rgba(248,113,113,0.06);
     }
 
-    .form-input,
-    .form-textarea {
-        width: 100%;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 7px;
-        padding: .65rem .9rem;
-        font-size: .9rem;
-        font-family: 'Inter', sans-serif;
-        color: var(--text-1);
-        outline: none;
-        transition: border-color .25s, background .25s;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-    }
-    .form-input::placeholder,
-    .form-textarea::placeholder { color: var(--text-3); }
-    .form-input:focus,
-    .form-textarea:focus {
-        border-color: rgba(201,169,110,0.4);
-        background: rgba(201,169,110,0.03);
-        box-shadow: 0 0 0 3px rgba(201,169,110,0.07);
-    }
-
-    .form-textarea {
-        min-height: 140px;
-        resize: vertical;
-        line-height: 1.6;
-    }
+    .form-textarea { min-height: 136px; resize: vertical; line-height: 1.6; }
 
     .form-row {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.1rem;
-        margin-bottom: 1.1rem;
+        display: grid; grid-template-columns: 1fr; gap: .95rem; margin-bottom: .95rem;
     }
-    @media (min-width: 480px) {
-        .form-row { grid-template-columns: 1fr 1fr; }
-    }
+    @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
 
     .btn-send {
-        display: inline-flex;
-        align-items: center;
-        gap: .5rem;
-        font-size: .82rem;
-        font-weight: 500;
-        letter-spacing: .04em;
-        color: var(--bg);
-        background: var(--accent);
-        border: 1px solid var(--accent);
-        padding: .72rem 1.6rem;
-        border-radius: 7px;
-        margin-top: 1.1rem;
-        cursor: pointer;
-        font-family: 'Inter', sans-serif;
-        transition: background .25s, color .25s, transform .2s, box-shadow .25s;
-        width: 100%;
-        justify-content: center;
+        display: inline-flex; align-items: center; gap: .42rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+        color: var(--bg); background: var(--accent);
+        border: 1px solid var(--accent); padding: .7rem 1.5rem;
+        border-radius: 7px; margin-top: .95rem; cursor: pointer;
+        transition: background .22s, color .22s, transform .18s, box-shadow .22s;
+        width: 100%; justify-content: center;
     }
     .btn-send:hover {
-        background: transparent;
-        color: var(--accent);
-        transform: translateY(-1px);
-        box-shadow: 0 8px 24px rgba(201,169,110,0.18);
+        background: transparent; color: var(--accent);
+        transform: translateY(-1px); box-shadow: 0 0 24px var(--accent-glow);
     }
-    .btn-send i { font-size: .75rem; }
+    .btn-send:active { transform: translateY(0); }
+    .btn-send i { font-size: .7rem; }
 
-    /* ── FOOTER ─────────────────────────────────────────────── */
+    /* ── FOOTER ── */
     .site-footer {
-        margin-top: 5rem;
-        padding: 2.5rem 0;
+        margin-top: 5rem; padding: 2.25rem 0;
         border-top: 1px solid var(--border);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
+        display: flex; flex-wrap: wrap; align-items: center;
+        justify-content: space-between; gap: 1rem;
     }
-
     .footer-name {
-        font-family: 'Instrument Serif', serif;
-        font-style: italic;
-        font-size: 1.1rem;
-        color: var(--text-2);
-        text-decoration: none;
-        transition: color .2s;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .88rem; font-weight: 700; letter-spacing: -.01em;
+        color: var(--text-2); text-decoration: none; transition: color .2s;
     }
+    .footer-name span { color: var(--accent); }
     .footer-name:hover { color: var(--text-1); }
-
-    .footer-copy {
-        font-size: .75rem;
-        color: var(--text-3);
-        letter-spacing: .04em;
-    }
-
+    .footer-copy { font-size: .72rem; color: var(--text-3); letter-spacing: .03em; }
     .footer-back {
-        display: inline-flex;
-        align-items: center;
-        gap: .4rem;
-        font-size: .75rem;
-        color: var(--text-3);
-        text-decoration: none;
-        letter-spacing: .06em;
-        text-transform: uppercase;
+        display: inline-flex; align-items: center; gap: .36rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .72rem; font-weight: 600; letter-spacing: .06em;
+        color: var(--text-3); text-decoration: none; text-transform: uppercase;
         transition: color .2s;
     }
-    .footer-back:hover { color: var(--text-2); }
-    .footer-back i { font-size: .65rem; }
+    .footer-back:hover { color: var(--accent); }
+    .footer-back i { font-size: .6rem; }
 </style>
 
 <section id="contact">
     <div class="contact-wrap">
 
-        <div class="contact-header reveal">
-            <h2 class="contact-heading">Contact</h2>
-            <span class="contact-number">04 / 05</span>
+        <div class="contact-header rv-fade-up">
+            <span class="contact-kicker">// contact</span>
+            <h2 class="contact-heading">Get in touch</h2>
         </div>
 
         <div class="contact-grid">
 
-            <!-- left -->
-            <div class="contact-info">
-                <p class="contact-pitch reveal rv-d1">
-                    I'm looking for an <strong>internship or junior developer role</strong>
-                    where I can contribute to real backend work and keep learning.
-                    If you have something that fits, or just want to talk about a project -
-                    feel free to reach out directly.
+            <div class="contact-info rv-slide-left">
+                <p class="contact-pitch">
+                    Looking for an <strong>internship or junior developer role</strong>
+                    where I can work on real backend problems and keep learning.
+                    If you have something that fits, or just want to talk — reach out directly.
                 </p>
-
                 <div class="contact-direct">
-
-                    <div class="contact-row reveal rv-d2">
+                    <div class="contact-row">
                         <span class="contact-key">Email</span>
                         <span class="contact-val">
                             <a href="mailto:sushantpahari06@gmail.com">sushantpahari06@gmail.com</a>
                         </span>
                     </div>
-
-                    <div class="contact-row reveal rv-d3">
+                    <div class="contact-row">
                         <span class="contact-key">Location</span>
                         <span class="contact-val">Pokhara, Nepal</span>
                     </div>
-
-                    <div class="contact-row reveal rv-d5">
+                    <div class="contact-row">
                         <span class="contact-key">Elsewhere</span>
                         <div class="contact-val">
                             <div class="social-list">
-                                <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" class="social-item">
-                                    <i class="fab fa-github"></i> GitHub
-                                </a>
-                                <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" class="social-item">
-                                    <i class="fab fa-linkedin-in"></i> LinkedIn
-                                </a>
-                                <a href="https://x.com/PahariSush40823" target="_blank" rel="noopener noreferrer" class="social-item">
-                                    <i class="fab fa-x-twitter"></i> X
-                                </a>
-                                <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="social-item">
-                                    <i class="fab fa-youtube"></i> YouTube
-                                </a>
-                                <a href="https://www.instagram.com/sushantpahari/" target="_blank" rel="noopener noreferrer" class="social-item">
-                                    <i class="fab fa-instagram"></i> Instagram
-                                </a>
+                                <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" class="social-item"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" class="social-item"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                <a href="https://x.com/PahariSush40823" target="_blank" rel="noopener noreferrer" class="social-item"><i class="fab fa-x-twitter"></i> X</a>
+                                <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="social-item"><i class="fab fa-youtube"></i> YouTube</a>
+                                <a href="https://www.instagram.com/sushantpahari/" target="_blank" rel="noopener noreferrer" class="social-item"><i class="fab fa-instagram"></i> Instagram</a>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <!-- right: form -->
-            <div class="contact-form-wrap reveal rv-d2">
+            <div class="contact-form-wrap rv-rise sd-2">
                 <form action="https://formspree.io/f/mojgyywg" method="POST" id="contact-form">
                     <div class="form-row">
                         <div class="form-group">
@@ -330,17 +205,14 @@
                             <input type="email" id="cf-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label" for="cf-subject">Subject</label>
-                        <input type="text" id="cf-subject" name="subject" class="form-input" placeholder="Internship opportunity / project / other" required>
+                        <input type="text" id="cf-subject" name="subject" class="form-input" placeholder="Internship / project / other" required>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label" for="cf-message">Message</label>
                         <textarea id="cf-message" name="message" class="form-textarea" placeholder="What's on your mind?" required></textarea>
                     </div>
-
                     <button type="submit" class="btn-send">
                         Send message <i class="fas fa-arrow-right"></i>
                     </button>
@@ -349,13 +221,10 @@
 
         </div>
 
-        <!-- footer inside contact wrap so it shares the max-width -->
-        <footer class="site-footer reveal rv-d2">
-            <a href="#home" class="footer-name">Sushant Pahari</a>
+        <footer class="site-footer">
+            <a href="#home" class="footer-name">SP<span>.</span></a>
             <span class="footer-copy">© 2025 — Built with Django &amp; Tailwind</span>
-            <a href="#home" class="footer-back">
-                Back to top <i class="fas fa-arrow-up"></i>
-            </a>
+            <a href="#home" class="footer-back">Back to top <i class="fas fa-arrow-up"></i></a>
         </footer>
 
     </div>

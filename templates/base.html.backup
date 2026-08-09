@@ -1,0 +1,857 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sushant Pahari — Python & Django Developer{% endblock %}</title>
+    <meta name="description" content="Sushant Pahari — Django backend developer and B.Sc. CSIT student based in Pokhara, Nepal. I build web applications with Python, Django, and PostgreSQL.">
+    <meta property="og:title" content="Sushant Pahari — Python & Django Developer">
+    <meta property="og:description" content="Django backend developer and B.Sc. CSIT student. I build web applications with Python, Django, and PostgreSQL.">
+    <meta property="og:type" content="website">
+    {% tailwind_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ── DESIGN TOKENS ──────────────────────────────────── */
+        /* Default: dark */
+        :root {
+            --bg:          #0a0e12;
+            --bg-2:        #0f141a;
+            --bg-3:        #151b23;
+            --surface:     rgba(255,255,255,0.03);
+            --surface-hi:  rgba(255,255,255,0.06);
+            --border:      rgba(255,255,255,0.08);
+            --border-hi:   rgba(255,255,255,0.14);
+            --text-1:      #e8eaed;
+            --text-2:      #9ba3ad;
+            --text-3:      #656d78;
+            --accent:      #d97757;
+            --accent-dim:  rgba(217,119,87,0.12);
+            --accent-glow: rgba(217,119,87,0.25);
+            --green:       #52a67d;
+            --nav-bg:      rgba(10,14,18,0.80);
+            --nav-mobile-bg: rgba(10,14,18,0.96);
+            --grid-color:  rgba(255,255,255,0.02);
+        }
+
+        html.light {
+            --bg:          #f7f8f9;
+            --bg-2:        #eef0f2;
+            --bg-3:        #e4e7eb;
+            --surface:     rgba(0,0,0,0.02);
+            --surface-hi:  rgba(0,0,0,0.04);
+            --border:      rgba(0,0,0,0.08);
+            --border-hi:   rgba(0,0,0,0.14);
+            --text-1:      #1a1d23;
+            --text-2:      #4a515c;
+            --text-3:      #767d88;
+            --accent:      #c25837;
+            --accent-dim:  rgba(194,88,55,0.12);
+            --accent-glow: rgba(194,88,55,0.22);
+            --green:       #2d8a5f;
+            --nav-bg:      rgba(247,248,249,0.85);
+            --nav-mobile-bg: rgba(247,248,249,0.96);
+            --grid-color:  rgba(0,0,0,0.02);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background .35s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-1);
+            background: var(--bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background .35s, color .35s;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-dim);
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-glow);
+        }
+
+        /* ── CURSOR ──────────────────────────────────────────── */
+        @media (hover: hover) and (pointer: fine) {
+            html, body, a, button, input, textarea, select, [role="button"] {
+                cursor: none !important;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .cur-dot, .cur-ring { display: none !important; }
+        }
+
+        .cur-dot {
+            position: fixed; top: 0; left: 0;
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            will-change: transform;
+            transform: translate(-50%, -50%);
+            transition: width .15s, height .15s, opacity .15s;
+            display: none;
+            mix-blend-mode: screen;
+        }
+
+        .cur-ring {
+            position: fixed; top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1px solid rgba(217,119,87,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999998;
+            will-change: transform;
+            transform: translate(-50%, -50%);
+            display: none;
+            transition:
+                width  .35s cubic-bezier(.16,1,.3,1),
+                height .35s cubic-bezier(.16,1,.3,1),
+                border-color .2s;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .cur-dot  { display: block; }
+            .cur-ring { display: block; }
+        }
+
+        /* hover state */
+        body.cur-hover .cur-dot {
+            width: 10px; height: 10px;
+        }
+        body.cur-hover .cur-ring {
+            width: 48px; height: 48px;
+            border-color: rgba(217,119,87,0.6);
+        }
+
+        /* click state */
+        body.cur-click .cur-dot {
+            width: 4px; height: 4px;
+        }
+        body.cur-click .cur-ring {
+            width: 28px; height: 28px;
+        }
+
+        /* ── BACKGROUND GRID SYSTEM ─────────────────────────── */
+        #bg-canvas {
+            position: fixed; inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* subtle overlay effects */
+        .bg-overlay {
+            position: fixed; inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .bg-gradient-top {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 40vh;
+            background: radial-gradient(ellipse 60% 50% at 50% 0%, var(--accent-dim), transparent 70%);
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* edge fades */
+        .edge-top, .edge-bottom {
+            position: fixed; left: 0; width: 100%;
+            pointer-events: none; z-index: 9998;
+        }
+        .edge-top {
+            top: 0; height: 80px;
+            background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+        }
+        .edge-bottom {
+            bottom: 0; height: 100px;
+            background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+        }
+
+        /* ── NAVIGATION ──────────────────────────────────────── */
+        header {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 10000;
+            padding: 1.5rem 1.5rem;
+        }
+        @media (min-width: 1024px) { header { padding: 2rem 2.5rem; } }
+
+        .nav-inner {
+            max-width: 1320px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.8rem 1.5rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            position: relative;
+            transition: background .3s, border-color .3s;
+        }
+
+        .nav-logo {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-1);
+            text-decoration: none;
+            letter-spacing: -.02em;
+            flex-shrink: 0;
+            transition: color .2s;
+        }
+        .nav-logo:hover { color: var(--accent); }
+        .nav-logo em { font-style: normal; color: var(--accent); font-weight: 400; }
+
+        .nav-links {
+            display: none;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            align-items: center; gap: 2.2rem;
+        }
+        @media (min-width: 1024px) { .nav-links { display: flex; } }
+
+        .nav-link {
+            font-size: .8rem; font-weight: 500;
+            letter-spacing: 0; text-transform: none;
+            color: var(--text-2); text-decoration: none;
+            padding: .5rem 0; position: relative;
+            transition: color .2s;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width .3s cubic-bezier(.16,1,.3,1);
+        }
+        .nav-link:hover { color: var(--text-1); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: var(--accent); }
+        .nav-link.active::after { width: 100%; background: var(--accent); }
+
+        .nav-right {
+            display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0;
+        }
+        .nav-social {
+            display: none; gap: 1rem; align-items: center;
+        }
+        @media (min-width: 640px) { .nav-social { display: flex; } }
+        .nav-social a {
+            color: var(--text-3); font-size: 1rem;
+            text-decoration: none;
+            transition: color .25s, transform .2s;
+            display: inline-flex; align-items: center;
+        }
+        .nav-social a:hover { color: var(--accent); transform: translateY(-1px); }
+
+        .btn-resume {
+            font-size: .78rem; font-weight: 500; letter-spacing: 0;
+            color: var(--text-1); text-decoration: none;
+            border: 1px solid var(--border-hi);
+            padding: .5rem 1.1rem; border-radius: 6px;
+            background: var(--surface);
+            transition: background .2s, border-color .2s, color .2s, transform .2s;
+            white-space: nowrap;
+        }
+        .btn-resume:hover {
+            background: var(--accent-dim);
+            border-color: rgba(217,119,87,0.4);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* hamburger */
+        .nav-toggle {
+            display: flex; flex-direction: column; gap: 5px;
+            background: none; border: none; padding: .35rem;
+            flex-shrink: 0;
+        }
+        @media (min-width: 1024px) { .nav-toggle { display: none; } }
+        .nav-toggle span {
+            display: block;
+            width: 22px; height: 1.5px;
+            background: var(--text-2); border-radius: 2px;
+            transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .25s, width .3s;
+            transform-origin: center;
+        }
+        .nav-toggle span:nth-child(2) { width: 15px; }
+        .nav-open .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); width: 22px; }
+        .nav-open .nav-toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-open .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); width: 22px; }
+
+        .nav-mobile {
+            display: none;
+            position: absolute; top: calc(100% + .7rem); left: 0; right: 0;
+            background: var(--nav-mobile-bg);
+            backdrop-filter: blur(28px);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem 1.6rem;
+            flex-direction: column; gap: 1.1rem;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+            transition: background .35s, border-color .35s;
+        }
+        .nav-open .nav-mobile { display: flex; }
+        .nav-mobile .nav-link { font-size: .88rem; }
+
+        /* ── PAGE WRAP ────────────────────────────────────── */
+        .page-wrap {
+            position: relative; z-index: 10;
+            padding-top: 6rem;
+        }
+        @media (min-width: 1024px) { .page-wrap { padding-top: 7rem; } }
+
+        /* ── SHARED SECTION HELPERS ───────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .5s cubic-bezier(.22,1,.36,1),
+                        transform .5s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* stagger delays */
+        .rv-d1 { transition-delay: .05s; }
+        .rv-d2 { transition-delay: .10s; }
+        .rv-d3 { transition-delay: .15s; }
+        .rv-d4 { transition-delay: .20s; }
+        .rv-d5 { transition-delay: .25s; }
+        .rv-d6 { transition-delay: .30s; }
+
+        /* reveal-left: slides in from left */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: opacity .5s cubic-bezier(.22,1,.36,1),
+                        transform .5s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+        #home, #about, #projects, #education, #contact {
+            scroll-margin-top: 100px;
+        }
+
+        /* ── THEME TOGGLE BUTTON ───────────────────────────── */
+        .btn-theme {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--text-3);
+            font-size: .9rem;
+            cursor: pointer;
+            transition: color .25s, border-color .25s, background .25s, transform .2s;
+            flex-shrink: 0;
+        }
+        .btn-theme:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: var(--accent-dim);
+            transform: translateY(-1px);
+        }
+        /* show the right icon per mode */
+        .btn-theme .icon-moon { display: none; }
+        .btn-theme .icon-sun  { display: block; }
+        html.light .btn-theme .icon-moon { display: block; }
+        html.light .btn-theme .icon-sun  { display: none; }
+
+        /* smooth color transitions across all themed elements */
+        html, body, header, nav, section, div, span, p, h1, h2, h3, h4, a, button, input, textarea {
+            transition-property: background-color, border-color, color, box-shadow;
+            transition-duration: .3s;
+            transition-timing-function: ease;
+        }
+        /* restore reveal animation transitions (override the rule above) */
+        .reveal {
+            transition:
+                opacity .65s cubic-bezier(.22,1,.36,1),
+                transform .65s cubic-bezier(.22,1,.36,1) !important;
+        }
+        .reveal-left {
+            transition:
+                opacity .6s cubic-bezier(.22,1,.36,1),
+                transform .6s cubic-bezier(.22,1,.36,1) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- bg layers -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-overlay"></div>
+    <div class="bg-gradient-top"></div>
+    <div class="edge-top"></div>
+    <div class="edge-bottom"></div>
+
+    <!-- cursor -->
+    <div class="cur-dot"  id="curDot"></div>
+    <div class="cur-ring" id="curRing"></div>
+
+    <!-- nav -->
+    <header id="siteHeader">
+        <nav class="nav-inner" id="navInner">
+            <a href="#home" class="nav-logo">S<em>.</em>Pahari</a>
+
+            <div class="nav-links">
+                <a href="#home"      class="nav-link">Home</a>
+                <a href="#about"     class="nav-link">About</a>
+                <a href="#projects"  class="nav-link">Projects</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#contact"   class="nav-link">Contact</a>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-social">
+                    <a href="https://github.com/Sushant7-codes"
+                       target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/"
+                       target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <button class="btn-theme" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                        <i class="fa-solid fa-sun  icon-sun"></i>
+                    </button>
+                </div>
+                <a href="{% static 'files/sushantpaharicv.pdf' %}"
+                   target="_blank" rel="noopener noreferrer" class="btn-resume">
+                    Resume ↗
+                </a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+
+            <div class="nav-mobile">
+                <a href="#home"      class="nav-link mob-link">Home</a>
+                <a href="#about"     class="nav-link mob-link">About</a>
+                <a href="#projects"  class="nav-link mob-link">Projects</a>
+                <a href="#education" class="nav-link mob-link">Education</a>
+                <a href="#contact"   class="nav-link mob-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrap">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // PARTICLE BACKGROUND — THEME AWARE
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const canvas = document.getElementById('bg-canvas');
+        const ctx    = canvas.getContext('2d');
+
+        // ── colour palettes per theme ──────────────────────────
+        const PALETTES = {
+            light: {
+                bg:      '#f2ead8',
+                // warm amber accent
+                AR: 154, AG: 110, AB:  26,
+                // soft sky blue aurora
+                TR:  80, TG: 140, TB: 200,
+                particleAlphaScale: 0.45,
+                auroraAlpha1: 0.07,
+                auroraAlpha2: 0.05,
+                auroraAlpha3: 0.03,
+            },
+            dark: {
+                bg:      '#0e0c0a',
+                AR: 201, AG: 169, AB: 110,
+                TR:  80, TG: 160, TB: 200,
+                particleAlphaScale: 1.0,
+                auroraAlpha1: 0.10,
+                auroraAlpha2: 0.08,
+                auroraAlpha3: 0.05,
+            },
+        };
+
+        function getPalette() {
+            return document.documentElement.classList.contains('light')
+                ? PALETTES.light : PALETTES.dark;
+        }
+
+        let W, H;
+        let mouseX = -9999, mouseY = -9999;
+        let time = 0;
+
+        /* ── LAYERS ─────────────────────────────────────────── */
+        const LAYERS = [
+            { count: 55, speed: 0.12, rMin: 0.8,  rMax: 1.6,  alpha: 0.35, connectDist: 100, connectAlpha: 0.10 },
+            { count: 40, speed: 0.22, rMin: 1.4,  rMax: 2.6,  alpha: 0.55, connectDist: 130, connectAlpha: 0.15 },
+            { count: 20, speed: 0.38, rMin: 2.4,  rMax: 4.0,  alpha: 0.75, connectDist: 0,   connectAlpha: 0    },
+        ];
+
+        let particles = [];
+
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', () => { resize(); init(); });
+
+        function rand(a, b) { return a + Math.random() * (b - a); }
+
+        function mkParticle(layer, li) {
+            return {
+                x:  rand(0, W),
+                y:  rand(0, H),
+                vx: (Math.random() - 0.5) * layer.speed,
+                vy: (Math.random() - 0.5) * layer.speed,
+                r:  rand(layer.rMin, layer.rMax),
+                baseAlpha: rand(layer.alpha * 0.6, layer.alpha),
+                alpha: 0,
+                layer: li,
+                hue: rand(-20, 20),
+            };
+        }
+
+        function init() {
+            particles = [];
+            LAYERS.forEach((layer, li) => {
+                const count = Math.round(layer.count * Math.min(W / 1440, 1.5));
+                for (let i = 0; i < count; i++) {
+                    particles.push(mkParticle(layer, li));
+                }
+            });
+        }
+        init();
+
+        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+        /* ── AURORA ─────────────────────────────────────────── */
+        function drawAurora(p) {
+            const t = time * 0.0006;
+            const { AR, AG, AB, TR, TG, TB, auroraAlpha1, auroraAlpha2, auroraAlpha3 } = p;
+
+            const s1 = 0.4 + Math.sin(t * 1.1) * 0.08;
+            const g1 = ctx.createRadialGradient(
+                W * (0.12 + Math.sin(t * 0.7) * 0.04),
+                H * (0.14 + Math.cos(t * 0.9) * 0.04), 0,
+                W * 0.12, H * 0.14, W * s1
+            );
+            g1.addColorStop(0, `rgba(${AR},${AG},${AB},${auroraAlpha1})`);
+            g1.addColorStop(0.45, `rgba(${AR},${AG},${AB},${auroraAlpha1 * 0.35})`);
+            g1.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g1;
+            ctx.fillRect(0, 0, W, H);
+
+            const s2 = 0.42 + Math.cos(t * 0.8) * 0.07;
+            const g2 = ctx.createRadialGradient(
+                W * (0.86 + Math.sin(t * 0.6) * 0.05),
+                H * (0.80 + Math.cos(t * 1.0) * 0.05), 0,
+                W * 0.86, H * 0.80, W * s2
+            );
+            g2.addColorStop(0, `rgba(${TR},${TG},${TB},${auroraAlpha2})`);
+            g2.addColorStop(0.5, `rgba(${TR},${TG},${TB},${auroraAlpha2 * 0.31})`);
+            g2.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g2;
+            ctx.fillRect(0, 0, W, H);
+
+            const cx = W * (0.50 + Math.sin(t * 0.4) * 0.12);
+            const cy = H * (0.48 + Math.cos(t * 0.5) * 0.08);
+            const g3 = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.32);
+            g3.addColorStop(0, `rgba(${AR},${AG},${AB},${auroraAlpha3})`);
+            g3.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g3;
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        /* ── MOUSE ORB ─────────────────────────────────────── */
+        function drawMouseOrb(p) {
+            if (mouseX < 0) return;
+            const { AR, AG, AB } = p;
+            const mg = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 180);
+            mg.addColorStop(0, `rgba(${AR},${AG},${AB},0.10)`);
+            mg.addColorStop(0.4, `rgba(${AR},${AG},${AB},0.04)`);
+            mg.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = mg;
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        /* ── MAIN LOOP ──────────────────────────────────────── */
+        function draw() {
+            time++;
+            const p = getPalette();
+
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = p.bg;
+            ctx.fillRect(0, 0, W, H);
+
+            drawAurora(p);
+            drawMouseOrb(p);
+
+            const { AR, AG, AB } = p;
+            const alphaScale = p.particleAlphaScale;
+
+            LAYERS.forEach((layer, li) => {
+                const layerPs = particles.filter(pt => pt.layer === li);
+
+                if (layer.connectDist > 0) {
+                    for (let i = 0; i < layerPs.length; i++) {
+                        for (let j = i + 1; j < layerPs.length; j++) {
+                            const a = layerPs[i], b = layerPs[j];
+                            const dx = a.x - b.x, dy = a.y - b.y;
+                            const d  = Math.sqrt(dx*dx + dy*dy);
+                            if (d < layer.connectDist) {
+                                const alpha = (1 - d / layer.connectDist) * layer.connectAlpha * alphaScale;
+                                ctx.beginPath();
+                                ctx.moveTo(a.x, a.y);
+                                ctx.lineTo(b.x, b.y);
+                                const lg = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+                                lg.addColorStop(0, `rgba(${AR},${AG},${AB},${alpha})`);
+                                lg.addColorStop(0.5, `rgba(${AR+20},${AG+20},${AB+40},${alpha * 0.9})`);
+                                lg.addColorStop(1, `rgba(${AR},${AG},${AB},${alpha})`);
+                                ctx.strokeStyle = lg;
+                                ctx.lineWidth = 0.7;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                }
+
+                layerPs.forEach(pt => {
+                    const mdx = pt.x - mouseX;
+                    const mdy = pt.y - mouseY;
+                    const md  = Math.sqrt(mdx * mdx + mdy * mdy);
+                    const ATTRACT = 160, REPEL = 70;
+
+                    if (md < REPEL) {
+                        const f = (1 - md / REPEL) * 1.2;
+                        pt.x += (mdx / md) * f;
+                        pt.y += (mdy / md) * f;
+                        pt.alpha = Math.min(1, pt.baseAlpha + f * 0.6);
+                    } else if (md < ATTRACT) {
+                        const f = (1 - md / ATTRACT) * 0.18;
+                        pt.x -= (mdx / md) * f;
+                        pt.y -= (mdy / md) * f;
+                        pt.alpha += (Math.min(1, pt.baseAlpha * 1.6) - pt.alpha) * 0.08;
+                    } else {
+                        pt.alpha += (pt.baseAlpha - pt.alpha) * 0.04;
+                    }
+
+                    pt.x += pt.vx;
+                    pt.y += pt.vy;
+
+                    if (pt.x < -10) pt.x = W + 10;
+                    if (pt.x > W+10) pt.x = -10;
+                    if (pt.y < -10) pt.y = H + 10;
+                    if (pt.y > H+10) pt.y = -10;
+
+                    if (li === 2) {
+                        ctx.shadowColor = `rgba(${AR},${AG},${AB},0.8)`;
+                        ctx.shadowBlur  = pt.r * 4;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${AR},${AG},${AB},${pt.alpha * alphaScale})`;
+                    ctx.fill();
+
+                    if (li === 2) {
+                        ctx.shadowBlur = 0;
+                        ctx.shadowColor = 'transparent';
+                    }
+                });
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+    </script>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // CURSOR + TRAIL
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const dot   = document.getElementById('curDot');
+        const ring  = document.getElementById('curRing');
+        const tc    = document.getElementById('trail-canvas');
+        const tctx  = tc.getContext('2d');
+
+        const isTouch      = window.matchMedia('(hover:none),(pointer:coarse)').matches;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+        if (isTouch || reducedMotion) return;
+
+        let mx = -200, my = -200;
+        let rx = mx,   ry = my;
+        let isHover = false;
+
+        const pts = [];
+        const MAX_PTS = 28;
+
+        function resizeTrail() {
+            tc.width  = window.innerWidth;
+            tc.height = window.innerHeight;
+        }
+        resizeTrail();
+        window.addEventListener('resize', resizeTrail);
+
+        // mouse tracking
+        window.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+            pts.push({ x: mx, y: my, t: Date.now() });
+            if (pts.length > MAX_PTS) pts.shift();
+        });
+
+        // hover states
+        function bindHover() {
+            document.querySelectorAll('a,button,input,textarea,select,[role="button"]').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cur-hover');
+                    isHover = true;
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cur-hover');
+                    isHover = false;
+                });
+            });
+        }
+        bindHover();
+        new MutationObserver(bindHover).observe(document.body, { childList: true, subtree: true });
+
+        // click pulse
+        document.addEventListener('mousedown', () => document.body.classList.add('cur-click'));
+        document.addEventListener('mouseup',   () => document.body.classList.remove('cur-click'));
+
+        // ring RAF loop
+        (function ringLoop() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+            requestAnimationFrame(ringLoop);
+        })();
+
+        // trail loop
+        (function trailLoop() {
+            tctx.clearRect(0, 0, tc.width, tc.height);
+
+            // fade old pts
+            const now = Date.now();
+            while (pts.length > 0 && now - pts[0].t > 600) pts.shift();
+
+            if (pts.length > 1) {
+                for (let i = 1; i < pts.length; i++) {
+                    const t = i / pts.length;
+                    const age = (now - pts[i].t) / 600;
+                    const a = t * (1 - age) * (isHover ? 0.55 : 0.38);
+                    if (a <= 0) continue;
+
+                    tctx.beginPath();
+                    tctx.moveTo(pts[i-1].x, pts[i-1].y);
+                    tctx.lineTo(pts[i].x,   pts[i].y);
+                    tctx.strokeStyle = `rgba(201,169,110,${a})`;
+                    tctx.lineWidth   = t * (isHover ? 4 : 2.5);
+                    tctx.lineCap     = 'round';
+                    tctx.lineJoin    = 'round';
+                    tctx.stroke();
+                }
+            }
+
+            requestAnimationFrame(trailLoop);
+        })();
+    })();
+    </script>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const navToggle = document.getElementById('navToggle');
+        const navInner  = document.getElementById('navInner');
+
+        navToggle.addEventListener('click', () => navInner.classList.toggle('nav-open'));
+        document.querySelectorAll('.mob-link').forEach(l =>
+            l.addEventListener('click', () => navInner.classList.remove('nav-open')));
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) navInner.classList.remove('nav-open');
+        });
+
+        // active nav via IntersectionObserver
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+        if (sections.length) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        navLinks.forEach(l => l.classList.toggle(
+                            'active', l.getAttribute('href') === '#' + e.target.id
+                        ));
+                    }
+                });
+            }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
+        }
+
+        // scroll reveal — handles both .reveal and .reveal-left
+        const ro = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+            });
+        }, { threshold: 0.07 });
+        document.querySelectorAll('.reveal, .reveal-left').forEach(el => ro.observe(el));
+    })();
+    </script>
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // THEME TOGGLE
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const html   = document.documentElement;
+        const btn    = document.getElementById('themeToggle');
+        const STORE  = 'sp-theme';
+
+        // default: dark. Only apply light if explicitly saved.
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                html.classList.add('light');
+            } else {
+                html.classList.remove('light');
+            }
+        }
+
+        // on load: check saved preference; default to dark
+        const saved = localStorage.getItem(STORE) || 'dark';
+        applyTheme(saved);
+
+        btn.addEventListener('click', () => {
+            const isLight = html.classList.contains('light');
+            const next    = isLight ? 'dark' : 'light';
+            applyTheme(next);
+            localStorage.setItem(STORE, next);
+        });
+    })();
+    </script>
+</body>
+</html>

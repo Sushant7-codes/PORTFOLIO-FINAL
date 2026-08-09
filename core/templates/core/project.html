@@ -1,372 +1,324 @@
 <style>
     /* ── PROJECTS ───────────────────────────────────────────── */
-    #projects {
-        padding: 6rem 1.5rem 5rem;
-        position: relative;
-        z-index: 10;
-    }
+    #projects { padding: 6rem 1.5rem 5rem; position: relative; z-index: 10; }
     @media (min-width: 1024px) { #projects { padding: 8rem 2.5rem 6rem; } }
+    .projects-wrap { max-width: 1320px; margin: 0 auto; }
 
-    .projects-wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-    }
-
-    /* shared section header */
     .sec-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 4rem;
-        padding-bottom: 1.5rem;
+        display: flex; align-items: baseline; gap: 1.5rem;
+        margin-bottom: 3.5rem; padding-bottom: 1.25rem;
         border-bottom: 1px solid var(--border);
+    }
+    .sec-kicker {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .62rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
     }
     .sec-heading {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1;
-        letter-spacing: -.02em;
-    }
-    .sec-number {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: .72rem;
-        color: var(--text-3);
-        letter-spacing: .06em;
-        flex-shrink: 0;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em;
     }
 
-    /* ── FEATURED PROJECT ───────────────────────────────────── */
+    /* ── FEATURED: Retail POS ── */
+    /* Layout: wide intro top, then 3-col detail cards below — each card
+       gets a lift-on-hover with accent border reveal, not a static block */
     .project-featured {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem 4rem;
-        padding: 2.5rem 0 3rem;
+        padding: 0 0 3.5rem;
         border-bottom: 1px solid var(--border);
-        margin-bottom: 0;
-        border-left: 3px solid var(--accent);
-        padding-left: 1.75rem;
     }
-    @media (min-width: 900px) {
-        .project-featured {
-            grid-template-columns: 1fr 1fr;
-            align-items: start;
-        }
+    .pf-intro {
+        padding-left: 1.5rem;
+        border-left: 2px solid var(--accent);
+        margin-bottom: 2.25rem;
+        display: flex; flex-direction: column; gap: .9rem;
     }
-
-    .pf-left { display: flex; flex-direction: column; gap: 1.25rem; }
-    .pf-right { display: flex; flex-direction: column; gap: 1.25rem; }
-
     .proj-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: .5rem;
-        font-size: .68rem;
-        font-weight: 500;
-        letter-spacing: .1em;
-        color: var(--text-3);
-        text-transform: uppercase;
+        display: inline-flex; align-items: center; gap: .42rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .67rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--text-3); text-transform: uppercase;
     }
-    .proj-tag-dot {
-        width: 5px; height: 5px; border-radius: 50%;
-        background: #4ade80;
-        box-shadow: 0 0 6px rgba(74,222,128,.7);
-    }
-    .proj-tag-dot.amber { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,.7); }
-
+    .proj-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+    .proj-tag-dot.amber { background: #fbbf24; }
     .proj-title-lg {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(1.7rem, 4vw, 2.8rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1.1;
-        letter-spacing: -.02em;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.7rem, 3.8vw, 2.8rem);
+        font-weight: 700; color: var(--text-1); line-height: 1.05; letter-spacing: -.025em;
     }
-
-    .proj-desc {
-        font-size: .95rem;
-        font-weight: 300;
-        color: var(--text-2);
-        line-height: 1.75;
+    .proj-summary {
+        font-size: .95rem; font-weight: 300;
+        color: var(--text-2); line-height: 1.78; max-width: 800px;
     }
-
     .proj-link {
-        display: inline-flex;
-        align-items: center;
-        gap: .45rem;
-        font-size: .8rem;
-        font-weight: 500;
-        letter-spacing: .04em;
-        color: var(--text-2);
-        text-decoration: none;
-        border: 1px solid var(--border-hi);
-        padding: .55rem 1.1rem;
-        border-radius: 6px;
-        background: var(--surface);
-        transition: color .25s, border-color .25s, transform .25s;
+        display: inline-flex; align-items: center; gap: .38rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .77rem; font-weight: 600;
+        color: var(--accent); text-decoration: none;
+        border: 1px solid rgba(56,189,248,0.28);
+        padding: .48rem 1rem; border-radius: 6px; background: var(--accent-dim);
+        transition: background .2s, border-color .2s, color .2s, transform .2s, box-shadow .2s;
         width: fit-content;
     }
     .proj-link:hover {
-        color: var(--accent);
-        border-color: rgba(201,169,110,0.4);
-        background: rgba(201,169,110,0.05);
-        transform: translateY(-2px);
+        background: rgba(56,189,248,0.16); border-color: rgba(56,189,248,0.5);
+        color: var(--text-1); transform: translateY(-1px);
+        box-shadow: 0 4px 16px var(--accent-glow);
     }
-    .proj-link i { font-size: .7rem; }
+    .proj-link i { font-size: .66rem; }
 
-    /* right side — detail blocks */
-    .proj-detail-block {
-        padding: 1.2rem 0;
-        border-bottom: 1px solid var(--border);
+    /* 3 detail cards in a row — interactive hover state */
+    .pf-cards {
+        display: grid; grid-template-columns: 1fr; gap: 1px;
+        border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
     }
-    .proj-detail-block:first-child { padding-top: 0; }
-    .proj-detail-block:last-child  { border-bottom: none; padding-bottom: 0; }
+    @media (min-width: 760px) { .pf-cards { grid-template-columns: 1fr 1fr 1fr; } }
+    .pf-card {
+        padding: 1.4rem 1.5rem;
+        background: var(--surface);
+        position: relative; overflow: hidden;
+        transition: background .25s;
+    }
+    /* adjacent card separator */
+    @media (min-width: 760px) {
+        .pf-card + .pf-card { border-left: 1px solid var(--border); }
+    }
+    @media (max-width: 759px) {
+        .pf-card + .pf-card { border-top: 1px solid var(--border); }
+    }
+    /* accent line slides in from bottom on hover */
+    .pf-card::after {
+        content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+        height: 2px; background: var(--accent);
+        transform: scaleX(0); transform-origin: left;
+        transition: transform .35s cubic-bezier(.16,1,.3,1);
+    }
+    .pf-card:hover { background: var(--surface-hi); }
+    .pf-card:hover::after { transform: scaleX(1); }
 
-    .proj-detail-label {
-        font-size: .68rem;
-        font-weight: 500;
-        letter-spacing: .1em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        margin-bottom: .5rem;
+    .pf-card-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--accent); text-transform: uppercase; margin-bottom: .55rem;
     }
-    .proj-detail-text {
-        font-size: .88rem;
-        color: var(--text-2);
-        line-height: 1.65;
+    .pf-card-text {
+        font-size: .86rem; font-weight: 300; color: var(--text-2); line-height: 1.65;
     }
-    .proj-detail-text strong { color: var(--text-1); font-weight: 500; }
+    .pf-card-text strong { color: var(--text-1); font-weight: 500; }
 
-    .proj-stack-line {
-        display: flex;
-        flex-wrap: wrap;
-        gap: .3rem;
-        margin-top: .4rem;
-    }
+    /* Stack tags */
+    .proj-stack-line { display: flex; flex-wrap: wrap; gap: .26rem; margin-top: .4rem; }
     .stack-tag {
-        font-size: .7rem;
         font-family: 'JetBrains Mono', monospace;
-        color: var(--text-3);
-        border: 1px solid var(--border);
-        padding: .15rem .5rem;
-        border-radius: 3px;
+        font-size: .68rem; color: var(--text-3);
+        border: 1px solid var(--border); padding: .13rem .46rem; border-radius: 3px;
         transition: color .2s, border-color .2s;
     }
-    .stack-tag:hover {
-        color: var(--accent);
-        border-color: rgba(201,169,110,0.35);
-    }
+    .stack-tag:hover { color: var(--accent); border-color: rgba(56,189,248,0.35); }
 
-    /* ── SECONDARY PROJECTS ─────────────────────────────────── */
-    .projects-secondary {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-    @media (min-width: 700px) {
-        .projects-secondary { grid-template-columns: 1fr 1fr; }
-    }
-
-    .proj-card {
-        padding: 2.25rem 0 2.25rem;
+    /* ── E-COMMERCE — horizontal card layout ──────────────────
+       Different from POS: image-side replaced with a stat block left,
+       description right. Wider layout, no sub-cards.
+    ─────────────────────────────────────────────────────────── */
+    .proj-ecom {
+        display: grid; grid-template-columns: 1fr;
         border-bottom: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        transition: background .2s;
+        padding: 3rem 0;
     }
-    @media (min-width: 700px) {
-        .proj-card { padding: 2.25rem 2rem 2.25rem 0; }
-        .proj-card:nth-child(even) {
-            padding-left: 2rem;
-            padding-right: 0;
-            border-left: 1px solid var(--border);
-        }
+    @media (min-width: 800px) {
+        .proj-ecom { grid-template-columns: 220px 1fr; gap: 0 3rem; }
     }
-    .proj-card:last-child { border-bottom: none; }
-    @media (min-width: 700px) {
-        .proj-card:nth-last-child(-n+2) { border-bottom: none; }
+    .ecom-stat-col {
+        display: flex; flex-direction: column; gap: 1.5rem;
+        padding-right: 2.5rem;
+        border-right: 1px solid var(--border);
+        padding-bottom: 2rem;
+    }
+    @media (max-width: 799px) {
+        .ecom-stat-col { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; }
+    }
+    .ecom-stat {
+        display: flex; flex-direction: column; gap: .15rem;
+    }
+    .ecom-stat-val {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.6rem; font-weight: 700; color: var(--text-1); letter-spacing: -.02em;
+        line-height: 1;
+    }
+    .ecom-stat-label {
+        font-size: .7rem; color: var(--text-3); letter-spacing: .05em;
+    }
+    .ecom-body {
+        display: flex; flex-direction: column; gap: .9rem;
+        padding-left: 0; padding-top: 0;
+    }
+    @media (min-width: 800px) { .ecom-body { padding-left: .5rem; } }
+    .proj-title-md {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+        font-weight: 700; color: var(--text-1); line-height: 1.1; letter-spacing: -.02em;
+    }
+    .proj-desc {
+        font-size: .88rem; font-weight: 300; color: var(--text-2); line-height: 1.75;
     }
 
-    .proj-title-sm {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(1.2rem, 2.5vw, 1.55rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1.2;
-        letter-spacing: -.01em;
+    /* ── EVENT MANAGEMENT — terminal/log card style ──────────
+       Different from both above: styled like a terminal commit log.
+       Shows the project as a structured "log entry."
+    ─────────────────────────────────────────────────────────── */
+    .proj-event {
+        padding: 3rem 0 0;
     }
+    .event-log {
+        background: var(--bg-2);
+        border: 1px solid var(--border); border-radius: 8px;
+        overflow: hidden;
+    }
+    .event-log-bar {
+        display: flex; align-items: center; gap: .55rem;
+        padding: .5rem .85rem; background: var(--bg-3);
+        border-bottom: 1px solid var(--border);
+    }
+    .event-log-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .63rem; color: var(--text-3); letter-spacing: .04em;
+    }
+    .event-log-body {
+        padding: 1.25rem 1.25rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .78rem; line-height: 1.75;
+        display: flex; flex-direction: column; gap: .25rem;
+    }
+    .log-row { display: flex; gap: 1.25rem; align-items: baseline; }
+    .log-key { color: var(--text-3); flex-shrink: 0; min-width: 80px; }
+    .log-val { color: var(--text-2); }
+    .log-val .lhl  { color: var(--accent); }
+    .log-val .lhl2 { color: var(--accent-2); }
+    .log-val .lok  { color: var(--green); }
+    .log-val .ldim { color: var(--text-3); }
+    .log-desc {
+        margin-top: .75rem; padding-top: .75rem;
+        border-top: 1px solid var(--border);
+        font-family: 'Inter', sans-serif;
+        font-size: .86rem; font-weight: 300;
+        color: var(--text-2); line-height: 1.75;
+    }
+    .log-my-role {
+        margin-top: .5rem;
+        font-size: .8rem; color: var(--text-3); line-height: 1.6;
+    }
+    .log-my-role strong { color: var(--accent); font-weight: 500; }
 
-    .proj-card .proj-desc {
-        font-size: .88rem;
-        flex: 1;
+    /* ── SECONDARY ROW wrapper ── */
+    .projects-secondary-row {
+        display: grid; grid-template-columns: 1fr; gap: 0;
+    }
+    @media (min-width: 760px) {
+        .projects-secondary-row { grid-template-columns: 1fr 1fr; }
     }
 
     /* ── TECHNOLOGY INDEX ───────────────────────────────────── */
     .tech-section {
-        margin-top: 5rem;
-        padding-top: 4rem;
-        border-top: 1px solid var(--border);
+        margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--border);
     }
-
-    .tech-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 3rem;
-    }
+    .tech-header { margin-bottom: 2.5rem; }
     .tech-heading {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(1.5rem, 3vw, 2.2rem);
-        font-weight: 400;
-        color: var(--text-1);
-        letter-spacing: -.02em;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+        font-weight: 700; color: var(--text-1); letter-spacing: -.02em;
     }
-    .tech-note {
-        font-size: .78rem;
-        color: var(--text-3);
-        max-width: 340px;
-        text-align: right;
-        line-height: 1.5;
-    }
-    @media (max-width: 640px) { .tech-note { display: none; } }
-
     .tech-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0;
+        display: grid; grid-template-columns: 1fr;
     }
-    @media (min-width: 640px) {
-        .tech-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (min-width: 1100px) {
-        .tech-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-
+    @media (min-width: 640px)  { .tech-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .tech-grid { grid-template-columns: repeat(4,1fr); } }
     .tech-group {
-        padding: 1.75rem 0;
-        border-bottom: 1px solid var(--border);
+        padding: 1.6rem 0; border-bottom: 1px solid var(--border);
     }
     @media (min-width: 640px) {
-        .tech-group { padding: 1.75rem 2rem 1.75rem 0; }
-        .tech-group:nth-child(even) {
-            padding-left: 2rem;
-            padding-right: 0;
-            border-left: 1px solid var(--border);
-        }
+        .tech-group { padding: 1.6rem 2rem 1.6rem 0; }
+        .tech-group:nth-child(even) { padding-left: 2rem; padding-right: 0; border-left: 1px solid var(--border); }
     }
     @media (min-width: 1100px) {
-        .tech-group { padding: 1.75rem 2rem 1.75rem 0; }
-        .tech-group:nth-child(4n+2),
-        .tech-group:nth-child(4n+3),
-        .tech-group:nth-child(4n+4) {
-            padding-left: 2rem;
-            border-left: 1px solid var(--border);
-        }
+        .tech-group { padding: 1.6rem 2rem 1.6rem 0; }
+        .tech-group:nth-child(4n+2),.tech-group:nth-child(4n+3),.tech-group:nth-child(4n+4)
+            { padding-left: 2rem; border-left: 1px solid var(--border); }
         .tech-group:nth-child(4n+1) { padding-left: 0; }
-    }
-
-    /* last row: no bottom border */
-    @media (min-width: 1100px) {
         .tech-group:nth-last-child(-n+4) { border-bottom: none; }
     }
     @media (min-width: 640px) and (max-width: 1099px) {
         .tech-group:nth-last-child(-n+2) { border-bottom: none; }
     }
-    @media (max-width: 639px) {
-        .tech-group:last-child { border-bottom: none; }
-    }
-
+    @media (max-width: 639px) { .tech-group:last-child { border-bottom: none; } }
     .tech-cat {
-        font-size: .68rem;
-        font-weight: 500;
-        letter-spacing: .1em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        margin-bottom: .85rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--text-3); text-transform: uppercase; margin-bottom: .8rem;
     }
-    .tech-items {
-        display: flex;
-        flex-direction: column;
-        gap: .4rem;
-    }
+    .tech-items { display: flex; flex-direction: column; gap: .36rem; }
     .tech-item {
-        font-size: .88rem;
-        color: var(--text-2);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: .5rem;
+        font-size: .86rem; color: var(--text-2);
+        display: flex; align-items: center; justify-content: space-between; gap: .5rem;
     }
     .tech-item-name { color: var(--text-1); font-weight: 400; }
     .tech-item-note {
-        font-size: .72rem;
         font-family: 'JetBrains Mono', monospace;
-        color: var(--text-3);
+        font-size: .68rem; color: var(--text-3);
     }
 </style>
 
 <section id="projects">
     <div class="projects-wrap">
 
-        <div class="sec-header reveal">
-            <h2 class="sec-heading">Work</h2>
-            <span class="sec-number">02 / 05</span>
+        <div class="sec-header rv-fade-up">
+            <span class="sec-kicker">// work</span>
+            <h2 class="sec-heading">Projects</h2>
         </div>
 
-        <!-- ── FEATURED: Retail POS ── -->
-        <article class="project-featured">
-            <div class="pf-left reveal rv-d1">
+        <!-- ── FEATURED: Retail POS ─────────────────────────── -->
+        <!-- Structure: wide intro → 3 interactive detail cards in a row -->
+        <article class="project-featured rv-scale sd-1">
+            <div class="pf-intro">
                 <div class="proj-tag">
                     <div class="proj-tag-dot"></div>
-                    Live - Major Project
+                    Live — Major Project
                 </div>
-
                 <h3 class="proj-title-lg">Retail POS<br>Management System</h3>
-
-                <p class="proj-desc">
-                    A full-stack point-of-sale application covering inventory management,
-                    sales tracking, billing, and multi-role user access. Built end-to-end
-                    as my 8th semester major project - from database schema through to
-                    deployment on Render with Cloudinary for media and PostgreSQL for data.
+                <p class="proj-summary">
+                    Full-stack point-of-sale application — inventory, sales tracking,
+                    billing, and multi-role user access. Built end-to-end as my 8th
+                    semester major project, from schema design to deployment on Render
+                    with Cloudinary for media and PostgreSQL for data.
                 </p>
-
                 <a href="https://final-retail-pos.onrender.com/" target="_blank" rel="noopener noreferrer" class="proj-link">
                     View live system <i class="fas fa-arrow-up-right-from-square"></i>
                 </a>
             </div>
 
-            <div class="pf-right reveal rv-d2">
-                <div class="proj-detail-block">
-                    <div class="proj-detail-label">Problem solved</div>
-                    <div class="proj-detail-text">
-                        Small retail operations typically manage inventory and sales in
-                        spreadsheets. This replaces that with a structured system that
-                        enforces <strong>role-based access</strong>  staffs, managers,
-                        and admins each see only what they need.
+            <div class="pf-cards">
+                <div class="pf-card">
+                    <div class="pf-card-label">What it does</div>
+                    <div class="pf-card-text">
+                        Replaces spreadsheet-based retail management. Staff, managers, and
+                        admins each get a scoped view via <strong>role-based access control</strong>
+                        built on Django's group permissions.
                     </div>
                 </div>
-
-                <div class="proj-detail-block">
-                    <div class="proj-detail-label">Technical decisions</div>
-                    <div class="proj-detail-text">
-                        Custom Django user model with a group-based permission system.
-                        <strong>Cloudinary</strong> for product image storage so the
-                        deployment stays stateless. WhiteNoise for static files -
-                        no separate CDN needed at this scale.
+                <div class="pf-card">
+                    <div class="pf-card-label">A decision I'd revisit</div>
+                    <div class="pf-card-text">
+                        Used <strong>WhiteNoise</strong> to serve static files directly from
+                        Django — fine at this scale, but it's the first thing I'd swap for
+                        a CDN once traffic grows.
                     </div>
                 </div>
-
-                <div class="proj-detail-block">
-                    <div class="proj-detail-label">Stack</div>
+                <div class="pf-card">
+                    <div class="pf-card-label">Stack</div>
                     <div class="proj-stack-line">
                         <span class="stack-tag">Python</span>
                         <span class="stack-tag">Django</span>
                         <span class="stack-tag">PostgreSQL</span>
-                        <span class="stack-tag">Tailwind + DaisyUI</span>
+                        <span class="stack-tag">Tailwind</span>
+                        <span class="stack-tag">DaisyUI</span>
                         <span class="stack-tag">Cloudinary</span>
                         <span class="stack-tag">Render</span>
                         <span class="stack-tag">RBAC</span>
@@ -375,155 +327,137 @@
             </div>
         </article>
 
-        <!-- ── SECONDARY PROJECTS ── -->
-        <div class="projects-secondary">
+        <!-- ── SECONDARY PROJECTS ROW ── -->
+        <div class="projects-secondary-row">
 
-            <article class="proj-card reveal rv-d1">
-                <div class="proj-tag">
-                    <div class="proj-tag-dot"></div>
-                    Live - E-Commerce
+            <!-- E-COMMERCE — horizontal stat layout -->
+            <article class="proj-ecom rv-slide-left sd-2">
+                <div class="ecom-stat-col">
+                    <div class="proj-tag">
+                        <div class="proj-tag-dot"></div>
+                        Live
+                    </div>
+                    <div class="ecom-stat">
+                        <span class="ecom-stat-val">Django</span>
+                        <span class="ecom-stat-label">primary framework</span>
+                    </div>
+                    <div class="ecom-stat">
+                        <span class="ecom-stat-val">PythonAnywhere</span>
+                        <span class="ecom-stat-label">deployed on</span>
+                    </div>
+                    <div class="proj-stack-line">
+                        <span class="stack-tag">Django</span>
+                        <span class="stack-tag">SQLite</span>
+                        <span class="stack-tag">Tailwind</span>
+                        <span class="stack-tag">JS</span>
+                    </div>
+                    <a href="https://sushantpahari.pythonanywhere.com/home/" target="_blank" rel="noopener noreferrer" class="proj-link">
+                        View store <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
                 </div>
-                <h3 class="proj-title-sm">Sports E-Commerce Platform</h3>
-                <p class="proj-desc">
-                    Django e-commerce site for browsing sports products, cart management,
-                    and order placement. Responsive interface, deployed on PythonAnywhere.
-                    Built to understand the full request–response cycle in a shopping context.
-                </p>
-                <div class="proj-stack-line">
-                    <span class="stack-tag">Django</span>
-                    <span class="stack-tag">SQLite</span>
-                    <span class="stack-tag">Tailwind</span>
-                    <span class="stack-tag">JavaScript</span>
-                    <span class="stack-tag">PythonAnywhere</span>
+                <div class="ecom-body">
+                    <h3 class="proj-title-md">Sports E-Commerce Platform</h3>
+                    <p class="proj-desc">
+                        Built this to understand how the full request–response cycle works
+                        in a shopping context — cart state, order placement, session
+                        handling. Not a tutorial follow-along; I wanted to debug the flow
+                        myself.
+                    </p>
                 </div>
-                <a href="https://sushantpahari.pythonanywhere.com/home/" target="_blank" rel="noopener noreferrer" class="proj-link">
-                    View live store <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
             </article>
 
-            <article class="proj-card reveal rv-d2">
-                <div class="proj-tag">
-                    <div class="proj-tag-dot amber"></div>
-                    Live — College Project
+            <!-- EVENT MANAGEMENT — terminal/log card -->
+            <article class="proj-event rv-slide-right sd-3">
+                <div class="event-log">
+                    <div class="event-log-bar">
+                        <span class="term-dot r" style="width:8px;height:8px;border-radius:50%;background:#f87171;display:inline-block"></span>
+                        <span class="term-dot y" style="width:8px;height:8px;border-radius:50%;background:#fbbf24;display:inline-block"></span>
+                        <span class="term-dot g" style="width:8px;height:8px;border-radius:50%;background:#34d399;display:inline-block"></span>
+                        <span class="event-log-title">project.log — event-management-system</span>
+                    </div>
+                    <div class="event-log-body">
+                        <div class="log-row">
+                            <span class="log-key">status</span>
+                            <span class="log-val"><span class="lok">● live</span></span>
+                        </div>
+                        <div class="log-row">
+                            <span class="log-key">type</span>
+                            <span class="log-val"><span class="ldim">team project — 7th semester</span></span>
+                        </div>
+                        <div class="log-row">
+                            <span class="log-key">my role</span>
+                            <span class="log-val"><span class="lhl">database design</span></span>
+                        </div>
+                        <div class="log-row">
+                            <span class="log-key">stack</span>
+                            <span class="log-val">
+                                <span class="lhl">PostgreSQL</span> ·
+                                <span class="lhl2">Next.js</span> ·
+                                <span class="ldim">Node.js</span>
+                            </span>
+                        </div>
+                        <div class="log-desc">
+                            Campus event platform — create, manage, and register for events.
+                            Teammates handled the frontend and API. I owned the data layer:
+                            schema planning, entity relationships, and SQL for a three-person team.
+                        </div>
+                        <div class="log-my-role">
+                            <strong>// my contribution:</strong> schema that held together under a
+                            Next.js frontend I didn't control.
+                        </div>
+                        <div style="margin-top:.9rem">
+                            <a href="https://ems.sushanta.me" target="_blank" rel="noopener noreferrer" class="proj-link">
+                                View live system <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="proj-title-sm">Event Management System</h3>
-                <p class="proj-desc">
-                    Team project from 7th semester. Platform for creating, managing, and
-                    registering for events. My contribution was the database design -
-                    schema planning, entity relationships, and SQL for a three-person team
-                    using Next.js and Node.js.
-                </p>
-                <div class="proj-stack-line">
-                    <span class="stack-tag">PostgreSQL</span>
-                    <span class="stack-tag">Database Design</span>
-                    <span class="stack-tag">Next.js</span>
-                    <span class="stack-tag">Node.js</span>
-                    <span class="stack-tag">Team collab</span>
-                </div>
-                <a href="https://ems.sushanta.me" target="_blank" rel="noopener noreferrer" class="proj-link">
-                    View live system <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
             </article>
 
         </div>
 
         <!-- ── TECHNOLOGY INDEX ── -->
         <div class="tech-section">
-            <div class="tech-header reveal">
+            <div class="tech-header rv-fade-up">
                 <h3 class="tech-heading">Technologies</h3>
-                <p class="tech-note">Tools and languages I've used across these projects and coursework.</p>
             </div>
-
             <div class="tech-grid">
-
-                <div class="tech-group reveal rv-d1">
+                <div class="tech-group">
                     <div class="tech-cat">Backend</div>
                     <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-item-name">Python</span>
-                            <span class="tech-item-note">primary</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">Django</span>
-                            <span class="tech-item-note">ORM · Auth · Templates</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">REST APIs</span>
-                            <span class="tech-item-note">DRF </span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">RBAC</span>
-                            <span class="tech-item-note">groups &amp; permissions</span>
-                        </div>
+                        <div class="tech-item"><span class="tech-item-name">Python</span><span class="tech-item-note">primary</span></div>
+                        <div class="tech-item"><span class="tech-item-name">Django</span><span class="tech-item-note">ORM · Auth · Templates</span></div>
+                        <div class="tech-item"><span class="tech-item-name">REST APIs</span><span class="tech-item-note">DRF</span></div>
+                        <div class="tech-item"><span class="tech-item-name">RBAC</span><span class="tech-item-note">groups &amp; permissions</span></div>
                     </div>
                 </div>
-
-                <div class="tech-group reveal rv-d2">
+                <div class="tech-group">
                     <div class="tech-cat">Data</div>
                     <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-item-name">PostgreSQL</span>
-                            <span class="tech-item-note">production DB</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">SQLite</span>
-                            <span class="tech-item-note">development</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">SQL</span>
-                            <span class="tech-item-note">queries · schema design</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">Django ORM</span>
-                            <span class="tech-item-note">migrations</span>
-                        </div>
+                        <div class="tech-item"><span class="tech-item-name">PostgreSQL</span><span class="tech-item-note">production DB</span></div>
+                        <div class="tech-item"><span class="tech-item-name">SQLite</span><span class="tech-item-note">development</span></div>
+                        <div class="tech-item"><span class="tech-item-name">SQL</span><span class="tech-item-note">queries · schema</span></div>
+                        <div class="tech-item"><span class="tech-item-name">Django ORM</span><span class="tech-item-note">migrations</span></div>
                     </div>
                 </div>
-
-                <div class="tech-group reveal rv-d3">
+                <div class="tech-group">
                     <div class="tech-cat">Frontend</div>
                     <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-item-name">Tailwind CSS</span>
-                            <span class="tech-item-note">utility-first</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">JavaScript</span>
-                            <span class="tech-item-note">vanilla</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">Django Templates</span>
-                            <span class="tech-item-note">server-side</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">HTML / CSS</span>
-                            <span class="tech-item-note">semantic</span>
-                        </div>
+                        <div class="tech-item"><span class="tech-item-name">Tailwind CSS</span><span class="tech-item-note">utility-first</span></div>
+                        <div class="tech-item"><span class="tech-item-name">JavaScript</span><span class="tech-item-note">vanilla</span></div>
+                        <div class="tech-item"><span class="tech-item-name">Django Templates</span><span class="tech-item-note">server-side</span></div>
+                        <div class="tech-item"><span class="tech-item-name">HTML / CSS</span><span class="tech-item-note">semantic</span></div>
                     </div>
                 </div>
-
-                <div class="tech-group reveal rv-d4">
+                <div class="tech-group">
                     <div class="tech-cat">Tooling</div>
                     <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-item-name">Git &amp; GitHub</span>
-                            <span class="tech-item-note">version control</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">Render</span>
-                            <span class="tech-item-note">deployment</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">Cloudinary</span>
-                            <span class="tech-item-note">media storage</span>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-item-name">WhiteNoise</span>
-                            <span class="tech-item-note">static files</span>
-                        </div>
+                        <div class="tech-item"><span class="tech-item-name">Git &amp; GitHub</span><span class="tech-item-note">version control</span></div>
+                        <div class="tech-item"><span class="tech-item-name">Render</span><span class="tech-item-note">deployment</span></div>
+                        <div class="tech-item"><span class="tech-item-name">Cloudinary</span><span class="tech-item-note">media storage</span></div>
+                        <div class="tech-item"><span class="tech-item-name">WhiteNoise</span><span class="tech-item-note">static files</span></div>
                     </div>
                 </div>
-
             </div>
         </div>
 

@@ -1,259 +1,140 @@
 <style>
     /* ── EDUCATION ──────────────────────────────────────────── */
-    #education {
-        padding: 6rem 1.5rem 5rem;
-        position: relative;
-        z-index: 10;
-    }
+    #education { padding: 6rem 1.5rem 5rem; position: relative; z-index: 10; }
     @media (min-width: 1024px) { #education { padding: 8rem 2.5rem 6rem; } }
-
-    .edu-wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-    }
+    .edu-wrap { max-width: 1320px; margin: 0 auto; }
 
     .edu-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 4rem;
-        padding-bottom: 1.5rem;
+        display: flex; align-items: baseline; gap: 1.5rem;
+        margin-bottom: 3.5rem; padding-bottom: 1.25rem;
         border-bottom: 1px solid var(--border);
     }
-    .edu-heading {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1;
-        letter-spacing: -.02em;
-    }
-    .edu-number {
+    .edu-kicker {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .72rem;
-        color: var(--text-3);
-        letter-spacing: .06em;
-        flex-shrink: 0;
+        font-size: .62rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+    }
+    .edu-heading {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em;
     }
 
-    /* intro note */
     .edu-intro {
-        font-size: .95rem;
-        font-weight: 300;
-        color: var(--text-2);
-        line-height: 1.7;
-        max-width: 680px;
-        margin-bottom: 3.5rem;
+        font-size: .95rem; font-weight: 300; color: var(--text-2);
+        line-height: 1.76; max-width: 620px; margin-bottom: 3rem;
     }
 
-    /* ── TIMELINE ───────────────────────────────────────────── */
-    .edu-timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        position: relative;
-    }
+    /* ── TIMELINE ── */
+    .edu-timeline { display: flex; flex-direction: column; position: relative; }
 
-    /* vertical rule */
+    /* animated vertical rule — draws down as entries become visible */
     .edu-timeline::before {
         content: '';
-        position: absolute;
-        top: .45rem;
-        left: 5px;
-        bottom: 0;
+        position: absolute; top: .42rem; left: 5px; bottom: 0;
         width: 1px;
-        background: linear-gradient(to bottom, var(--accent-dim), var(--border), transparent);
+        background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+        /* drawn in by CSS animation triggered when timeline scrolls into view */
+        transform-origin: top;
+        transform: scaleY(0);
+        transition: transform 1.2s cubic-bezier(.16,1,.3,1) .2s;
     }
-    @media (min-width: 680px) {
-        .edu-timeline::before { left: 11px; }
-    }
+    .edu-timeline.visible::before { transform: scaleY(1); }
+    @media (min-width: 680px) { .edu-timeline::before { left: 11px; } }
 
     .edu-entry {
-        display: grid;
-        grid-template-columns: 24px 1fr;
-        gap: 0 1.5rem;
-        padding-bottom: 3rem;
-        position: relative;
+        display: grid; grid-template-columns: 24px 1fr;
+        gap: 0 1.5rem; padding-bottom: 3rem; position: relative;
     }
-    @media (min-width: 680px) {
-        .edu-entry { grid-template-columns: 36px 1fr; gap: 0 2rem; }
-    }
+    @media (min-width: 680px) { .edu-entry { grid-template-columns: 36px 1fr; gap: 0 2rem; } }
     .edu-entry:last-child { padding-bottom: 0; }
 
-    /* timeline node */
+    /* node — glows on the active entry */
     .edu-node {
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        border: 1.5px solid var(--border-hi);
-        background: var(--bg);
-        margin-top: .35rem;
-        flex-shrink: 0;
-        position: relative;
-        z-index: 1;
-        transition: border-color .25s, box-shadow .25s;
+        width: 11px; height: 11px; border-radius: 50%;
+        border: 1.5px solid var(--border-hi); background: var(--bg);
+        margin-top: .35rem; flex-shrink: 0; position: relative; z-index: 1;
+        transition: border-color .3s, box-shadow .3s;
     }
     .edu-node.active {
         border-color: var(--accent);
-        box-shadow: 0 0 8px var(--accent-glow);
+        box-shadow: 0 0 10px var(--accent-glow), 0 0 0 3px rgba(56,189,248,0.1);
     }
-    @media (min-width: 680px) {
-        .edu-node { width: 13px; height: 13px; margin-top: .32rem; }
-    }
+    @media (min-width: 680px) { .edu-node { width: 13px; height: 13px; margin-top: .32rem; } }
 
-    /* entry content */
-    .edu-content {
-        display: flex;
-        flex-direction: column;
-        gap: .6rem;
-    }
+    .edu-content { display: flex; flex-direction: column; gap: .55rem; }
     @media (min-width: 860px) {
         .edu-content-inner {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: .5rem 3rem;
-            align-items: baseline;
+            display: grid; grid-template-columns: 1fr auto;
+            gap: .5rem 3rem; align-items: baseline;
         }
     }
-
     .edu-period {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .7rem;
-        color: var(--text-3);
-        letter-spacing: .06em;
-        white-space: nowrap;
+        font-size: .68rem; color: var(--text-3); letter-spacing: .05em; white-space: nowrap;
     }
-
     .edu-institution {
-        font-size: .78rem;
-        font-weight: 500;
-        letter-spacing: .06em;
-        color: var(--text-3);
-        text-transform: uppercase;
-        margin-bottom: .15rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .72rem; font-weight: 600; letter-spacing: .06em;
+        color: var(--text-3); text-transform: uppercase; margin-bottom: .12rem;
     }
-
     .edu-degree {
-        font-family: 'Instrument Serif', serif;
-        font-size: clamp(1.15rem, 2.5vw, 1.55rem);
-        font-weight: 400;
-        color: var(--text-1);
-        line-height: 1.2;
-        letter-spacing: -.01em;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+        font-weight: 700; color: var(--text-1); line-height: 1.2; letter-spacing: -.02em;
     }
-
     .edu-meta {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: .5rem .75rem;
-        margin-top: .1rem;
+        display: flex; flex-wrap: wrap; align-items: center; gap: .42rem .68rem; margin-top: .08rem;
     }
-
     .edu-badge {
-        font-size: .7rem;
-        font-weight: 500;
-        letter-spacing: .06em;
-        color: var(--text-3);
-        border: 1px solid var(--border);
-        padding: .18rem .6rem;
-        border-radius: 4px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .66rem; font-weight: 600; letter-spacing: .05em;
+        color: var(--text-3); border: 1px solid var(--border);
+        padding: .15rem .55rem; border-radius: 4px;
     }
     .edu-badge.current {
-        color: var(--accent);
-        border-color: rgba(201,169,110,0.3);
-        background: rgba(201,169,110,0.06);
+        color: var(--accent); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06);
     }
-
     .edu-score {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .75rem;
-        color: var(--text-2);
-        letter-spacing: .04em;
+        font-size: .72rem; color: var(--text-2); letter-spacing: .03em;
     }
-
     .edu-note {
-        font-size: .88rem;
-        font-weight: 300;
-        color: var(--text-2);
-        line-height: 1.7;
-        max-width: 680px;
+        font-size: .87rem; font-weight: 300; color: var(--text-2); line-height: 1.74; max-width: 620px;
     }
 
-    /* semester grid for CSIT */
+    /* semester grid */
     .sem-grid {
-        display: grid;
-        grid-template-columns: repeat(4, auto);
-        gap: .4rem .75rem;
-        margin-top: .75rem;
-        width: fit-content;
+        display: grid; grid-template-columns: repeat(4, auto);
+        gap: .36rem .68rem; margin-top: .7rem; width: fit-content;
     }
-    .sem-item {
-        display: flex;
-        flex-direction: column;
-        gap: .1rem;
-    }
+    .sem-item { display: flex; flex-direction: column; gap: .07rem; }
     .sem-label {
-        font-size: .6rem;
-        letter-spacing: .06em;
-        color: var(--text-3);
-        text-transform: uppercase;
-    }
-    .sem-val {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .78rem;
-        color: var(--text-2);
+        font-size: .58rem; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase;
     }
-    .sem-val.active-sem {
-        color: var(--accent);
-    }
-    .sem-val.awaited {
-        color: var(--text-3);
-    }
-
-    /* detail items for CSIT back side */
-    .edu-detail-list {
-        display: flex;
-        flex-direction: column;
-        gap: .35rem;
-        margin-top: .65rem;
-    }
-    .edu-detail-item {
-        display: grid;
-        grid-template-columns: 110px 1fr;
-        gap: .3rem 1rem;
-        font-size: .82rem;
-    }
-    .edu-detail-key {
-        color: var(--text-3);
-        font-size: .7rem;
-        letter-spacing: .05em;
-        text-transform: uppercase;
-        padding-top: .05rem;
-    }
-    .edu-detail-val { color: var(--text-2); line-height: 1.5; }
-    .edu-detail-val strong { color: var(--text-1); font-weight: 500; }
+    .sem-val { font-family: 'JetBrains Mono', monospace; font-size: .76rem; color: var(--text-2); }
+    .sem-val.active-sem { color: var(--accent); }
+    .sem-val.awaited    { color: var(--text-3); }
 </style>
 
 <section id="education">
     <div class="edu-wrap">
 
-        <div class="edu-header reveal">
-            <h2 class="edu-heading">Education</h2>
-            <span class="edu-number">03 / 05</span>
+        <div class="edu-header rv-fade-up">
+            <span class="edu-kicker">// education</span>
+            <h2 class="edu-heading">Background</h2>
         </div>
 
-        <p class="edu-intro reveal rv-d1">
-            My CS studies gave me the foundations - algorithms, databases, networking, OOP.
-            The real learning happened alongside, building things that required me to
-            apply those concepts against actual constraints.
+        <p class="edu-intro rv-fade-up sd-1">
+            CS studies gave me the foundations — algorithms, databases, networking, OOP.
+            The real learning happened alongside, building things that put those concepts
+            against actual constraints.
         </p>
 
-        <div class="edu-timeline">
+        <!-- timeline gets .visible when it scrolls in, which triggers the line draw-down -->
+        <div class="edu-timeline rv-fade-up" id="eduTimeline">
 
-            <!-- Entry 1: SEE -->
-            <div class="edu-entry reveal rv-d1">
+            <div class="edu-entry rv-slide-right sd-1">
                 <div class="edu-node"></div>
                 <div class="edu-content">
                     <div class="edu-content-inner">
@@ -270,8 +151,7 @@
                 </div>
             </div>
 
-            <!-- Entry 2: +2 Science -->
-            <div class="edu-entry reveal rv-d2">
+            <div class="edu-entry rv-slide-right sd-3">
                 <div class="edu-node"></div>
                 <div class="edu-content">
                     <div class="edu-content-inner">
@@ -286,15 +166,14 @@
                         <span class="edu-badge">NEB Board</span>
                     </div>
                     <p class="edu-note">
-                        Science stream with <s>computer science</s> biology 🙃. Started teaching myself
-                        programming independently - C language
-                        first, then web fundamentals. This is where the interest became real.
+                        Science stream with <s>computer science</s> biology 🙃. Started
+                        teaching myself to code independently — C first, then web basics.
+                        This is where it became something I actually wanted to do.
                     </p>
                 </div>
             </div>
 
-            <!-- Entry 3: B.Sc. CSIT — active -->
-            <div class="edu-entry reveal rv-d3">
+            <div class="edu-entry rv-slide-right sd-5">
                 <div class="edu-node active"></div>
                 <div class="edu-content">
                     <div class="edu-content-inner">
@@ -308,47 +187,35 @@
                         <span class="edu-badge current">8th Semester — Active</span>
                         <span class="edu-badge">B.Sc. CSIT</span>
                     </div>
-
                     <div class="sem-grid">
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 1</span>
-                            <span class="sem-val">3.46</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 2</span>
-                            <span class="sem-val">3.24</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 3</span>
-                            <span class="sem-val">3.24</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 4</span>
-                            <span class="sem-val">3.32</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 5</span>
-                            <span class="sem-val">3.43</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 6</span>
-                            <span class="sem-val">3.27</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 7</span>
-                            <span class="sem-val awaited">Await</span>
-                        </div>
-                        <div class="sem-item">
-                            <span class="sem-label">Sem 8</span>
-                            <span class="sem-val active-sem">now</span>
-                        </div>
+                        <div class="sem-item"><span class="sem-label">Sem 1</span><span class="sem-val">3.46</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 2</span><span class="sem-val">3.24</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 3</span><span class="sem-val">3.24</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 4</span><span class="sem-val">3.32</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 5</span><span class="sem-val">3.43</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 6</span><span class="sem-val">3.27</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 7</span><span class="sem-val awaited">await</span></div>
+                        <div class="sem-item"><span class="sem-label">Sem 8</span><span class="sem-val active-sem">now</span></div>
                     </div>
                 </div>
             </div>
 
         </div>
-
     </div>
 </section>
+
+<script>
+// Make the timeline's vertical line draw itself down when it enters the viewport
+(function() {
+    const tl = document.getElementById('eduTimeline');
+    if (!tl) return;
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { tl.classList.add('visible'); io.unobserve(tl); }
+        });
+    }, { threshold: 0.08 });
+    io.observe(tl);
+})();
+</script>
 
 {% include 'core/contact.html' %}
