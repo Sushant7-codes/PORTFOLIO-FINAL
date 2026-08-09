@@ -1,481 +1,362 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@300;400;500;600&display=swap');
-
+    /* ── CONTACT ────────────────────────────────────────────── */
     #contact {
+        padding: 6rem 1.5rem 0;
         position: relative;
-        width: 100%;
-        padding: 5rem 0 7rem;
-        background: transparent;
-        z-index: 20;
-        font-family: 'Space Grotesk', sans-serif;
-        overflow: hidden;
+        z-index: 10;
     }
+    @media (min-width: 1024px) { #contact { padding: 8rem 2.5rem 0; } }
 
-    .contact-container {
-        max-width: 1280px;
+    .contact-wrap {
+        max-width: 1320px;
         margin: 0 auto;
-        padding: 0 2rem;
-        box-sizing: border-box;
-        position: relative;
     }
 
-    .section-header {
-        margin-bottom: 0.5rem;
+    .contact-header {
         display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-
-    .section-tagline {
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 3.5px;
-        color: #a855f7;
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-    }
-
-    .section-tagline-line {
-        height: 1px;
-        width: 48px;
-        background: linear-gradient(90deg, rgba(168, 85, 247, 0.7), transparent);
-    }
-
-    .section-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: clamp(2.1rem, 4.5vw, 3.1rem);
-        font-weight: 800;
-        color: #ffffff;
-        margin: 0;
-        letter-spacing: -1.2px;
-    }
-
-    .section-subtitle {
-        font-size: 1.02rem;
-        font-weight: 300;
-        color: #94a3b8;
-        max-width: 620px;
-        line-height: 1.65;
-        margin-top: 0.35rem;
-        margin-bottom: 0;
-    }
-
-    .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr;
+        align-items: baseline;
+        justify-content: space-between;
         gap: 2rem;
+        margin-bottom: 4rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
     }
-
-    @media (min-width: 900px) {
-        .contact-grid {
-            grid-template-columns: 1fr 1.15fr;
-            gap: 2.4rem;
-            align-items: start;
-        }
+    .contact-heading {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 400;
+        color: var(--text-1);
+        line-height: 1;
+        letter-spacing: -.02em;
     }
-
-    .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-    }
-
-    .info-card {
-        position: relative;
-        background: rgba(8, 12, 24, 0.65);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 1.4rem 1.5rem;
-        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        overflow: hidden;
-    }
-
-    .info-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 3px;
-        height: 100%;
-        background: linear-gradient(to bottom, #a855f7, #3b82f6);
-        border-radius: 3px 0 0 3px;
-        opacity: 0.7;
-    }
-
-    .info-card:hover {
-        box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.22), 0 14px 32px rgba(0, 0, 0, 0.28);
-        transform: translateY(-3px);
-    }
-
-    .info-card-header {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.7rem;
-    }
-
-    .info-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.95rem;
-        background: rgba(168, 85, 247, 0.12);
-        color: #c084fc;
-        border: 1px solid rgba(168, 85, 247, 0.22);
+    .contact-number {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .72rem;
+        color: var(--text-3);
+        letter-spacing: .06em;
         flex-shrink: 0;
     }
 
-    .info-card:nth-child(2) .info-icon {
-        background: rgba(56, 189, 248, 0.1);
-        color: #38bdf8;
-        border-color: rgba(56, 189, 248, 0.22);
+    /* grid */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem 5rem;
+    }
+    @media (min-width: 860px) {
+        .contact-grid { grid-template-columns: 1fr 1.3fr; align-items: start; }
     }
 
-    .info-card:nth-child(3) .info-icon {
-        background: rgba(52, 211, 153, 0.1);
-        color: #34d399;
-        border-color: rgba(52, 211, 153, 0.22);
+    /* ── LEFT: info ─────────────────────────────────────────── */
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
     }
 
-    .info-label {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 0.72rem;
-        letter-spacing: 1.2px;
-        color: #94a3b8;
-        text-transform: uppercase;
-        margin: 0;
+    .contact-pitch {
+        font-size: clamp(1rem, 2vw, 1.1rem);
+        font-weight: 300;
+        color: var(--text-2);
+        line-height: 1.8;
     }
-
-    .info-value {
-        font-size: 0.95rem;
-        color: #e2e8f0;
+    .contact-pitch strong {
+        color: var(--text-1);
         font-weight: 400;
-        margin: 0;
-        word-break: break-all;
     }
 
-    .info-value a {
-        color: #e2e8f0;
+    .contact-direct {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .contact-row {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: .4rem 1rem;
+        padding: .85rem 0;
+        border-bottom: 1px solid var(--border);
+        align-items: baseline;
+    }
+    .contact-row:first-child { padding-top: 0; }
+    .contact-row:last-child  { border-bottom: none; padding-bottom: 0; }
+
+    .contact-key {
+        font-size: .68rem;
+        font-weight: 500;
+        letter-spacing: .1em;
+        color: var(--text-3);
+        text-transform: uppercase;
+        padding-top: .05rem;
+    }
+    .contact-val {
+        font-size: .9rem;
+        color: var(--text-2);
+    }
+    .contact-val a {
+        color: var(--text-2);
         text-decoration: none;
-        transition: color 0.25s;
+        transition: color .2s;
     }
+    .contact-val a:hover { color: var(--text-1); }
 
-    .info-value a:hover {
-        color: #c084fc;
-    }
-
-    .social-row {
+    /* social links */
+    .social-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.7rem;
-        margin-top: 0.4rem;
+        gap: .5rem;
+        margin-top: .25rem;
     }
-
-    .social-btn {
-        width: 42px;
-        height: 42px;
-        border-radius: 10px;
-        display: flex;
+    .social-item {
+        display: inline-flex;
         align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #94a3b8;
-        font-size: 1rem;
+        gap: .4rem;
+        font-size: .78rem;
+        color: var(--text-3);
         text-decoration: none;
-        transition: all 0.3s;
+        border: 1px solid var(--border);
+        padding: .3rem .75rem;
+        border-radius: 5px;
+        transition: color .2s, border-color .2s;
     }
-
-    .social-btn:hover {
-        background: rgba(168, 85, 247, 0.15);
-        border-color: rgba(168, 85, 247, 0.4);
-        color: #e9d5ff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(168, 85, 247, 0.15);
+    .social-item:hover {
+        color: var(--accent);
+        border-color: rgba(201,169,110,0.35);
     }
+    .social-item i { font-size: .8rem; }
 
-    .availability-banner {
+    /* ── RIGHT: form ────────────────────────────────────────── */
+    .contact-form-wrap {
         display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin-top: 0.35rem;
-        margin-bottom: 0.90rem;
-        padding: 0.45rem 1rem;
-        background: rgba(52, 211, 153, 0.08);
-        border: 1px solid rgba(52, 211, 153, 0.25);
-        border-radius: 50px;
-        font-size: 0.82rem;
-        color: #86efac;
-        width: fit-content;
-    }
-    
-    .availability-banner .avail-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #34d399;
-        box-shadow: 0 0 10px #34d399;
-        animation: availPulse 2s infinite;
-    }
-
-    .availability-note {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin-top: 0.5rem;
-        font-size: 0.82rem;
-        color: #94a3b8;
-    }
-
-    @keyframes availPulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.4; }
-    }
-
-    .contact-form-card {
-        position: relative;
-        background: rgba(8, 12, 24, 0.72);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 36px rgba(0, 0, 0, 0.25);
-        border-radius: 20px;
-        padding: 1.8rem 1.9rem 1.7rem;
-        overflow: hidden;
-    }
-
-    .contact-form-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, #a855f7, #3b82f6, #34d399);
-    }
-
-    .form-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #f8fafc;
-        margin: 0 0 0.35rem 0;
-        letter-spacing: -0.2px;
-    }
-
-    .form-subtitle {
-        font-size: 0.85rem;
-        color: #94a3b8;
-        margin: 0 0 1.5rem 0;
-        font-weight: 300;
+        flex-direction: column;
+        gap: 0;
     }
 
     .form-group {
-        margin-bottom: 1.15rem;
+        margin-bottom: 1.1rem;
     }
+    .form-group:last-of-type { margin-bottom: 0; }
 
     .form-label {
         display: block;
-        font-size: 0.75rem;
+        font-size: .7rem;
         font-weight: 500;
-        color: #94a3b8;
-        margin-bottom: 0.4rem;
-        letter-spacing: 0.3px;
+        letter-spacing: .08em;
+        color: var(--text-3);
+        text-transform: uppercase;
+        margin-bottom: .45rem;
     }
 
     .form-input,
     .form-textarea {
         width: 100%;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 0.7rem 0.95rem;
-        font-size: 0.9rem;
-        color: #e2e8f0;
-        font-family: 'Space Grotesk', sans-serif;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: .65rem .9rem;
+        font-size: .9rem;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-1);
         outline: none;
-        transition: all 0.3s;
+        transition: border-color .25s, background .25s;
         box-sizing: border-box;
+        -webkit-appearance: none;
     }
-
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: var(--text-3); }
     .form-input:focus,
     .form-textarea:focus {
-        border-color: rgba(168, 85, 247, 0.45);
-        background: rgba(168, 85, 247, 0.05);
-        box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
-    }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-        color: #64748b;
+        border-color: rgba(201,169,110,0.4);
+        background: rgba(201,169,110,0.03);
+        box-shadow: 0 0 0 3px rgba(201,169,110,0.07);
     }
 
     .form-textarea {
-        min-height: 130px;
+        min-height: 140px;
         resize: vertical;
+        line-height: 1.6;
     }
 
     .form-row {
         display: grid;
         grid-template-columns: 1fr;
+        gap: 1.1rem;
+        margin-bottom: 1.1rem;
+    }
+    @media (min-width: 480px) {
+        .form-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .btn-send {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        font-size: .82rem;
+        font-weight: 500;
+        letter-spacing: .04em;
+        color: var(--bg);
+        background: var(--accent);
+        border: 1px solid var(--accent);
+        padding: .72rem 1.6rem;
+        border-radius: 7px;
+        margin-top: 1.1rem;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        transition: background .25s, color .25s, transform .2s, box-shadow .25s;
+        width: 100%;
+        justify-content: center;
+    }
+    .btn-send:hover {
+        background: transparent;
+        color: var(--accent);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(201,169,110,0.18);
+    }
+    .btn-send i { font-size: .75rem; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    .site-footer {
+        margin-top: 5rem;
+        padding: 2.5rem 0;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
         gap: 1rem;
     }
 
-    @media (min-width: 520px) {
-        .form-row {
-            grid-template-columns: 1fr 1fr;
-        }
+    .footer-name {
+        font-family: 'Instrument Serif', serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        color: var(--text-2);
+        text-decoration: none;
+        transition: color .2s;
+    }
+    .footer-name:hover { color: var(--text-1); }
+
+    .footer-copy {
+        font-size: .75rem;
+        color: var(--text-3);
+        letter-spacing: .04em;
     }
 
-    .btn-submit {
+    .footer-back {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        gap: 0.55rem;
-        width: 100%;
-        padding: 0.8rem 1.4rem;
-        margin-top: 0.4rem;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.18));
-        border: 1px solid rgba(168, 85, 247, 0.4);
-        border-radius: 10px;
-        color: #e9d5ff;
-        font-size: 0.9rem;
-        font-weight: 500;
-        font-family: 'Space Grotesk', sans-serif;
-        cursor: pointer;
-        transition: all 0.3s;
+        gap: .4rem;
+        font-size: .75rem;
+        color: var(--text-3);
+        text-decoration: none;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        transition: color .2s;
     }
-
-    .btn-submit:hover {
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(59, 130, 246, 0.28));
-        border-color: rgba(168, 85, 247, 0.65);
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 22px rgba(168, 85, 247, 0.25);
-    }
-
-    .btn-submit i {
-        font-size: 0.85rem;
-    }
-
-    @media (max-width: 600px) {
-        .contact-form-card {
-            padding: 1.4rem 1.25rem 1.3rem;
-        }
-        .info-card {
-            padding: 1.2rem 1.25rem;
-        }
-    }
+    .footer-back:hover { color: var(--text-2); }
+    .footer-back i { font-size: .65rem; }
 </style>
 
 <section id="contact">
-    <div class="contact-container">
+    <div class="contact-wrap">
 
-        <div class="section-header">
-            <div class="section-tagline">
-                <span>Get In Touch</span>
-                <div class="section-tagline-line"></div>
-            </div>
-            <h1 class="section-title">Contact Me</h1>
-            <p class="section-subtitle">
-                Whether you have a project, an internship opportunity, or just want to connect, feel free to reach out. I'd be happy to hear from you.
-            </p>
-        </div>
-
-        <div class="availability-banner">
-            <div class="avail-dot"></div>
-            <span>Open to internships & full-time opportunities</span>
+        <div class="contact-header reveal">
+            <h2 class="contact-heading">Contact</h2>
+            <span class="contact-number">04 / 05</span>
         </div>
 
         <div class="contact-grid">
 
+            <!-- left -->
             <div class="contact-info">
+                <p class="contact-pitch reveal rv-d1">
+                    I'm looking for an <strong>internship or junior developer role</strong>
+                    where I can contribute to real backend work and keep learning.
+                    If you have something that fits, or just want to talk about a project -
+                    feel free to reach out directly.
+                </p>
 
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                        <p class="info-label">Email</p>
+                <div class="contact-direct">
+
+                    <div class="contact-row reveal rv-d2">
+                        <span class="contact-key">Email</span>
+                        <span class="contact-val">
+                            <a href="mailto:sushantpahari06@gmail.com">sushantpahari06@gmail.com</a>
+                        </span>
                     </div>
-                    <p class="info-value">
-                        <a href="mailto:sushantpahari06@gmail.com?subject=Hello%20from%20Portfolio&body=Hi%20Sushant%2C%0A%0A">sushantpahari06@gmail.com</a>
-                    </p>
+
+                    <div class="contact-row reveal rv-d3">
+                        <span class="contact-key">Location</span>
+                        <span class="contact-val">Pokhara, Nepal</span>
+                    </div>
+
+                    <div class="contact-row reveal rv-d5">
+                        <span class="contact-key">Elsewhere</span>
+                        <div class="contact-val">
+                            <div class="social-list">
+                                <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" class="social-item">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                                <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" class="social-item">
+                                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                                </a>
+                                <a href="https://x.com/PahariSush40823" target="_blank" rel="noopener noreferrer" class="social-item">
+                                    <i class="fab fa-x-twitter"></i> X
+                                </a>
+                                <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="social-item">
+                                    <i class="fab fa-youtube"></i> YouTube
+                                </a>
+                                <a href="https://www.instagram.com/sushantpahari/" target="_blank" rel="noopener noreferrer" class="social-item">
+                                    <i class="fab fa-instagram"></i> Instagram
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <p class="info-label">Location</p>
-                    </div>
-                    <p class="info-value">Pokhara-32, Nepal</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <div class="info-icon"><i class="fas fa-share-alt"></i></div>
-                        <p class="info-label">Connect</p>
-                    </div>
-                    <div class="social-row">
-                        <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://x.com/PahariSush40823" target="_blank" rel="noopener noreferrer" class="social-btn" title="Twitter / X">
-                            <i class="fab fa-x-twitter"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="social-btn" title="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/sushantpahari/" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="contact-form-card">
-                <h3 class="form-title">Send a Message</h3>
-                <p class="form-subtitle">I’ll get back to you as soon as possible.</p>
-
+            <!-- right: form -->
+            <div class="contact-form-wrap reveal rv-d2">
                 <form action="https://formspree.io/f/mojgyywg" method="POST" id="contact-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label" for="name">Your Name</label>
-                            <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+                            <label class="form-label" for="cf-name">Name</label>
+                            <input type="text" id="cf-name" name="name" class="form-input" placeholder="Your name" required autocomplete="name">
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="email">Email Address</label>
-                            <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                            <label class="form-label" for="cf-email">Email</label>
+                            <input type="email" id="cf-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" class="form-input" placeholder="Internship Opportunity / Project Inquiry" required>
+                        <label class="form-label" for="cf-subject">Subject</label>
+                        <input type="text" id="cf-subject" name="subject" class="form-input" placeholder="Internship opportunity / project / other" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="message">Message</label>
-                        <textarea id="message" name="message" class="form-textarea" placeholder="Write your message here..." required></textarea>
+                        <label class="form-label" for="cf-message">Message</label>
+                        <textarea id="cf-message" name="message" class="form-textarea" placeholder="What's on your mind?" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i>
-                        Send Message
+                    <button type="submit" class="btn-send">
+                        Send message <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
 
         </div>
+
+        <!-- footer inside contact wrap so it shares the max-width -->
+        <footer class="site-footer reveal rv-d2">
+            <a href="#home" class="footer-name">Sushant Pahari</a>
+            <span class="footer-copy">© 2025 — Built with Django &amp; Tailwind</span>
+            <a href="#home" class="footer-back">
+                Back to top <i class="fas fa-arrow-up"></i>
+            </a>
+        </footer>
+
     </div>
 </section>

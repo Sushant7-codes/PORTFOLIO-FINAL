@@ -1,326 +1,256 @@
-<!-- FontAwesome for utility icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap');
-
+    /* ── ABOUT ──────────────────────────────────────────────── */
     #about {
+        padding: 6rem 1.5rem 5rem;
         position: relative;
-        width: 100%;
-        padding: 4rem 0;
-        background: transparent;
-        z-index: 20;
+        z-index: 10;
     }
+    @media (min-width: 1024px) { #about { padding: 8rem 2.5rem 6rem; } }
 
-    .about-container {
-        max-width: 1200px;
+    .about-wrap {
+        max-width: 1320px;
         margin: 0 auto;
-        padding: 0 2rem;
-        font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Header - Left Aligned */
+    /* header row */
     .about-header {
-        margin-bottom: 4rem;
-        text-align: left;
-    }
-
-    .about-tagline {
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 3px;
-        color: #a855f7;
-        text-transform: uppercase;
         display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        justify-content: flex-start;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 4rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .about-heading {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 400;
+        color: var(--text-1);
+        line-height: 1;
+        letter-spacing: -.02em;
+    }
+    .about-number {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .72rem;
+        color: var(--text-3);
+        letter-spacing: .06em;
+        flex-shrink: 0;
     }
 
-    .about-tagline-line {
-        height: 1px;
-        width: 50px;
-        background: rgba(168, 85, 247, 0.4);
-    }
-
-    .about-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        font-weight: 900;
-        color: #ffffff;
-        letter-spacing: -1px;
-        margin: 0;
-    }
-
-    .about-content-grid {
+    /* two-column layout */
+    .about-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 4rem;
-        align-items: start;
+        gap: 3rem 5rem;
+    }
+    @media (min-width: 900px) {
+        .about-grid { grid-template-columns: 1.1fr 1fr; }
     }
 
-    @media (min-width: 992px) {
-        .about-content-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-        #about {
-            padding-top: 8rem;
-        }
-    }
-
-    /* Left - Story */
-    .story-paragraphs {
+    /* left — text */
+    .about-text {
         display: flex;
         flex-direction: column;
-        gap: 1.8rem;
+        gap: 1.4rem;
     }
-
-    .story-paragraphs p {
-        font-size: clamp(1.05rem, 2.5vw, 1.15rem);
+    .about-text p {
+        font-size: clamp(.95rem, 1.8vw, 1.05rem);
         font-weight: 300;
-        color: #94a3b8;
+        color: var(--text-2);
         line-height: 1.8;
-        margin: 0;
     }
-
-    .story-paragraphs p strong {
-        color: #f1f5f9;
+    .about-text p strong {
+        color: var(--text-1);
         font-weight: 500;
     }
-
-    /* Right - Unique Key Details Panel */
-    .highlights-section {
-        background: rgba(8, 12, 24, 0.7);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(168, 85, 247, 0.15);
-        border-radius: 20px;
-        padding: 2.5rem 2rem;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
+    .about-text a {
+        color: var(--text-2);
+        text-decoration: underline;
+        text-decoration-color: var(--border-hi);
+        text-underline-offset: 3px;
+        transition: color .2s, text-decoration-color .2s;
+    }
+    .about-text a:hover {
+        color: var(--text-1);
+        text-decoration-color: var(--text-2);
     }
 
-    .highlights-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #a855f7, transparent);
-    }
-
-    .highlights-section h3 {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.35rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        color: #f1f5f9;
-        margin-bottom: 2rem;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    .metrics-list {
+    /* right — details */
+    .about-details {
         display: flex;
         flex-direction: column;
-        gap: 1.8rem;
+        gap: 0;
     }
 
-    .metric-item {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
-        transition: all 0.3s ease;
+    .detail-row {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: .5rem 1.5rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+        align-items: baseline;
     }
+    .detail-row:first-child { padding-top: 0; }
+    .detail-row:last-child  { border-bottom: none; }
 
-    .metric-item:hover {
-        transform: translateX(8px);
-    }
-
-    .metric-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
-        flex-shrink: 0;
-        transition: all 0.4s ease;
-    }
-
-    .metric-item:hover .metric-icon {
-        transform: scale(1.1) rotate(8deg);
-    }
-
-    .metric-content {
-        flex: 1;
-    }
-
-    .metric-label {
-        font-size: 0.8rem;
+    .detail-key {
+        font-size: .72rem;
         font-weight: 500;
-        color: #64748b;
+        letter-spacing: .08em;
+        color: var(--text-3);
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 0.4rem;
+        padding-top: .05rem;
+    }
+    .detail-val {
+        font-size: .92rem;
+        color: var(--text-2);
+        line-height: 1.6;
+    }
+    .detail-val strong {
+        color: var(--text-1);
+        font-weight: 500;
+    }
+    .detail-val a {
+        color: var(--text-2);
+        text-decoration: underline;
+        text-decoration-color: var(--border-hi);
+        text-underline-offset: 3px;
+        transition: color .2s;
+    }
+    .detail-val a:hover { color: var(--text-1); }
+
+    /* stack chips — small inline tags */
+    .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .35rem;
+        margin-top: .3rem;
+    }
+    .chip {
+        font-size: .7rem;
+        color: var(--text-2);
+        border: 1px solid var(--border-hi);
+        padding: .18rem .55rem;
+        border-radius: 4px;
+        transition: color .2s, border-color .2s;
+    }
+    .chip:hover {
+        color: var(--accent);
+        border-color: rgba(201,169,110,0.35);
     }
 
-    .metric-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #f8fafc;
-        margin-bottom: 0.6rem;
+    .link-plain {
+        text-decoration: none;
+        color: var(--text-2);
+        transition: color .2s;
     }
-
-    .progress-container {
-        height: 6px;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 9999px;
-        overflow: hidden;
-        position: relative;
+    .link-plain:hover {
+        color: var(--text-1);
     }
-
-    .progress-bar {
-        height: 100%;
-        border-radius: 9999px;
-        transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-    }
-
-    .progress-bar::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: -2px;
-        width: 8px;
-        height: 10px;
-        background: #fff;
-        box-shadow: 0 0 12px currentColor;
-        opacity: 0.7;
-    }
-
-    /* Color themes */
-    .edu .metric-icon { background: rgba(168, 85, 247, 0.1); color: #c084fc; }
-    .edu .progress-bar { background: linear-gradient(90deg, #a855f7, #c084fc); width: 85%; }
-
-    .int .metric-icon { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
-    .int .progress-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); width: 95%; }
-
-    .cre .metric-icon { background: rgba(244, 114, 182, 0.1); color: #f472b6; }
-    .cre .progress-bar { background: linear-gradient(90deg, #ec4899, #f472b6); width: 90%; }
-
-    .hob .metric-icon { background: rgba(34, 211, 238, 0.1); color: #22d3ee; }
-    .hob .progress-bar { background: linear-gradient(90deg, #06b6d4, #22d3ee); width: 80%; }
-
-    .lea .metric-icon { background: rgba(52, 211, 153, 0.1); color: #34d399; }
-    .lea .progress-bar { background: linear-gradient(90deg, #10b981, #34d399); width: 75%; }
 </style>
 
 <section id="about">
-    <div class="about-container">
-        
-        <!-- Header - Now Left Aligned -->
-        <div class="about-header">
-            <div class="about-tagline">
-                <span>Biography</span>
-                <div class="about-tagline-line"></div>
-            </div>
-            <h1 class="about-title">About Me</h1>
+    <div class="about-wrap">
+
+        <div class="about-header reveal">
+            <h2 class="about-heading">About</h2>
+            <span class="about-number">01 / 05</span>
         </div>
 
-        <!-- Two Column Layout -->
-        <div class="about-content-grid">
-            
-            <!-- Left: Story -->
-            <article class="story-paragraphs">
-                <p>
-                    Hi, I'm Sushant Pahari, a B.Sc.CSIT student, with an interest in backend development and modern web technologies. I build full-stack web applications using Python, Django, JavaScript, and relational databases while continuously learning and improving, with a major focus on writing reliable and scalable backend systems.
+        <div class="about-grid">
+
+            <!-- left: story — each paragraph fades in separately -->
+            <div class="about-text">
+                <p class="reveal rv-d1">
+                    I'm Sushant - a <strong>B.Sc. CSIT student</strong> in my final year at
+                    Prithvi Narayan Campus, Pokhara. My work centres on backend development:
+                    writing Django applications that are structured well enough to maintain and
+                    scale, with databases that make sense.
                 </p>
-                <p>
-                  Outside of programming, I create eFootball content on
-                  <a href="https://www.youtube.com/@eFootballPlays7"
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     class="text-blue-400 hover:text-blue-300">
-                    YouTube
-                  </a>.
-                  Managing the channel has taught me video editing, thumbnail design, and how to keep an audience engaged, while also improving my creativity and problem-solving skills.
+                <p class="reveal rv-d2">
+                    Firstly, I started with C,
+                    picked up Python, and haven't stopped since. Most of what I know came from
+                    building real things: a retail POS system, an e-commerce store, and a
+                    college event management platform with teammates.
                 </p>
-                <p>
-                    I'm always looking for opportunities to learn, gain real-world experience, and contribute to projects where I can continue growing as a developer.
+                <p class="reveal rv-d3">
+                    Outside of code, I run an
+                    <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">eFootball YouTube channel</a>
+                    with over 20K subscribers - which taught me more about video editing,
+                    thumbnails, and audience attention spans than any tutorial ever could.
                 </p>
-            </article>
+                <p class="reveal rv-d4">
+                    Right now I'm focused on finishing my Bachelor's degree, deepening my knowledge of
+                    <strong>Django REST Framework</strong> and modern deployment practices, and
+                    finding an opportunity where I can contribute to real backend work.
+                </p>
+            </div>
 
-            <!-- Right: Key Details -->
-            <section class="highlights-section">
-                <h3>Key Details</h3>
-                
-                <div class="metrics-list">
-                    <!-- Education -->
-                    <div class="metric-item edu">
-                        <div class="metric-icon"><i class="fas fa-graduation-cap"></i></div>
-                        <div class="metric-content">
-                            <div class="metric-label">Education</div>
-                            <div class="metric-title">BSc.CSIT Student</div>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- right: each row fades in with its own delay -->
+            <div class="about-details">
 
-                    <!-- Interests -->
-                    <div class="metric-item int">
-                        <div class="metric-icon"><i class="fas fa-code"></i></div>
-                        <div class="metric-content">
-                            <div class="metric-label">Interests</div>
-                            <div class="metric-title">Backend Development,Full-Stack Development, Python, Django</div>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="detail-row reveal rv-d1">
+                    <span class="detail-key">Status</span>
+                    <span class="detail-val">
+                        <strong>Open to internships</strong> &amp; junior roles
+                    </span>
+                </div>
 
-                    <!-- Creative Focus -->
-                    <div class="metric-item cre">
-                        <div class="metric-icon"><i class="fas fa-film"></i></div>
-                        <div class="metric-content">
-                            <div class="metric-label">Creative Focus</div>
-                            <div class="metric-title">Video Editing, Thumbnail Design, YouTube Content Creation</div>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="detail-row reveal rv-d2">
+                    <span class="detail-key">Degree</span>
+                    <span class="detail-val">B.Sc. CSIT - 8th Semester</span>
+                </div>
 
-                    <!-- Hobbies -->
-                    <div class="metric-item hob">
-                        <div class="metric-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="metric-content">
-                            <div class="metric-label">Hobbies</div>
-                            <div class="metric-title">Football, eFootball, UI Design, Exploring New Places</div>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="detail-row reveal rv-d3">
+                    <span class="detail-key">University</span>
+                    <span class="detail-val">Tribhuvan University<br>Prithvi Narayan Campus</span>
+                </div>
 
-                    <!-- Currently Specializing -->
-                    <div class="metric-item lea">
-                        <div class="metric-icon"><i class="fas fa-seedling"></i></div>
-                        <div class="metric-content">
-                            <div class="metric-label">Currently Learning</div>
-                            <div class="metric-title">Advanced Django, Django REST Framework, Git & github</div>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
+                <div class="detail-row reveal rv-d4">
+                    <span class="detail-key">Location</span>
+                    <span class="detail-val">Pokhara-32, Nepal</span>
+                </div>
+
+                <div class="detail-row reveal rv-d5">
+                    <span class="detail-key">Focus</span>
+                    <div class="detail-val">
+                        <div class="chip-row">
+                            <span class="chip">Django</span>
+                            <span class="chip">Python</span>
+                            <span class="chip">PostgreSQL</span>
+                            <span class="chip">REST APIs</span>
+                            <span class="chip">Full-stack</span>
                         </div>
                     </div>
                 </div>
-            </section>
 
+                <div class="detail-row reveal rv-d6">
+                    <span class="detail-key">Learning</span>
+                    <div class="detail-val">
+                        <div class="chip-row">
+                            <span class="chip">DRF</span>
+                            <span class="chip">Advanced Django</span>
+                            <span class="chip">Git workflows</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-row reveal rv-d6">
+                    <span class="detail-key">Side project</span>
+                    <span class="detail-val">
+                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">
+                            YouTube - 22K+ subscribers
+                        </a><br>
+                        <a href="https://www.tiktok.com/@efootball.plays7" target="_blank" rel="noopener noreferrer" class="link-plain">
+                            TikTok - 71K+ followers
+                        </a>
+                    </span>
+                </div>
+
+            </div>
         </div>
+
     </div>
 </section>
 

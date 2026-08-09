@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 — Page Not Found · Sushant Pahari{% endblock %}
+
+{% block content %}
+<style>
+    .not-found {
+        min-height: calc(100vh - 6.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .nf-code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(5rem, 18vw, 12rem);
+        font-weight: 400;
+        color: rgba(240,242,245,.04);
+        line-height: 1;
+        letter-spacing: -.04em;
+        user-select: none;
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+    }
+
+    .nf-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .nf-label {
+        font-size: .72rem;
+        font-weight: 500;
+        letter-spacing: .12em;
+        color: var(--text-3);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+    }
+    .nf-label::before, .nf-label::after {
+        content: '';
+        width: 20px;
+        height: 1px;
+        background: var(--text-3);
+    }
+
+    .nf-heading {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+        font-weight: 400;
+        color: var(--text-1);
+        line-height: 1.15;
+        letter-spacing: -.02em;
+        max-width: 480px;
+    }
+
+    .nf-body {
+        font-size: .95rem;
+        font-weight: 300;
+        color: var(--text-2);
+        line-height: 1.7;
+        max-width: 380px;
+    }
+
+    .nf-actions {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: .5rem;
+    }
+
+    .nf-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: .45rem;
+        font-size: .82rem;
+        font-weight: 500;
+        letter-spacing: .04em;
+        color: var(--bg);
+        background: var(--text-1);
+        text-decoration: none;
+        padding: .65rem 1.4rem;
+        border-radius: 6px;
+        border: 1px solid var(--text-1);
+        transition: background .25s, color .25s, transform .2s;
+    }
+    .nf-btn-primary:hover {
+        background: transparent;
+        color: var(--text-1);
+        transform: translateY(-2px);
+    }
+    .nf-btn-primary i { font-size: .72rem; }
+
+    .nf-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: .45rem;
+        font-size: .82rem;
+        font-weight: 500;
+        letter-spacing: .04em;
+        color: var(--text-2);
+        text-decoration: none;
+        padding: .65rem 1.3rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-hi);
+        background: var(--surface);
+        transition: color .25s, border-color .25s, transform .2s;
+    }
+    .nf-btn-secondary:hover {
+        color: var(--text-1);
+        border-color: rgba(255,255,255,.25);
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="not-found">
+    <div class="nf-code" aria-hidden="true">404</div>
+
+    <div class="nf-content">
+        <span class="nf-label">Page not found</span>
+        <h1 class="nf-heading">This page doesn't exist</h1>
+        <p class="nf-body">
+            The URL you followed might be wrong, or this page was moved.
+            Head back home and find what you were looking for.
+        </p>
+        <div class="nf-actions">
+            <a href="/" class="nf-btn-primary">
+                <i class="fas fa-arrow-left"></i> Back home
+            </a>
+            <a href="/#contact" class="nf-btn-secondary">Get in touch</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
