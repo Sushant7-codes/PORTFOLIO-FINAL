@@ -252,7 +252,7 @@
             0 0 0 2px var(--bg),
             0 0 0 4px rgba(56,189,248,0.35),
             0 0 32px var(--accent-glow);
-        transition: box-shadow .3s;
+        transition: box-shadow .45s cubic-bezier(.22,1,.36,1);
     }
     html.light .photo-circle {
         box-shadow:
@@ -279,7 +279,26 @@
         filter: grayscale(85%) contrast(1.05);
         transform: scale(1.12);
         transform-origin: center 20%;
-        transition: filter .3s;
+        transition: filter .45s cubic-bezier(.22,1,.36,1);
+    }
+    
+    /* Hover: reveal more natural color (desktop only) */
+    @media (hover: hover) and (pointer: fine) {
+        .photo-circle:hover .photo-img {
+            filter: grayscale(20%) contrast(1.08);
+        }
+        .photo-circle:hover {
+            box-shadow:
+                0 0 0 2px var(--bg),
+                0 0 0 4px rgba(56,189,248,0.45),
+                0 0 40px var(--accent-glow);
+        }
+        html.light .photo-circle:hover {
+            box-shadow:
+                0 0 0 2px var(--bg),
+                0 0 0 4px rgba(2,132,199,0.40),
+                0 0 28px rgba(2,132,199,0.20);
+        }
     }
     .photo-tint {
         position: absolute; inset: 0; border-radius: inherit;
