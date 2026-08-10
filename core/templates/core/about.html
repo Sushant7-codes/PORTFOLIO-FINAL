@@ -1,8 +1,13 @@
 <style>
     /* ── ABOUT ──────────────────────────────────────────────── */
-    #about { padding: 5rem 1rem 3rem; position: relative; z-index: 10; }
-    @media (min-width: 640px)  { #about { padding: 5rem 1.5rem 3rem; } }
+    #about {
+        padding: 5rem 1rem 2.5rem;          /* reduced bottom padding */
+        position: relative;
+        z-index: 10;
+    }
+    @media (min-width: 640px)  { #about { padding: 5rem 1.5rem 2.5rem; } }
     @media (min-width: 1024px) { #about { padding: 7rem 2.5rem 3rem; } }
+
     .about-wrap { max-width: 1320px; margin: 0 auto; }
 
     .about-header {
@@ -10,6 +15,7 @@
         margin-bottom: 2.5rem; flex-wrap: wrap;
     }
     @media (min-width: 640px) { .about-header { gap: 1.5rem; margin-bottom: 3rem; } }
+
     .about-kicker {
         font-family: 'JetBrains Mono', monospace;
         font-size: .6rem; color: var(--accent); letter-spacing: .1em;
@@ -26,34 +32,24 @@
     .about-main-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 2rem;
-        align-items: start;
-    }
-    @media (min-width: 1024px) {
-        .about-main-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem 4rem;
-        }
-    }
-    @media (min-width: 1280px) {
-        .about-main-grid { grid-template-columns: 1fr 1fr; }
+        gap: 2.5rem;
+        align-items: start;                 /* critical – prevents tall empty space */
     }
 
-    /* Left col: text paragraphs */
+    /* Side-by-side only on large screens */
+    @media (min-width: 1024px) {
+        .about-main-grid {
+            grid-template-columns: 1fr minmax(320px, 420px);
+            gap: 3rem 4rem;
+        }
+    }
+
+    /* LEFT COLUMN (text + details) */
     .about-left-col {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 2.25rem;
         min-width: 0;
-    }
-
-    /* Right col: detail rows only (schema removed) */
-    .about-right-col {
-        display: flex;
-        flex-direction: column;
-        gap: 0;  /* No gap needed - only one child now */
-        min-width: 0;
-        align-self: start;  /* Prevent stretching to fill grid row height */
     }
 
     /* text */
@@ -71,12 +67,10 @@
     .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
     /* detail rows */
-    .about-details { 
-        display: flex; 
-        flex-direction: column; 
+    .about-details {
+        display: flex;
+        flex-direction: column;
         min-width: 0;
-        flex-shrink: 0;  /* Don't allow shrinking */
-        height: fit-content;  /* Only take up needed height */
     }
     .detail-row {
         display: grid;
@@ -112,6 +106,90 @@
     .chip:hover { color: var(--accent); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06); }
     .link-plain { text-decoration: none; color: var(--text-2); transition: color .2s; }
     .link-plain:hover { color: var(--accent); }
+
+    /* ── CODE SNIPPET CARD ──────────────────────────────────── */
+    .code-snippet-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--surface);
+        font-family: 'JetBrains Mono', monospace;
+        width: 100%;
+        max-width: 100%;          /* shrinks nicely on mobile */
+    }
+
+    .code-header {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        padding: .5rem .75rem;
+        background: var(--bg-3);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .code-dots {
+        display: flex;
+        align-items: center;
+        gap: .35rem;
+    }
+
+    .code-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+    .code-dot.red    { background: #f87171; }
+    .code-dot.yellow { background: #fbbf24; }
+    .code-dot.green  { background: #34d399; }
+
+    .code-filename {
+        font-size: .65rem;
+        color: var(--text-3);
+        letter-spacing: .02em;
+    }
+
+    .code-body {
+        padding: .75rem 0;
+        font-size: .72rem;
+        line-height: 1.65;
+        overflow-x: auto;
+    }
+    @media (min-width: 640px) {
+        .code-body { font-size: .76rem; padding: .85rem 0; }
+    }
+
+    .code-line {
+        display: flex;
+        align-items: baseline;
+        padding: 0 .85rem;
+        min-height: 1.65em;
+    }
+    .code-line.blank { min-height: 1.65em; }
+
+    .ln {
+        display: inline-block;
+        width: 2.2rem;
+        text-align: right;
+        color: var(--text-3);
+        opacity: .5;
+        user-select: none;
+        flex-shrink: 0;
+        padding-right: 1rem;
+    }
+
+    /* Syntax highlighting */
+    .kw         { color: var(--accent-2); font-weight: 500; }
+    .cls        { color: var(--accent); }
+    .method     { color: var(--text-1); }
+    .method-def { color: var(--accent); }
+    .attr       { color: var(--text-2); }
+    .punc       { color: var(--text-3); }
+    .num        { color: #fbbf24; }
+    .bool       { color: var(--accent-2); }
+    .const      { color: var(--accent); font-weight: 500; }
+    .param      { color: var(--text-2); font-style: italic; }
+    .builtin    { color: var(--accent-2); }
 </style>
 
 <section id="about">
@@ -124,7 +202,7 @@
 
         <div class="about-main-grid">
 
-            <!-- LEFT: text paragraphs only -->
+            <!-- LEFT: text + details -->
             <div class="about-left-col">
                 <div class="about-text">
                     <p class="rv-slide-left sd-1">
@@ -151,8 +229,34 @@
                     </p>
                 </div>
             </div>
-        </div>
 
+            <!-- RIGHT: only the code card (side-by-side on large screens) -->
+            <div class="code-snippet-card rv-scale sd-8">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-filename">models.py</span>
+                </div>
+                <div class="code-body">
+                    <div class="code-line"><span class="ln">1</span><span class="kw">class</span> <span class="cls">Project</span><span class="punc">(</span><span class="cls">models</span><span class="punc">.</span><span class="cls">Model</span><span class="punc">):</span></div>
+                    <div class="code-line"><span class="ln">2</span>    <span class="attr">title</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span>max_length<span class="punc">=</span><span class="num">200</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">3</span>    <span class="attr">description</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">TextField</span><span class="punc">()</span></div>
+                    <div class="code-line"><span class="ln">4</span>    <span class="attr">tech_stack</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">JSONField</span><span class="punc">(</span>default<span class="punc">=</span><span class="builtin">list</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">5</span>    <span class="attr">live_url</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">URLField</span><span class="punc">(</span>blank<span class="punc">=</span><span class="bool">True</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">6</span>    <span class="attr">created_by</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">ForeignKey</span><span class="punc">(</span></div>
+                    <div class="code-line"><span class="ln">7</span>        <span class="cls">User</span><span class="punc">,</span> on_delete<span class="punc">=</span>models<span class="punc">.</span><span class="const">CASCADE</span></div>
+                    <div class="code-line"><span class="ln">8</span>    <span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">9</span>    <span class="attr">is_featured</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">BooleanField</span><span class="punc">(</span>default<span class="punc">=</span><span class="bool">False</span><span class="punc">)</span></div>
+                    <div class="code-line blank"><span class="ln">10</span></div>
+                    <div class="code-line"><span class="ln">11</span>    <span class="kw">def</span> <span class="method-def">__str__</span><span class="punc">(</span><span class="param">self</span><span class="punc">):</span></div>
+                    <div class="code-line"><span class="ln">12</span>        <span class="kw">return</span> <span class="param">self</span><span class="punc">.</span>title</div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </section>
 

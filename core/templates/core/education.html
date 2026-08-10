@@ -67,21 +67,34 @@
 
     .edu-content { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
 
-    /* On wider screens, show degree title + period side by side */
+    /* On wider screens, degree + period side by side */
     .edu-content-inner { display: flex; flex-direction: column; gap: .25rem; }
     @media (min-width: 760px) {
         .edu-content-inner {
-            display: grid; grid-template-columns: 1fr auto;
-            gap: .4rem 2rem; align-items: baseline;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .4rem 2rem;
+            align-items: baseline;
         }
     }
 
+    /* ── YEAR / PERIOD – now clearly visible ── */
     .edu-period {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .65rem; color: var(--text-3); letter-spacing: .05em; white-space: nowrap;
-        margin-top: .1rem;
+        font-size: .78rem;                 /* was .65rem */
+        font-weight: 500;
+        color: var(--text-2);              /* was very dim --text-3 */
+        letter-spacing: .04em;
+        white-space: nowrap;
+        margin-top: .15rem;
     }
-    @media (min-width: 760px) { .edu-period { margin-top: 0; } }
+    @media (min-width: 760px) {
+        .edu-period {
+            margin-top: 0;
+            font-size: .82rem;
+            color: var(--text-1);          /* even stronger on desktop */
+        }
+    }
 
     .edu-institution {
         font-family: 'Space Grotesk', sans-serif;
@@ -105,35 +118,58 @@
     .edu-badge.current {
         color: var(--accent); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06);
     }
+
+    /* Overall GPA score – slightly stronger */
     .edu-score {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .7rem; color: var(--text-2); letter-spacing: .03em;
+        font-size: .78rem;                 /* was .7rem */
+        font-weight: 500;
+        color: var(--text-1);              /* brighter */
+        letter-spacing: .03em;
     }
+
     .edu-note {
         font-size: clamp(.82rem, 2vw, .87rem); font-weight: 300;
         color: var(--text-2); line-height: 1.74; max-width: 580px;
     }
 
-    /* semester grid — 4 cols on wider, 4 cols on small too (numbers are short) */
+    /* ── SEMESTER GRID – bigger & clearer ── */
     .sem-grid {
         display: grid;
         grid-template-columns: repeat(4, auto);
-        gap: .32rem .55rem;
-        margin-top: .65rem;
+        gap: .4rem .7rem;
+        margin-top: .8rem;
         width: fit-content;
     }
     @media (max-width: 360px) {
-        /* very small phones: 2 columns */
-        .sem-grid { grid-template-columns: repeat(2, auto); gap: .4rem .8rem; }
+        .sem-grid { grid-template-columns: repeat(2, auto); gap: .45rem .9rem; }
     }
-    .sem-item { display: flex; flex-direction: column; gap: .06rem; }
+
+    .sem-item { display: flex; flex-direction: column; gap: .1rem; }
+
     .sem-label {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .55rem; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase;
+        font-size: .62rem;                 /* was .55rem */
+        letter-spacing: .05em;
+        color: var(--text-2);              /* brighter than --text-3 */
+        text-transform: uppercase;
     }
-    .sem-val { font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: var(--text-2); }
-    .sem-val.active-sem { color: var(--accent); }
-    .sem-val.awaited    { color: var(--text-3); }
+
+    .sem-val {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .88rem;                 /* was .74rem – clearly bigger */
+        font-weight: 500;
+        color: var(--text-1);              /* solid readable color */
+    }
+    .sem-val.active-sem {
+        color: var(--accent);
+        font-weight: 600;
+    }
+    .sem-val.awaited {
+        color: var(--text-2);              /* still secondary but no longer nearly invisible */
+        font-style: italic;
+        font-weight: 400;
+    }
 </style>
 
 <section id="education">
