@@ -7,8 +7,7 @@
 
     .about-header {
         display: flex; align-items: baseline; gap: 1rem;
-        margin-bottom: 2.5rem;
-        flex-wrap: wrap;
+        margin-bottom: 2.5rem; flex-wrap: wrap;
     }
     @media (min-width: 640px) { .about-header { gap: 1.5rem; margin-bottom: 3rem; } }
     .about-kicker {
@@ -24,37 +23,36 @@
     }
 
     /* ── MAIN GRID ──────────────────────────────────────────── */
-    /* Mobile: single column stack
-       768–1023px: still single column but about-left-col goes side-by-side inside
-       ≥1024px: left content | right schema */
     .about-main-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 2rem;
+        align-items: start;
     }
     @media (min-width: 1024px) {
         .about-main-grid {
-            grid-template-columns: 1fr 420px;
-            gap: 3rem 4rem;
-            align-items: start;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem 4rem;
         }
     }
     @media (min-width: 1280px) {
-        .about-main-grid { grid-template-columns: 1fr 500px; }
+        .about-main-grid { grid-template-columns: 1fr 1fr; }
     }
 
-    /* Left sub-grid */
+    /* Left col: text paragraphs */
     .about-left-col {
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 2rem;
         min-width: 0;
     }
-    @media (min-width: 680px) and (max-width: 1023px) {
-        .about-left-col {
-            grid-template-columns: 1.1fr 1fr;
-            gap: 2rem 3rem;
-        }
+
+    /* Right col: detail rows + schema stacked */
+    .about-right-col {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        min-width: 0;
     }
 
     /* text */
@@ -104,19 +102,15 @@
         border: 1px solid var(--border); padding: .12rem .45rem; border-radius: 4px;
         transition: color .2s, border-color .2s, background .2s;
     }
-    .chip:hover {
-        color: var(--accent);
-        border-color: rgba(56,189,248,0.3);
-        background: rgba(56,189,248,0.06);
-    }
+    .chip:hover { color: var(--accent); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06); }
     .link-plain { text-decoration: none; color: var(--text-2); transition: color .2s; }
     .link-plain:hover { color: var(--accent); }
 
-    /* ── RIGHT: schema canvas ─────────────────────────────── */
+    /* ── RIGHT: DB schema — pure HTML, no canvas ──────────── */
     .about-schema-col {
         display: flex;
         flex-direction: column;
-        gap: .65rem;
+        gap: .75rem;
         min-width: 0;
     }
     .schema-label {
@@ -124,20 +118,94 @@
         font-size: .6rem; color: var(--accent);
         letter-spacing: .1em; text-transform: uppercase;
     }
-    .schema-canvas-wrap {
-        width: 100%;
-        position: relative;
-        /* height is set by JS to exactly fit the diagram — no overflow gap */
-        overflow: hidden;
-        border-radius: 10px;
+
+    /* Two-column grid of schema tables */
+    .schema-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .6rem;
+    }
+
+    .schema-table {
         border: 1px solid var(--border);
+        border-radius: 7px;
+        overflow: hidden;
+        background: var(--surface);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .68rem;
     }
-    @media (min-width: 1024px) { .schema-canvas-wrap { border: none; } }
-    #schemaCanvas {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
+    @media (min-width: 640px) { .schema-table { font-size: .72rem; } }
+
+    .schema-table-head {
+        background: rgba(56,189,248,0.09);
+        color: var(--accent);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: .68rem;
+        font-weight: 600;
+        padding: .38rem .6rem;
+        letter-spacing: .04em;
+        border-bottom: 1px solid var(--border);
     }
+    html.light .schema-table-head { background: rgba(2,132,199,0.09); color: #0284c7; }
+
+    .schema-table-row {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .26rem .6rem;
+        color: var(--text-3);
+        border-bottom: 1px solid var(--border);
+        font-size: .64rem;
+        transition: background .15s;
+    }
+    @media (min-width: 640px) { .schema-table-row { font-size: .67rem; } }
+    .schema-table-row:last-child { border-bottom: none; }
+    .schema-table-row:hover { background: rgba(56,189,248,0.04); }
+
+    .schema-table-row .field-name { flex: 1; color: var(--text-2); }
+    .schema-badge {
+        font-size: .55rem;
+        padding: .06rem .3rem;
+        border-radius: 3px;
+        border: 1px solid;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    .schema-badge.pk {
+        color: var(--accent); border-color: rgba(56,189,248,0.4);
+        background: rgba(56,189,248,0.08);
+    }
+    .schema-badge.fk {
+        color: var(--accent-2); border-color: rgba(129,140,248,0.4);
+        background: rgba(129,140,248,0.08);
+    }
+    html.light .schema-badge.pk { color: #0284c7; border-color: rgba(2,132,199,0.4); background: rgba(2,132,199,0.08); }
+    html.light .schema-badge.fk { color: #6366f1; border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.08); }
+
+    /* Relation lines — simple visual connector between tables */
+    .schema-relations {
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+        padding: .6rem;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--surface);
+    }
+    .schema-rel-row {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: .62rem;
+        color: var(--text-3);
+    }
+    .schema-rel-from { color: var(--accent); }
+    .schema-rel-arrow { color: var(--text-3); letter-spacing: -.02em; }
+    .schema-rel-to   { color: var(--accent-2); }
+    .schema-rel-card { color: var(--text-3); margin-left: auto; font-size: .58rem; }
+    html.light .schema-rel-from { color: #0284c7; }
+    html.light .schema-rel-to   { color: #6366f1; }
 </style>
 
 <section id="about">
@@ -150,8 +218,8 @@
 
         <div class="about-main-grid">
 
+            <!-- LEFT: text paragraphs only -->
             <div class="about-left-col">
-
                 <div class="about-text">
                     <p class="rv-slide-left sd-1">
                         I'm Sushant — final year <strong>B.Sc. CSIT student</strong> at
@@ -162,7 +230,7 @@
                     <p class="rv-slide-left sd-3">
                         Started with C, moved to Python, and haven't looked back. What I know
                         mostly came from building real things — a retail POS system, an
-                        e-commerce store, a college event platform with teammates.
+                        e-commerce store, an event platform with teammates.
                     </p>
                     <p class="rv-slide-left sd-6">
                         Outside code I run an
@@ -176,6 +244,10 @@
                         looking for a place to do real backend work.
                     </p>
                 </div>
+            </div>
+
+            <!-- RIGHT: detail rows + schema diagram -->
+            <div class="about-right-col">
 
                 <div class="about-details">
                     <div class="detail-row rv-clip sd-1">
@@ -224,191 +296,11 @@
                         </span>
                     </div>
                 </div>
-
-            </div><!-- /about-left-col -->
-
-            <!-- Schema diagram — full-width on mobile, right column on desktop -->
-            <div class="about-schema-col rv-fade-up sd-3">
-                <span class="schema-label">// db schema</span>
-                <div class="schema-canvas-wrap">
-                    <canvas id="schemaCanvas" aria-hidden="true"></canvas>
-                </div>
-            </div>
+            </div><!-- /about-right-col -->
 
         </div>
 
     </div>
 </section>
-
-<script>
-(function () {
-    const canvas = document.getElementById('schemaCanvas');
-    if (!canvas) return;
-    const wrap = canvas.closest('.schema-canvas-wrap');
-
-    const isLight = () => document.documentElement.classList.contains('light');
-
-    function palette() {
-        return isLight()
-            ? { nodeFill:'#eaeff5', nodeBorder:'rgba(2,132,199,0.35)',
-                nodeHead:'rgba(2,132,199,0.12)', headText:'#0284c7',
-                bodyText:'#4a5668', edge:'rgba(2,132,199,0.22)',
-                packet:'2,132,199', pillBg:'rgba(2,132,199,0.08)', pillText:'#0284c7' }
-            : { nodeFill:'rgba(255,255,255,0.04)', nodeBorder:'rgba(56,189,248,0.22)',
-                nodeHead:'rgba(56,189,248,0.09)', headText:'#38bdf8',
-                bodyText:'#8a99aa', edge:'rgba(56,189,248,0.16)',
-                packet:'56,189,248', pillBg:'rgba(56,189,248,0.07)', pillText:'#38bdf8' };
-    }
-
-    const NODES = [
-        { id:'user',      label:'User',      fields:['id  PK','username','email','password'] },
-        { id:'product',   label:'Product',   fields:['id  PK','name','price','stock'] },
-        { id:'order',     label:'Order',     fields:['id  PK','user_id FK','total','status'] },
-        { id:'orderitem', label:'OrderItem', fields:['id  PK','order_id FK','product_id FK','qty'] },
-    ];
-    const EDGES = [
-        { from:'user',    to:'order',     label:'1 : N' },
-        { from:'order',   to:'orderitem', label:'1 : N' },
-        { from:'product', to:'orderitem', label:'1 : N' },
-    ];
-    const packets = EDGES.map((_, i) => ({
-        edgeIdx: i,
-        t:       i * 0.34,
-        speed:   0.0022 + i * 0.0006,
-        dir:     1,
-    }));
-
-    let W, H, dpr;
-    let NW, NH, HROW, FROW, PAD, FONT_HEAD, FONT_FIELD, FONT_PILL, nodeMap = {};
-
-    function computeSizes(w) {
-        const minNW = w < 320 ? 90 : (w < 480 ? 110 : 130);
-        NW        = Math.max(minNW, Math.min(220, w * 0.20));
-        HROW      = NW * 0.175;
-        FROW      = NW * 0.148;
-        NH        = HROW + FROW * 4 + 6;
-        PAD       = Math.max(8, w * 0.025);
-        FONT_HEAD = Math.max(8,  NW * 0.085);
-        FONT_FIELD= Math.max(7,  NW * 0.072);
-        FONT_PILL = Math.max(7,  NW * 0.068);
-    }
-
-    function layout(w) {
-        computeSizes(w);
-        const totalNodeW = NW * 2;
-        const gap        = Math.max(20, w - totalNodeW - PAD * 2);
-        const colL = PAD;
-        const colR = PAD + NW + gap;
-        /* Keep row gap proportional but cap it so the diagram stays compact */
-        const rowGap = Math.min(NH * 0.55, Math.max(20, w * 0.045));
-        const rowT = PAD;
-        const rowB = rowT + NH + rowGap;
-
-        NODES[0].x = colL; NODES[0].y = rowT;
-        NODES[1].x = colR; NODES[1].y = rowT;
-        NODES[2].x = colL; NODES[2].y = rowB;
-        NODES[3].x = colR; NODES[3].y = rowB;
-
-        H = rowB + NH + PAD;
-        NODES.forEach(n => { nodeMap[n.id] = n; });
-    }
-
-    function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        W   = wrap.clientWidth || 300;
-        layout(W);
-        canvas.width        = W   * dpr;
-        canvas.height       = H   * dpr;
-        canvas.style.width  = W   + 'px';
-        canvas.style.height = H   + 'px';
-        /* Sync wrapper height so nothing below it is pushed down */
-        wrap.style.height   = H   + 'px';
-    }
-
-    window.addEventListener('resize', () => { resize(); });
-    resize();
-
-    const ctx = canvas.getContext('2d');
-
-    function lerpPt(a, b, t) {
-        return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
-    }
-    function nodeCenter(id) {
-        const n = nodeMap[id];
-        return { x: n.x + NW / 2, y: n.y + NH / 2 };
-    }
-
-    function drawNode(n, p) {
-        const { x, y } = n;
-        const r = 5;
-        ctx.beginPath(); ctx.roundRect(x, y, NW, NH, r);
-        ctx.fillStyle = p.nodeFill; ctx.fill();
-        ctx.strokeStyle = p.nodeBorder; ctx.lineWidth = 1; ctx.stroke();
-        ctx.beginPath(); ctx.roundRect(x, y, NW, HROW, [r, r, 0, 0]);
-        ctx.fillStyle = p.nodeHead; ctx.fill();
-        ctx.font = `600 ${FONT_HEAD}px 'Space Grotesk', sans-serif`;
-        ctx.fillStyle = p.headText; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(n.label, x + NW / 2, y + HROW / 2);
-        ctx.font = `400 ${FONT_FIELD}px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = p.bodyText; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-        n.fields.forEach((f, i) => {
-            const fy = y + HROW + i * FROW;
-            if (i > 0) {
-                ctx.beginPath(); ctx.moveTo(x + 1, fy); ctx.lineTo(x + NW - 1, fy);
-                ctx.strokeStyle = p.nodeBorder; ctx.lineWidth = 0.4; ctx.stroke();
-            }
-            ctx.fillText(f, x + NW * 0.07, fy + FROW * 0.5);
-        });
-    }
-
-    function drawEdge(edge, p, pkt) {
-        const a = nodeCenter(edge.from);
-        const b = nodeCenter(edge.to);
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = p.edge; ctx.lineWidth = 1.2;
-        ctx.setLineDash([4, 6]); ctx.stroke(); ctx.setLineDash([]);
-        const mid = lerpPt(a, b, 0.5);
-        const lw = FONT_PILL * 3.6, lh = FONT_PILL * 1.55;
-        ctx.fillStyle = p.pillBg; ctx.beginPath();
-        ctx.roundRect(mid.x - lw / 2, mid.y - lh / 2, lw, lh, 3); ctx.fill();
-        ctx.font = `500 ${FONT_PILL}px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = p.pillText; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(edge.label, mid.x, mid.y);
-        const pt = lerpPt(a, b, pkt);
-        const pr = Math.max(3, NW * 0.030);
-        ctx.beginPath(); ctx.arc(pt.x, pt.y, pr, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.packet},0.88)`;
-        ctx.shadowColor = `rgba(${p.packet},0.55)`; ctx.shadowBlur = 8;
-        ctx.fill(); ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
-    }
-
-    let running = false;
-
-    function frame() {
-        if (!running) return;
-        ctx.save(); ctx.scale(dpr, dpr);
-        ctx.clearRect(0, 0, W, H);
-        const p = palette();
-        packets.forEach(pk => drawEdge(EDGES[pk.edgeIdx], p, pk.t));
-        NODES.forEach(n => drawNode(n, p));
-        packets.forEach(pk => {
-            pk.t += pk.speed * pk.dir;
-            if (pk.t >= 1) { pk.t = 1; pk.dir = -1; }
-            if (pk.t <= 0) { pk.t = 0; pk.dir =  1; }
-        });
-        ctx.restore();
-        requestAnimationFrame(frame);
-    }
-
-    const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting && !running) {
-                running = true; resize(); frame(); io.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.08 });
-    io.observe(wrap);
-})();
-</script>
 
 {% include 'core/project.html' %}
