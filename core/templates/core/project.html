@@ -1,91 +1,109 @@
 <style>
     /* ── PROJECTS ───────────────────────────────────────────── */
-    #projects { padding: 6rem 1.5rem 5rem; position: relative; z-index: 10; }
-    @media (min-width: 1024px) { #projects { padding: 8rem 2.5rem 6rem; } }
+    #projects { padding: 3rem 1rem 4rem; position: relative; z-index: 10; }
+    @media (min-width: 640px)  { #projects { padding: 3rem 1.5rem 5rem; } }
+    @media (min-width: 1024px) { #projects { padding: 4rem 2.5rem 6rem; } }
     .projects-wrap { max-width: 1320px; margin: 0 auto; }
 
     .sec-header {
-        display: flex; align-items: baseline; gap: 1.5rem;
-        margin-bottom: 3.5rem; padding-bottom: 1.25rem;
-        border-bottom: 1px solid var(--border);
+        display: flex; align-items: baseline; gap: 1rem;
+        margin-bottom: 2.5rem; flex-wrap: wrap;
     }
+    @media (min-width: 640px) { .sec-header { gap: 1.5rem; margin-bottom: 3rem; } }
     .sec-kicker {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .62rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+        font-size: .6rem; color: var(--accent); letter-spacing: .1em;
+        text-transform: uppercase; white-space: nowrap;
     }
     .sec-heading {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-size: clamp(1.6rem, 5vw, 3.2rem);
         font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em;
     }
 
-    /* ── FEATURED: Retail POS ── */
-    /* Layout: wide intro top, then 3-col detail cards below — each card
-       gets a lift-on-hover with accent border reveal, not a static block */
+    /* ── SHARED: featured project block ────────────────────── */
     .project-featured {
-        padding: 0 0 3.5rem;
+        padding: 0 0 2.5rem;
         border-bottom: 1px solid var(--border);
     }
-    .pf-intro {
-        padding-left: 1.5rem;
-        border-left: 2px solid var(--accent);
-        margin-bottom: 2.25rem;
-        display: flex; flex-direction: column; gap: .9rem;
+    @media (min-width: 640px) { .project-featured { padding-bottom: 3rem; } }
+
+    /* Last featured block has no bottom border — sits above tech index */
+    .project-featured:last-of-type {
+        border-bottom: none;
+        padding-bottom: 0;
     }
+
+    .pf-intro {
+        padding-left: 1rem;
+        border-left: 2px solid var(--accent);
+        margin-bottom: 1.75rem;
+        display: flex; flex-direction: column; gap: .75rem;
+    }
+    @media (min-width: 640px) { .pf-intro { padding-left: 1.5rem; gap: .9rem; margin-bottom: 2rem; } }
+
     .proj-tag {
         display: inline-flex; align-items: center; gap: .42rem;
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .67rem; font-weight: 600; letter-spacing: .1em;
+        font-size: .64rem; font-weight: 600; letter-spacing: .1em;
         color: var(--text-3); text-transform: uppercase;
     }
-    .proj-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+    .proj-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
     .proj-tag-dot.amber { background: #fbbf24; }
+    .proj-tag-dot.blue  { background: var(--accent); }
+
     .proj-title-lg {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.7rem, 3.8vw, 2.8rem);
+        font-size: clamp(1.4rem, 4.5vw, 2.8rem);
         font-weight: 700; color: var(--text-1); line-height: 1.05; letter-spacing: -.025em;
     }
     .proj-summary {
-        font-size: .95rem; font-weight: 300;
-        color: var(--text-2); line-height: 1.78; max-width: 800px;
+        font-size: clamp(.86rem, 2vw, .95rem); font-weight: 300;
+        color: var(--text-2); line-height: 1.78;
     }
     .proj-link {
         display: inline-flex; align-items: center; gap: .38rem;
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .77rem; font-weight: 600;
+        font-size: .75rem; font-weight: 600;
         color: var(--accent); text-decoration: none;
         border: 1px solid rgba(56,189,248,0.28);
-        padding: .48rem 1rem; border-radius: 6px; background: var(--accent-dim);
+        padding: .45rem .9rem; border-radius: 6px; background: var(--accent-dim);
         transition: background .2s, border-color .2s, color .2s, transform .2s, box-shadow .2s;
-        width: fit-content;
+        width: fit-content; white-space: nowrap;
     }
     .proj-link:hover {
         background: rgba(56,189,248,0.16); border-color: rgba(56,189,248,0.5);
         color: var(--text-1); transform: translateY(-1px);
         box-shadow: 0 4px 16px var(--accent-glow);
     }
-    .proj-link i { font-size: .66rem; }
+    .proj-link i { font-size: .64rem; }
 
-    /* 3 detail cards in a row — interactive hover state */
+    /* Detail cards grid — stacked → 2-col → 3-col */
     .pf-cards {
-        display: grid; grid-template-columns: 1fr; gap: 1px;
+        display: grid; grid-template-columns: 1fr;
         border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
     }
-    @media (min-width: 760px) { .pf-cards { grid-template-columns: 1fr 1fr 1fr; } }
+    @media (min-width: 560px) { .pf-cards { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .pf-cards { grid-template-columns: 1fr 1fr 1fr; } }
+
     .pf-card {
-        padding: 1.4rem 1.5rem;
+        padding: 1.2rem 1.25rem;
         background: var(--surface);
         position: relative; overflow: hidden;
         transition: background .25s;
     }
-    /* adjacent card separator */
-    @media (min-width: 760px) {
+    @media (min-width: 640px) { .pf-card { padding: 1.4rem 1.5rem; } }
+
+    @media (min-width: 900px) {
         .pf-card + .pf-card { border-left: 1px solid var(--border); }
     }
-    @media (max-width: 759px) {
+    @media (min-width: 560px) and (max-width: 899px) {
+        .pf-card:nth-child(even) { border-left: 1px solid var(--border); }
+        .pf-card:nth-child(n+3)  { border-top:  1px solid var(--border); }
+    }
+    @media (max-width: 559px) {
         .pf-card + .pf-card { border-top: 1px solid var(--border); }
     }
-    /* accent line slides in from bottom on hover */
     .pf-card::after {
         content: ''; position: absolute; bottom: 0; left: 0; right: 0;
         height: 2px; background: var(--accent);
@@ -97,173 +115,80 @@
 
     .pf-card-label {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .65rem; font-weight: 600; letter-spacing: .1em;
-        color: var(--accent); text-transform: uppercase; margin-bottom: .55rem;
+        font-size: .63rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--accent); text-transform: uppercase; margin-bottom: .5rem;
     }
     .pf-card-text {
-        font-size: .86rem; font-weight: 300; color: var(--text-2); line-height: 1.65;
+        font-size: .84rem; font-weight: 300; color: var(--text-2); line-height: 1.65;
     }
     .pf-card-text strong { color: var(--text-1); font-weight: 500; }
 
-    /* Stack tags */
-    .proj-stack-line { display: flex; flex-wrap: wrap; gap: .26rem; margin-top: .4rem; }
+    .proj-stack-line { display: flex; flex-wrap: wrap; gap: .22rem; margin-top: .35rem; }
     .stack-tag {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .68rem; color: var(--text-3);
-        border: 1px solid var(--border); padding: .13rem .46rem; border-radius: 3px;
+        font-size: .65rem; color: var(--text-3);
+        border: 1px solid var(--border); padding: .1rem .42rem; border-radius: 3px;
         transition: color .2s, border-color .2s;
     }
     .stack-tag:hover { color: var(--accent); border-color: rgba(56,189,248,0.35); }
 
-    /* ── E-COMMERCE — horizontal card layout ──────────────────
-       Different from POS: image-side replaced with a stat block left,
-       description right. Wider layout, no sub-cards.
-    ─────────────────────────────────────────────────────────── */
-    .proj-ecom {
-        display: grid; grid-template-columns: 1fr;
-        border-bottom: 1px solid var(--border);
-        padding: 3rem 0;
+    /* Contributor badge — used on team project */
+    .contrib-row {
+        display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .35rem;
     }
-    @media (min-width: 800px) {
-        .proj-ecom { grid-template-columns: 220px 1fr; gap: 0 3rem; }
-    }
-    .ecom-stat-col {
-        display: flex; flex-direction: column; gap: 1.5rem;
-        padding-right: 2.5rem;
-        border-right: 1px solid var(--border);
-        padding-bottom: 2rem;
-    }
-    @media (max-width: 799px) {
-        .ecom-stat-col { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; }
-    }
-    .ecom-stat {
-        display: flex; flex-direction: column; gap: .15rem;
-    }
-    .ecom-stat-val {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.6rem; font-weight: 700; color: var(--text-1); letter-spacing: -.02em;
-        line-height: 1;
-    }
-    .ecom-stat-label {
-        font-size: .7rem; color: var(--text-3); letter-spacing: .05em;
-    }
-    .ecom-body {
-        display: flex; flex-direction: column; gap: .9rem;
-        padding-left: 0; padding-top: 0;
-    }
-    @media (min-width: 800px) { .ecom-body { padding-left: .5rem; } }
-    .proj-title-md {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.25rem, 2.6vw, 1.75rem);
-        font-weight: 700; color: var(--text-1); line-height: 1.1; letter-spacing: -.02em;
-    }
-    .proj-desc {
-        font-size: .88rem; font-weight: 300; color: var(--text-2); line-height: 1.75;
-    }
-
-    /* ── EVENT MANAGEMENT — terminal/log card style ──────────
-       Different from both above: styled like a terminal commit log.
-       Shows the project as a structured "log entry."
-    ─────────────────────────────────────────────────────────── */
-    .proj-event {
-        padding: 3rem 0 0;
-    }
-    .event-log {
-        background: var(--bg-2);
-        border: 1px solid var(--border); border-radius: 8px;
-        overflow: hidden;
-    }
-    .event-log-bar {
-        display: flex; align-items: center; gap: .55rem;
-        padding: .5rem .85rem; background: var(--bg-3);
-        border-bottom: 1px solid var(--border);
-    }
-    .event-log-title {
+    .contrib-badge {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .63rem; color: var(--text-3); letter-spacing: .04em;
+        font-size: .64rem;
+        padding: .12rem .5rem; border-radius: 3px; border: 1px solid var(--border);
+        color: var(--text-3);
     }
-    .event-log-body {
-        padding: 1.25rem 1.25rem;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: .78rem; line-height: 1.75;
-        display: flex; flex-direction: column; gap: .25rem;
-    }
-    .log-row { display: flex; gap: 1.25rem; align-items: baseline; }
-    .log-key { color: var(--text-3); flex-shrink: 0; min-width: 80px; }
-    .log-val { color: var(--text-2); }
-    .log-val .lhl  { color: var(--accent); }
-    .log-val .lhl2 { color: var(--accent-2); }
-    .log-val .lok  { color: var(--green); }
-    .log-val .ldim { color: var(--text-3); }
-    .log-desc {
-        margin-top: .75rem; padding-top: .75rem;
-        border-top: 1px solid var(--border);
-        font-family: 'Inter', sans-serif;
-        font-size: .86rem; font-weight: 300;
-        color: var(--text-2); line-height: 1.75;
-    }
-    .log-my-role {
-        margin-top: .5rem;
-        font-size: .8rem; color: var(--text-3); line-height: 1.6;
-    }
-    .log-my-role strong { color: var(--accent); font-weight: 500; }
-
-    /* ── SECONDARY ROW wrapper ── */
-    .projects-secondary-row {
-        display: grid; grid-template-columns: 1fr; gap: 0;
-    }
-    @media (min-width: 760px) {
-        .projects-secondary-row { grid-template-columns: 1fr 1fr; }
+    .contrib-badge.mine {
+        color: var(--accent);
+        border-color: rgba(56,189,248,0.35);
+        background: rgba(56,189,248,0.06);
     }
 
     /* ── TECHNOLOGY INDEX ───────────────────────────────────── */
     .tech-section {
-        margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--border);
+        margin-top: 3.5rem; padding-top: 3rem; border-top: 1px solid var(--border);
     }
-    .tech-header { margin-bottom: 2.5rem; }
+    @media (min-width: 640px) { .tech-section { margin-top: 4.5rem; padding-top: 3.5rem; } }
+    .tech-header { margin-bottom: 2rem; }
     .tech-heading {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+        font-size: clamp(1.2rem, 3vw, 1.9rem);
         font-weight: 700; color: var(--text-1); letter-spacing: -.02em;
     }
-    .tech-grid {
-        display: grid; grid-template-columns: 1fr;
-    }
-    @media (min-width: 640px)  { .tech-grid { grid-template-columns: 1fr 1fr; } }
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; }
     @media (min-width: 1100px) { .tech-grid { grid-template-columns: repeat(4,1fr); } }
-    .tech-group {
-        padding: 1.6rem 0; border-bottom: 1px solid var(--border);
-    }
-    @media (min-width: 640px) {
-        .tech-group { padding: 1.6rem 2rem 1.6rem 0; }
-        .tech-group:nth-child(even) { padding-left: 2rem; padding-right: 0; border-left: 1px solid var(--border); }
+
+    .tech-group { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+    @media (max-width: 1099px) {
+        .tech-group { padding: 1.25rem 1rem 1.25rem 0; }
+        .tech-group:nth-child(even) { padding-left: 1rem; padding-right: 0; border-left: 1px solid var(--border); }
+        .tech-group:nth-last-child(-n+2) { border-bottom: none; }
     }
     @media (min-width: 1100px) {
-        .tech-group { padding: 1.6rem 2rem 1.6rem 0; }
-        .tech-group:nth-child(4n+2),.tech-group:nth-child(4n+3),.tech-group:nth-child(4n+4)
-            { padding-left: 2rem; border-left: 1px solid var(--border); }
+        .tech-group { padding: 1.5rem 2rem 1.5rem 0; }
+        .tech-group:nth-child(4n+2),
+        .tech-group:nth-child(4n+3),
+        .tech-group:nth-child(4n+4) { padding-left: 2rem; border-left: 1px solid var(--border); }
         .tech-group:nth-child(4n+1) { padding-left: 0; }
         .tech-group:nth-last-child(-n+4) { border-bottom: none; }
     }
-    @media (min-width: 640px) and (max-width: 1099px) {
-        .tech-group:nth-last-child(-n+2) { border-bottom: none; }
-    }
-    @media (max-width: 639px) { .tech-group:last-child { border-bottom: none; } }
     .tech-cat {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .65rem; font-weight: 600; letter-spacing: .1em;
-        color: var(--text-3); text-transform: uppercase; margin-bottom: .8rem;
+        font-size: .63rem; font-weight: 600; letter-spacing: .1em;
+        color: var(--text-3); text-transform: uppercase; margin-bottom: .7rem;
     }
-    .tech-items { display: flex; flex-direction: column; gap: .36rem; }
+    .tech-items { display: flex; flex-direction: column; gap: .32rem; }
     .tech-item {
-        font-size: .86rem; color: var(--text-2);
-        display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+        font-size: .84rem; color: var(--text-2);
+        display: flex; align-items: center; justify-content: space-between;
+        gap: .4rem; flex-wrap: wrap;
     }
     .tech-item-name { color: var(--text-1); font-weight: 400; }
-    .tech-item-note {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: .68rem; color: var(--text-3);
-    }
+    .tech-item-note { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--text-3); }
 </style>
 
 <section id="projects">
@@ -274,13 +199,14 @@
             <h2 class="sec-heading">Projects</h2>
         </div>
 
-        <!-- ── FEATURED: Retail POS ─────────────────────────── -->
-        <!-- Structure: wide intro → 3 interactive detail cards in a row -->
+        <!-- ══════════════════════════════════════════════════
+             PROJECT 1 — Retail POS (Major Project)
+        ══════════════════════════════════════════════════ -->
         <article class="project-featured rv-scale sd-1">
             <div class="pf-intro">
                 <div class="proj-tag">
                     <div class="proj-tag-dot"></div>
-                    Live — Major Project
+                    Live — Major Project · 8th Semester
                 </div>
                 <h3 class="proj-title-lg">Retail POS<br>Management System</h3>
                 <p class="proj-summary">
@@ -327,94 +253,124 @@
             </div>
         </article>
 
-        <!-- ── SECONDARY PROJECTS ROW ── -->
-        <div class="projects-secondary-row">
+        <!-- ══════════════════════════════════════════════════
+             PROJECT 2 — Sports E-Commerce
+        ══════════════════════════════════════════════════ -->
+        <article class="project-featured rv-scale sd-2">
+            <div class="pf-intro">
+                <div class="proj-tag">
+                    <div class="proj-tag-dot"></div>
+                    Live — E-Commerce
+                </div>
+                <h3 class="proj-title-lg">Sports E-Commerce<br>Platform</h3>
+                <p class="proj-summary">
+                    A marketplace for sports gear — jerseys, balls, and equipment.
+                    Sellers list their items, buyers browse and purchase. Built to
+                    understand the full Django request–response cycle in a real shopping
+                    context: cart state, order placement, session handling, and
+                    role-based seller vs. buyer views.
+                </p>
+                <a href="https://sushantpahari.pythonanywhere.com/home/" target="_blank" rel="noopener noreferrer" class="proj-link">
+                    View live store <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
 
-            <!-- E-COMMERCE — horizontal stat layout -->
-            <article class="proj-ecom rv-slide-left sd-2">
-                <div class="ecom-stat-col">
-                    <div class="proj-tag">
-                        <div class="proj-tag-dot"></div>
-                        Live
+            <div class="pf-cards">
+                <div class="pf-card">
+                    <div class="pf-card-label">What it does</div>
+                    <div class="pf-card-text">
+                        Sellers can list sports items with images and prices. Buyers can
+                        browse, add to cart, and place orders. Separate dashboards for
+                        each role via <strong>RBAC</strong> on Django's permission system.
                     </div>
-                    <div class="ecom-stat">
-                        <span class="ecom-stat-val">Django</span>
-                        <span class="ecom-stat-label">primary framework</span>
+                </div>
+                <div class="pf-card">
+                    <div class="pf-card-label">What I learned</div>
+                    <div class="pf-card-text">
+                        Not a tutorial follow-along — I wanted to debug the full flow myself.
+                        Cart state, session management, and order logic all written
+                        from scratch to actually understand how they connect.
                     </div>
-                    <div class="ecom-stat">
-                        <span class="ecom-stat-val">PythonAnywhere</span>
-                        <span class="ecom-stat-label">deployed on</span>
-                    </div>
+                </div>
+                <div class="pf-card">
+                    <div class="pf-card-label">Stack</div>
                     <div class="proj-stack-line">
+                        <span class="stack-tag">Python</span>
                         <span class="stack-tag">Django</span>
                         <span class="stack-tag">SQLite</span>
-                        <span class="stack-tag">Tailwind</span>
-                        <span class="stack-tag">JS</span>
+                        <span class="stack-tag">Tailwind CSS</span>
+                        <span class="stack-tag">HTML</span>
+                        <span class="stack-tag">RBAC</span>
+                        <span class="stack-tag">PythonAnywhere</span>
                     </div>
-                    <a href="https://sushantpahari.pythonanywhere.com/home/" target="_blank" rel="noopener noreferrer" class="proj-link">
-                        View store <i class="fas fa-arrow-up-right-from-square"></i>
-                    </a>
                 </div>
-                <div class="ecom-body">
-                    <h3 class="proj-title-md">Sports E-Commerce Platform</h3>
-                    <p class="proj-desc">
-                        Built this to understand how the full request–response cycle works
-                        in a shopping context — cart state, order placement, session
-                        handling. Not a tutorial follow-along; I wanted to debug the flow
-                        myself.
-                    </p>
-                </div>
-            </article>
+            </div>
+        </article>
 
-            <!-- EVENT MANAGEMENT — terminal/log card -->
-            <article class="proj-event rv-slide-right sd-3">
-                <div class="event-log">
-                    <div class="event-log-bar">
-                        <span class="term-dot r" style="width:8px;height:8px;border-radius:50%;background:#f87171;display:inline-block"></span>
-                        <span class="term-dot y" style="width:8px;height:8px;border-radius:50%;background:#fbbf24;display:inline-block"></span>
-                        <span class="term-dot g" style="width:8px;height:8px;border-radius:50%;background:#34d399;display:inline-block"></span>
-                        <span class="event-log-title">project.log — event-management-system</span>
+        <!-- ══════════════════════════════════════════════════
+             PROJECT 3 — Event Management System (Team)
+        ══════════════════════════════════════════════════ -->
+        <article class="project-featured rv-scale sd-3">
+            <div class="pf-intro">
+                <div class="proj-tag">
+                    <div class="proj-tag-dot blue"></div>
+                    Live — Team Project · 7th Semester
+                </div>
+                <h3 class="proj-title-lg">Event Management<br>System</h3>
+                <p class="proj-summary">
+                    Public event platform — anyone can create and organize events, with
+                    a freemium model: free tier lets you host a limited number of events,
+                    paid subscription unlocks more. Built with a team of three; my
+                    responsibility was the entire data layer — schema design, entity
+                    relationships, and the PostgreSQL database that the Next.js frontend
+                    and Node.js API both depend on.
+                </p>
+                <a href="https://ems.sushanta.me" target="_blank" rel="noopener noreferrer" class="proj-link">
+                    View live system <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+
+            <div class="pf-cards">
+                <div class="pf-card">
+                    <div class="pf-card-label">What it does</div>
+                    <div class="pf-card-text">
+                        Any user can sign up, create events, and manage registrations.
+                        Free tier covers a limited event count — users upgrade to a
+                        <strong>paid subscription</strong> to unlock more events.
                     </div>
-                    <div class="event-log-body">
-                        <div class="log-row">
-                            <span class="log-key">status</span>
-                            <span class="log-val"><span class="lok">● live</span></span>
-                        </div>
-                        <div class="log-row">
-                            <span class="log-key">type</span>
-                            <span class="log-val"><span class="ldim">team project — 7th semester</span></span>
-                        </div>
-                        <div class="log-row">
-                            <span class="log-key">my role</span>
-                            <span class="log-val"><span class="lhl">database design</span></span>
-                        </div>
-                        <div class="log-row">
-                            <span class="log-key">stack</span>
-                            <span class="log-val">
-                                <span class="lhl">PostgreSQL</span> ·
-                                <span class="lhl2">Next.js</span> ·
-                                <span class="ldim">Node.js</span>
-                            </span>
-                        </div>
-                        <div class="log-desc">
-                            Campus event platform — create, manage, and register for events.
-                            Teammates handled the frontend and API. I owned the data layer:
-                            schema planning, entity relationships, and SQL for a three-person team.
-                        </div>
-                        <div class="log-my-role">
-                            <strong>// my contribution:</strong> schema that held together under a
-                            Next.js frontend I didn't control.
-                        </div>
-                        <div style="margin-top:.9rem">
-                            <a href="https://ems.sushanta.me" target="_blank" rel="noopener noreferrer" class="proj-link">
-                                View live system <i class="fas fa-arrow-up-right-from-square"></i>
-                            </a>
+                </div>
+                <div class="pf-card">
+                    <div class="pf-card-label">Team split</div>
+                    <div class="pf-card-text">
+                        Three contributors, three clear lanes:
+                        <div class="contrib-row" style="margin-top:.5rem">
+                            <span class="contrib-badge mine">Me — PostgreSQL DB</span>
+                            <span class="contrib-badge">Friend 1 — Next.js frontend</span>
+                            <span class="contrib-badge">Friend 2 — Node.js backend</span>
                         </div>
                     </div>
                 </div>
-            </article>
-
-        </div>
+                <div class="pf-card">
+                    <div class="pf-card-label">My contribution</div>
+                    <div class="pf-card-text">
+                        Owned the full database layer — schema planning, table relationships,
+                        and SQL that a <strong>Node.js API I didn't control</strong>
+                        would query reliably without breaking.
+                    </div>
+                </div>
+                <div class="pf-card">
+                    <div class="pf-card-label">Stack</div>
+                    <div class="proj-stack-line">
+                        <span class="stack-tag">PostgreSQL</span>
+                        <span class="stack-tag">Next.js</span>
+                        <span class="stack-tag">Node.js</span>
+                        <span class="stack-tag">SQL</span>
+                        <span class="stack-tag">Schema design</span>
+                        <span class="stack-tag">Freemium</span>
+                    </div>
+                </div>
+            </div>
+        </article>
 
         <!-- ── TECHNOLOGY INDEX ── -->
         <div class="tech-section">

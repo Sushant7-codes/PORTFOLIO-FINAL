@@ -95,7 +95,7 @@
         }
         .cur-dot {
             position: fixed; top: 0; left: 0;
-            width: 5px; height: 5px;
+            width: 10px; height: 10px;
             background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
@@ -103,13 +103,13 @@
             will-change: transform;
             transform: translate(-50%, -50%);
             display: none;
-            box-shadow: 0 0 8px var(--accent-glow);
-            transition: width .15s, height .15s, background .15s;
+            box-shadow: 0 0 12px var(--accent-glow);
+            transition: width .15s, height .15s, background .15s, box-shadow .15s;
         }
         .cur-ring {
             position: fixed; top: 0; left: 0;
-            width: 32px; height: 32px;
-            border: 1px solid rgba(56,189,248,0.4);
+            width: 44px; height: 44px;
+            border: 1.5px solid rgba(56,189,248,0.5);
             border-radius: 50%;
             pointer-events: none;
             z-index: 999998;
@@ -122,10 +122,10 @@
             .cur-dot  { display: block; }
             .cur-ring { display: block; }
         }
-        body.cur-hover .cur-dot  { width: 8px; height: 8px; background: var(--text-1); }
-        body.cur-hover .cur-ring { width: 48px; height: 48px; border-color: rgba(56,189,248,0.25); }
-        body.cur-click .cur-dot  { width: 4px; height: 4px; }
-        body.cur-click .cur-ring { width: 24px; height: 24px; border-color: var(--accent); }
+        body.cur-hover .cur-dot  { width: 14px; height: 14px; background: var(--text-1); box-shadow: 0 0 16px rgba(232,237,242,0.3); }
+        body.cur-hover .cur-ring { width: 60px; height: 60px; border-color: rgba(56,189,248,0.3); }
+        body.cur-click .cur-dot  { width: 7px; height: 7px; }
+        body.cur-click .cur-ring { width: 34px; height: 34px; border-color: var(--accent); }
         @media (prefers-reduced-motion: reduce) { .cur-dot, .cur-ring { display: none !important; } }
     </style>
     <style>
@@ -193,6 +193,19 @@
             transition: color .2s, transform .2s; display: inline-flex; align-items: center;
         }
         .nav-social a:hover { color: var(--accent); transform: translateY(-1px); }
+        /* mobile menu socials row */
+        .mob-socials {
+            display: flex; align-items: center; gap: .9rem;
+            padding-top: .65rem;
+            border-top: 1px solid var(--border);
+        }
+        .mob-socials a {
+            color: var(--text-3); font-size: 1.05rem; text-decoration: none;
+            display: inline-flex; align-items: center;
+            transition: color .2s;
+        }
+        .mob-socials a:hover { color: var(--accent); }
+        .mob-socials .btn-theme { margin-left: auto; }
         .btn-resume {
             font-family: 'Space Grotesk', sans-serif;
             font-size: .72rem; font-weight: 600; letter-spacing: .06em;
@@ -383,6 +396,15 @@
                 <a href="#projects"  class="nav-link mob-link">Work</a>
                 <a href="#education" class="nav-link mob-link">Education</a>
                 <a href="#contact"   class="nav-link mob-link">Contact</a>
+                <!-- socials + theme always inside mobile dropdown -->
+                <div class="mob-socials">
+                    <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <button class="btn-theme" id="themeToggleDrop" aria-label="Toggle theme">
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                        <i class="fa-solid fa-sun  icon-sun"></i>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -413,8 +435,10 @@
 
         function getColors() {
             return isLight()
-                ? { grid: 'rgba(2,132,199,0.06)',  node: 'rgba(2,132,199,0.25)',  accent: '2,132,199' }
-                : { grid: 'rgba(56,189,248,0.045)', node: 'rgba(56,189,248,0.20)', accent: '56,189,248' };
+                ? { grid: 'rgba(2,132,199,0.18)',  node: 'rgba(2,132,199,0.55)',  accent: '2,132,199',
+                    edgeBase: 0.14, edgeGlow: 0.22, nodeBase: 0.30, nodeGlow: 0.70 }
+                : { grid: 'rgba(56,189,248,0.045)', node: 'rgba(56,189,248,0.20)', accent: '56,189,248',
+                    edgeBase: 0.045, edgeGlow: 0.12, nodeBase: 0.12, nodeGlow: 0.55 };
         }
 
         function resize() {
@@ -485,8 +509,8 @@
                     const nb = nodes[n.r * COLS + n.c + 1];
                     const dx = n.x - mouseX, dy = n.y - mouseY;
                     const dMouse = Math.sqrt(dx*dx + dy*dy);
-                    const glow = dMouse < 180 ? (1 - dMouse/180) * 0.12 : 0;
-                    const alpha = 0.045 + glow;
+                    const glow = dMouse < 180 ? (1 - dMouse/180) * C.edgeGlow : 0;
+                    const alpha = C.edgeBase + glow;
                     ctx.beginPath();
                     ctx.moveTo(n.x, n.y);
                     ctx.lineTo(nb.x, nb.y);
@@ -498,8 +522,8 @@
                     const nb = nodes[(n.r + 1) * COLS + n.c];
                     const dx = n.x - mouseX, dy = n.y - mouseY;
                     const dMouse = Math.sqrt(dx*dx + dy*dy);
-                    const glow = dMouse < 180 ? (1 - dMouse/180) * 0.10 : 0;
-                    const alpha = 0.035 + glow;
+                    const glow = dMouse < 180 ? (1 - dMouse/180) * (C.edgeGlow * 0.85) : 0;
+                    const alpha = (C.edgeBase * 0.78) + glow;
                     ctx.beginPath();
                     ctx.moveTo(n.x, n.y);
                     ctx.lineTo(nb.x, nb.y);
@@ -513,7 +537,7 @@
                 const dx = n.x - mouseX, dy = n.y - mouseY;
                 const d  = Math.sqrt(dx*dx + dy*dy);
                 const proximity = d < 120 ? (1 - d/120) : 0;
-                const alpha = 0.12 + proximity * 0.55;
+                const alpha = C.nodeBase + proximity * C.nodeGlow;
                 const r = NODE_R + proximity * 2.5;
 
                 ctx.beginPath();
@@ -624,13 +648,24 @@
     // ═══════════════════════════════════════════════════════════
     (function() {
         const html = document.documentElement;
-        const btn  = document.getElementById('themeToggle');
         const KEY  = 'sp-theme';
-        const apply = t => t === 'light' ? html.classList.add('light') : html.classList.remove('light');
+
+        function apply(t) {
+            if (t === 'light') html.classList.add('light');
+            else html.classList.remove('light');
+        }
+
         apply(localStorage.getItem(KEY) || 'dark');
-        btn.addEventListener('click', () => {
+
+        function toggle() {
             const next = html.classList.contains('light') ? 'dark' : 'light';
             apply(next); localStorage.setItem(KEY, next);
+        }
+
+        // Wire desktop toggle and mobile-dropdown toggle
+        ['themeToggle', 'themeToggleDrop'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.addEventListener('click', toggle);
         });
     })();
     </script>

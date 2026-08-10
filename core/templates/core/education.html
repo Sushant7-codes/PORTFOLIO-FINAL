@@ -1,118 +1,137 @@
 <style>
     /* ── EDUCATION ──────────────────────────────────────────── */
-    #education { padding: 6rem 1.5rem 5rem; position: relative; z-index: 10; }
+    #education { padding: 5rem 1rem 4rem; position: relative; z-index: 10; }
+    @media (min-width: 640px)  { #education { padding: 6rem 1.5rem 5rem; } }
     @media (min-width: 1024px) { #education { padding: 8rem 2.5rem 6rem; } }
     .edu-wrap { max-width: 1320px; margin: 0 auto; }
 
     .edu-header {
-        display: flex; align-items: baseline; gap: 1.5rem;
-        margin-bottom: 3.5rem; padding-bottom: 1.25rem;
-        border-bottom: 1px solid var(--border);
+        display: flex; align-items: baseline; gap: 1rem;
+        margin-bottom: 2rem; flex-wrap: wrap;
     }
+    @media (min-width: 640px) { .edu-header { gap: 1.5rem; margin-bottom: 3rem; } }
     .edu-kicker {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .62rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+        font-size: .6rem; color: var(--accent); letter-spacing: .1em;
+        text-transform: uppercase; white-space: nowrap;
     }
     .edu-heading {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+        font-size: clamp(1.6rem, 5vw, 3.2rem);
         font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em;
     }
 
     .edu-intro {
-        font-size: .95rem; font-weight: 300; color: var(--text-2);
-        line-height: 1.76; max-width: 620px; margin-bottom: 3rem;
+        font-size: clamp(.86rem, 2vw, .95rem); font-weight: 300; color: var(--text-2);
+        line-height: 1.76; max-width: 600px; margin-bottom: 2.5rem;
     }
 
     /* ── TIMELINE ── */
     .edu-timeline { display: flex; flex-direction: column; position: relative; }
 
-    /* animated vertical rule — draws down as entries become visible */
     .edu-timeline::before {
         content: '';
-        position: absolute; top: .42rem; left: 5px; bottom: 0;
+        position: absolute; top: .42rem; left: 4px; bottom: 0;
         width: 1px;
         background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
-        /* drawn in by CSS animation triggered when timeline scrolls into view */
-        transform-origin: top;
-        transform: scaleY(0);
+        transform-origin: top; transform: scaleY(0);
         transition: transform 1.2s cubic-bezier(.16,1,.3,1) .2s;
     }
     .edu-timeline.visible::before { transform: scaleY(1); }
+    @media (min-width: 480px) { .edu-timeline::before { left: 8px; } }
     @media (min-width: 680px) { .edu-timeline::before { left: 11px; } }
 
     .edu-entry {
-        display: grid; grid-template-columns: 24px 1fr;
-        gap: 0 1.5rem; padding-bottom: 3rem; position: relative;
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 0 1rem;
+        padding-bottom: 2.5rem;
+        position: relative;
     }
-    @media (min-width: 680px) { .edu-entry { grid-template-columns: 36px 1fr; gap: 0 2rem; } }
+    @media (min-width: 480px) { .edu-entry { grid-template-columns: 28px 1fr; gap: 0 1.25rem; } }
+    @media (min-width: 680px) { .edu-entry { grid-template-columns: 36px 1fr; gap: 0 1.75rem; padding-bottom: 3rem; } }
     .edu-entry:last-child { padding-bottom: 0; }
 
-    /* node — glows on the active entry */
     .edu-node {
-        width: 11px; height: 11px; border-radius: 50%;
+        width: 9px; height: 9px; border-radius: 50%;
         border: 1.5px solid var(--border-hi); background: var(--bg);
-        margin-top: .35rem; flex-shrink: 0; position: relative; z-index: 1;
+        margin-top: .38rem; flex-shrink: 0; position: relative; z-index: 1;
         transition: border-color .3s, box-shadow .3s;
     }
+    @media (min-width: 480px) { .edu-node { width: 11px; height: 11px; } }
+    @media (min-width: 680px) { .edu-node { width: 13px; height: 13px; margin-top: .32rem; } }
     .edu-node.active {
         border-color: var(--accent);
         box-shadow: 0 0 10px var(--accent-glow), 0 0 0 3px rgba(56,189,248,0.1);
     }
-    @media (min-width: 680px) { .edu-node { width: 13px; height: 13px; margin-top: .32rem; } }
 
-    .edu-content { display: flex; flex-direction: column; gap: .55rem; }
-    @media (min-width: 860px) {
+    .edu-content { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
+
+    /* On wider screens, show degree title + period side by side */
+    .edu-content-inner { display: flex; flex-direction: column; gap: .25rem; }
+    @media (min-width: 760px) {
         .edu-content-inner {
             display: grid; grid-template-columns: 1fr auto;
-            gap: .5rem 3rem; align-items: baseline;
+            gap: .4rem 2rem; align-items: baseline;
         }
     }
+
     .edu-period {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .68rem; color: var(--text-3); letter-spacing: .05em; white-space: nowrap;
+        font-size: .65rem; color: var(--text-3); letter-spacing: .05em; white-space: nowrap;
+        margin-top: .1rem;
     }
+    @media (min-width: 760px) { .edu-period { margin-top: 0; } }
+
     .edu-institution {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .72rem; font-weight: 600; letter-spacing: .06em;
-        color: var(--text-3); text-transform: uppercase; margin-bottom: .12rem;
+        font-size: .68rem; font-weight: 600; letter-spacing: .06em;
+        color: var(--text-3); text-transform: uppercase; margin-bottom: .1rem;
     }
     .edu-degree {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+        font-size: clamp(.95rem, 2.5vw, 1.4rem);
         font-weight: 700; color: var(--text-1); line-height: 1.2; letter-spacing: -.02em;
     }
     .edu-meta {
-        display: flex; flex-wrap: wrap; align-items: center; gap: .42rem .68rem; margin-top: .08rem;
+        display: flex; flex-wrap: wrap; align-items: center; gap: .38rem .6rem; margin-top: .06rem;
     }
     .edu-badge {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: .66rem; font-weight: 600; letter-spacing: .05em;
+        font-size: .63rem; font-weight: 600; letter-spacing: .05em;
         color: var(--text-3); border: 1px solid var(--border);
-        padding: .15rem .55rem; border-radius: 4px;
+        padding: .12rem .5rem; border-radius: 4px;
     }
     .edu-badge.current {
         color: var(--accent); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06);
     }
     .edu-score {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .72rem; color: var(--text-2); letter-spacing: .03em;
+        font-size: .7rem; color: var(--text-2); letter-spacing: .03em;
     }
     .edu-note {
-        font-size: .87rem; font-weight: 300; color: var(--text-2); line-height: 1.74; max-width: 620px;
+        font-size: clamp(.82rem, 2vw, .87rem); font-weight: 300;
+        color: var(--text-2); line-height: 1.74; max-width: 580px;
     }
 
-    /* semester grid */
+    /* semester grid — 4 cols on wider, 4 cols on small too (numbers are short) */
     .sem-grid {
-        display: grid; grid-template-columns: repeat(4, auto);
-        gap: .36rem .68rem; margin-top: .7rem; width: fit-content;
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        gap: .32rem .55rem;
+        margin-top: .65rem;
+        width: fit-content;
     }
-    .sem-item { display: flex; flex-direction: column; gap: .07rem; }
+    @media (max-width: 360px) {
+        /* very small phones: 2 columns */
+        .sem-grid { grid-template-columns: repeat(2, auto); gap: .4rem .8rem; }
+    }
+    .sem-item { display: flex; flex-direction: column; gap: .06rem; }
     .sem-label {
         font-family: 'JetBrains Mono', monospace;
-        font-size: .58rem; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase;
+        font-size: .55rem; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase;
     }
-    .sem-val { font-family: 'JetBrains Mono', monospace; font-size: .76rem; color: var(--text-2); }
+    .sem-val { font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: var(--text-2); }
     .sem-val.active-sem { color: var(--accent); }
     .sem-val.awaited    { color: var(--text-3); }
 </style>
@@ -131,7 +150,6 @@
             against actual constraints.
         </p>
 
-        <!-- timeline gets .visible when it scrolls in, which triggers the line draw-down -->
         <div class="edu-timeline rv-fade-up" id="eduTimeline">
 
             <div class="edu-entry rv-slide-right sd-1">
@@ -205,7 +223,6 @@
 </section>
 
 <script>
-// Make the timeline's vertical line draw itself down when it enters the viewport
 (function() {
     const tl = document.getElementById('eduTimeline');
     if (!tl) return;
