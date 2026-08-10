@@ -13,69 +13,74 @@
     {% tailwind_css %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Smooth Scroll (Lenis) for Inertia Scrolling -->
+    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+
     <style>
         /* ── DESIGN TOKENS ─────────────────────────────────────── */
         :root {
-            --bg:           #0a0d12;
-            --bg-2:         #0f1318;
-            --bg-3:         #151b22;
-            --surface:      rgba(255,255,255,0.035);
-            --surface-hi:   rgba(255,255,255,0.065);
-            --border:       rgba(255,255,255,0.075);
-            --border-hi:    rgba(255,255,255,0.14);
-            --text-1:       #e8edf2;
-            --text-2:       #8a99aa;
-            --text-3:       #4a5668;
-            --accent:       #38bdf8;
-            --accent-dim:   rgba(56,189,248,0.10);
-            --accent-glow:  rgba(56,189,248,0.22);
-            --accent-2:     #818cf8;
-            --green:        #34d399;
-            --nav-bg:       rgba(10,13,18,0.82);
-            --nav-mobile-bg:rgba(10,13,18,0.97);
-            --grid-color:   rgba(56,189,248,0.045);
-            --grid-node:    rgba(56,189,248,0.18);
+            --bg:            #030712;
+            --bg-alt:        #0b1120;
+            --surface:       rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --border:        rgba(255, 255, 255, 0.08);
+            --border-hi:     rgba(56, 189, 248, 0.35);
+            --text-1:        #f3f4f6;
+            --text-2:        #9ca3af;
+            --text-3:        #4b5563;
+            
+            --accent:        #38bdf8;
+            --accent-rgb:    56, 189, 248;
+            --accent-dim:    rgba(56, 189, 248, 0.12);
+            --accent-glow:   rgba(56, 189, 248, 0.25);
+            
+            --nav-bg:        rgba(3, 7, 18, 0.75);
+            --nav-border:    rgba(255, 255, 255, 0.1);
+            
+            /* Section-Specific Accent Colors (Dark Mode Defaults) */
+            --sec-home:      56, 189, 248;   /* Sky Blue */
+            --sec-about:     168, 85, 247;   /* Purple */
+            --sec-projects:  16, 185, 129;   /* Emerald */
+            --sec-education: 245, 158, 11;   /* Amber */
+            --sec-contact:   244, 63, 94;    /* Rose */
         }
+
         html.light {
-            --bg:           #f4f7fb;
-            --bg-2:         #eaeff5;
-            --bg-3:         #dde5ef;
-            --surface:      rgba(0,0,0,0.03);
-            --surface-hi:   rgba(0,0,0,0.06);
-            --border:       rgba(0,0,40,0.08);
-            --border-hi:    rgba(0,0,40,0.15);
-            --text-1:       #0d1117;
-            --text-2:       #4a5668;
-            --text-3:       #8a99aa;
-            --accent:       #0284c7;
-            --accent-dim:   rgba(2,132,199,0.10);
-            --accent-glow:  rgba(2,132,199,0.20);
-            --accent-2:     #6366f1;
-            --green:        #059669;
-            --nav-bg:       rgba(244,247,251,0.88);
-            --nav-mobile-bg:rgba(244,247,251,0.98);
-            --grid-color:   rgba(2,132,199,0.06);
-            --grid-node:    rgba(2,132,199,0.22);
+            --bg:            #f8fafc;
+            --bg-alt:        #f1f5f9;
+            --surface:       rgba(255, 255, 255, 0.7);
+            --surface-hover: rgba(255, 255, 255, 0.9);
+            --border:        rgba(0, 0, 0, 0.08);
+            --border-hi:     rgba(2, 132, 199, 0.4);
+            --text-1:        #0f172a;
+            --text-2:        #475569;
+            --text-3:        #94a3b8;
+            
+            --accent:        #0284c7;
+            --accent-rgb:    2, 132, 199;
+            --accent-dim:    rgba(2, 132, 199, 0.1);
+            --accent-glow:   rgba(2, 132, 199, 0.2);
+            
+            --nav-bg:        rgba(248, 250, 252, 0.85);
+            --nav-border:    rgba(0, 0, 0, 0.08);
+
+            /* Section-Specific Accent Colors (Light Mode Tweaks) */
+            --sec-home:      2, 132, 199;
+            --sec-about:     147, 51, 234;
+            --sec-projects:  5, 150, 105;
+            --sec-education: 217, 119, 6;
+            --sec-contact:   225, 29, 72;
         }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
         html {
-            scroll-behavior: smooth;
             background: var(--bg);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        /* Page load fade-in */
-        body {
-            animation: pageLoad 0.6s ease-out;
-        }
-        
-        @keyframes pageLoad {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
         }
         
         body {
@@ -84,165 +89,85 @@
             background: var(--bg);
             overflow-x: hidden;
             line-height: 1.6;
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { 
-            background: var(--bg); 
-        }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--border-hi); 
-            border-radius: 4px;
-            border: 2px solid var(--bg);
-            transition: background 0.2s;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-        
-        /* Firefox */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-hi) var(--bg);
-        }
-    </style>
-    <style>
-        /* ── ANIMATED GRADIENT BACKGROUND ──────────────────────── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, var(--gradient-1), transparent),
-                radial-gradient(ellipse 60% 50% at 80% 50%, var(--gradient-2), transparent),
-                radial-gradient(ellipse 100% 80% at 20% 100%, var(--gradient-3), transparent),
-                var(--bg);
-            animation: gradientShift 20s ease-in-out infinite;
-            will-change: transform;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.05); }
-        }
-        
-        /* Gradient color tokens */
-        :root {
-            --gradient-1: rgba(56,189,248,0.08);
-            --gradient-2: rgba(129,140,248,0.06);
-            --gradient-3: rgba(16,185,129,0.04);
-        }
-        html.light {
-            --gradient-1: rgba(2,132,199,0.12);
-            --gradient-2: rgba(99,102,241,0.08);
-            --gradient-3: rgba(5,150,105,0.06);
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* ── FLOATING PARTICLES ────────────────────────────────── */
-        .particles {
+        /* ── TOP SCROLL MASK / SHIELD (PREVENTS NAVBAR BLEED) ──── */
+        .top-scroll-shield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
+            z-index: 9990; /* Sits directly below header (z-index: 10000) */
+            pointer-events: none;
+            background: linear-gradient(to bottom, var(--bg) 45%, rgba(0, 0, 0, 0) 100%);
+            transition: background 0.5s ease;
+        }
+
+        /* ── CUSTOM SMOOTH SCROLLBAR ────────────────────────────── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+        /* ── BACKGROUND CANVAS ──────────────────────────────────── */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Ambient Noise Overlay for Depth Texture */
+        .bg-noise {
             position: fixed;
             inset: 0;
             z-index: 2;
             pointer-events: none;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            will-change: transform, opacity;
-            filter: blur(1px);
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* ── SECTION TRANSITIONS ───────────────────────────────── */
+        /* ── SECTION VISUAL DIFFERENTIATION & TRANSITIONS ───────── */
         section {
             position: relative;
-            will-change: transform;
-            transition: background-color 0.6s ease;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+            min-height: 80vh;
+            {% comment %} display: flex;
+            flex-direction: column;
+            justify-content: center; {% endcomment %}
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
         }
-        
-        /* Section-specific subtle background tints */
-        #home {
-            background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56,189,248,0.03), transparent 70%);
-        }
-        #about {
-            background: radial-gradient(ellipse 100% 60% at 0% 50%, rgba(129,140,248,0.025), transparent 70%);
-        }
-        #projects {
-            background: radial-gradient(ellipse 100% 60% at 100% 50%, rgba(16,185,129,0.025), transparent 70%);
-        }
-        #education {
-            background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(56,189,248,0.025), transparent 70%);
-        }
-        #contact {
-            background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(129,140,248,0.03), transparent 70%);
-        }
-        
-        html.light #home {
-            background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(2,132,199,0.05), transparent 70%);
-        }
-        html.light #about {
-            background: radial-gradient(ellipse 100% 60% at 0% 50%, rgba(99,102,241,0.04), transparent 70%);
-        }
-        html.light #projects {
-            background: radial-gradient(ellipse 100% 60% at 100% 50%, rgba(5,150,105,0.04), transparent 70%);
-        }
-        html.light #education {
-            background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(2,132,199,0.04), transparent 70%);
-        }
-        html.light #contact {
-            background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(99,102,241,0.05), transparent 70%);
-        }
+        @media (min-width: 1024px) { section { padding: 8rem 2.5rem; } }
 
-        /* Section dividers - visual separation between sections */
+        /* Subtle Section Backdrop Separators */
         section::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            max-width: 800px;
+            left: 10%;
+            right: 10%;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--border), transparent);
-            opacity: 0.5;
-        }
-        
-        section:last-of-type::after {
-            display: none;
+            pointer-events: none;
         }
 
-        /* Enhanced smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 76px;
+        /* Section Card Base Helper Class */
+        .glass-card {
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        @media (prefers-reduced-motion: no-preference) {
-            html {
-                scroll-behavior: smooth;
-            }
-            
-            /* Momentum scrolling effect */
-            * {
-                -webkit-overflow-scrolling: touch;
-            }
-        }
-    </style>
-    <style>
-        /* ── TOPOLOGY GRID CANVAS ─────────────────────────────── */
-        #bg-canvas {
-            position: fixed; inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.6;
-            mix-blend-mode: screen;
-        }
-        html.light #bg-canvas {
-            opacity: 0.4;
-            mix-blend-mode: multiply;
+        .glass-card:hover {
+            border-color: var(--border-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -15px rgba(var(--accent-rgb), 0.15);
         }
 
         /* ── CUSTOM CURSOR ────────────────────────────────────── */
@@ -253,7 +178,7 @@
         }
         .cur-dot {
             position: fixed; top: 0; left: 0;
-            width: 10px; height: 10px;
+            width: 8px; height: 8px;
             background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
@@ -261,271 +186,220 @@
             will-change: transform;
             transform: translate(-50%, -50%);
             display: none;
-            box-shadow: 0 0 12px var(--accent-glow);
-            transition: width .15s, height .15s, background .15s, box-shadow .15s;
+            box-shadow: 0 0 12px var(--accent);
+            transition: width .15s, height .15s, background .15s;
         }
         .cur-ring {
             position: fixed; top: 0; left: 0;
-            width: 44px; height: 44px;
-            border: 1.5px solid rgba(56,189,248,0.5);
+            width: 38px; height: 38px;
+            border: 1.5px solid rgba(var(--accent-rgb), 0.4);
             border-radius: 50%;
             pointer-events: none;
             z-index: 999998;
             will-change: transform;
             transform: translate(-50%, -50%);
             display: none;
-            transition: width .3s cubic-bezier(.16,1,.3,1), height .3s cubic-bezier(.16,1,.3,1), border-color .2s;
+            transition: width .25s cubic-bezier(.16,1,.3,1), height .25s cubic-bezier(.16,1,.3,1), border-color .2s;
         }
         @media (hover: hover) and (pointer: fine) {
             .cur-dot  { display: block; }
             .cur-ring { display: block; }
         }
-        body.cur-hover .cur-dot  { width: 14px; height: 14px; background: var(--text-1); box-shadow: 0 0 16px rgba(232,237,242,0.3); }
-        body.cur-hover .cur-ring { width: 60px; height: 60px; border-color: rgba(56,189,248,0.3); }
-        body.cur-click .cur-dot  { width: 7px; height: 7px; }
-        body.cur-click .cur-ring { width: 34px; height: 34px; border-color: var(--accent); }
-        @media (prefers-reduced-motion: reduce) { .cur-dot, .cur-ring { display: none !important; } }
-    </style>
-    <style>
+        body.cur-hover .cur-dot  { width: 14px; height: 14px; background: #ffffff; }
+        body.cur-hover .cur-ring { width: 56px; height: 56px; border-color: var(--accent); background: rgba(var(--accent-rgb), 0.08); }
+        body.cur-click .cur-dot  { width: 6px; height: 6px; }
+        body.cur-click .cur-ring { width: 30px; height: 30px; border-color: var(--accent); }
+
         /* ── NAVIGATION ────────────────────────────────────────── */
         header {
             position: fixed; top: 0; left: 0; right: 0;
             z-index: 10000;
-            padding: 1.1rem 1.5rem;
+            padding: 1rem 1.5rem;
+            transition: transform 0.3s ease;
         }
-        @media (min-width: 1024px) { header { padding: 1.35rem 2.5rem; } }
+        @media (min-width: 1024px) { header { padding: 1.25rem 2.5rem; } }
+
         .nav-inner {
-            max-width: 1320px; margin: 0 auto;
+            max-width: 1200px; margin: 0 auto;
             display: flex; align-items: center; justify-content: space-between;
-            padding: .6rem 1.25rem;
+            padding: .65rem 1.25rem;
             background: var(--nav-bg);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 0 0 1px rgba(56,189,248,0.04) inset, 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--nav-border);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             transition: background .3s, border-color .3s;
         }
         .nav-logo {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: .95rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: -.02em;
             color: var(--text-1);
             text-decoration: none;
-            flex-shrink: 0;
-            transition: color .2s;
+            display: flex; align-items: center; gap: 2px;
         }
-        .nav-logo span { color: var(--accent); }
-        .nav-logo:hover { color: var(--accent); }
+        .nav-logo span { color: var(--accent); transition: color 0.4s ease; }
+        
         .nav-links {
             display: none;
-            position: absolute; left: 50%; transform: translateX(-50%);
             align-items: center; gap: 2rem;
         }
         @media (min-width: 1024px) { .nav-links { display: flex; } }
+        
         .nav-link {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: .75rem; font-weight: 500;
-            letter-spacing: .07em; text-transform: uppercase;
-            color: var(--text-3); text-decoration: none;
+            font-size: .8rem; font-weight: 600;
+            letter-spacing: .08em; text-transform: uppercase;
+            color: var(--text-2); text-decoration: none;
             padding: .35rem 0; position: relative;
-            transition: color .2s;
+            transition: color .25s ease;
         }
         .nav-link::after {
-            content: ''; position: absolute; bottom: -1px; left: 0;
-            width: 0; height: 1px;
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px;
             background: var(--accent);
-            transition: width .35s cubic-bezier(.16,1,.3,1);
+            border-radius: 2px;
+            transition: width .3s cubic-bezier(.16,1,.3,1);
         }
         .nav-link:hover { color: var(--text-1); }
-        .nav-link:hover::after,
-        .nav-link.active::after { width: 100%; }
-        .nav-link.active { color: var(--text-1); }
-        .nav-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--accent); }
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
         .nav-social { display: none; gap: .9rem; align-items: center; }
         @media (min-width: 640px) { .nav-social { display: flex; } }
         .nav-social a {
-            color: var(--text-3); font-size: .95rem; text-decoration: none;
-            transition: color .2s, transform .2s; display: inline-flex; align-items: center;
+            color: var(--text-2); font-size: 1rem; text-decoration: none;
+            transition: color .2s, transform .2s;
         }
-        .nav-social a:hover { color: var(--accent); transform: translateY(-1px); }
-        /* mobile menu socials row */
-        .mob-socials {
-            display: flex; align-items: center; gap: .9rem;
-            padding-top: .65rem;
-            border-top: 1px solid var(--border);
-        }
-        .mob-socials a {
-            color: var(--text-3); font-size: 1.05rem; text-decoration: none;
-            display: inline-flex; align-items: center;
-            transition: color .2s;
-        }
-        .mob-socials a:hover { color: var(--accent); }
-        .mob-socials .btn-theme { margin-left: auto; }
+        .nav-social a:hover { color: var(--accent); transform: translateY(-2px); }
+
         .btn-resume {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: .72rem; font-weight: 600; letter-spacing: .06em;
-            color: var(--accent); text-decoration: none;
-            border: 1px solid rgba(56,189,248,0.3);
-            padding: .38rem .95rem; border-radius: 6px;
-            background: var(--accent-dim);
-            transition: background .2s, border-color .2s, color .2s;
-            white-space: nowrap;
+            font-size: .75rem; font-weight: 600; letter-spacing: .05em;
+            color: #ffffff; text-decoration: none;
+            padding: .45rem 1rem; border-radius: 8px;
+            background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+            box-shadow: 0 4px 14px rgba(100, 116, 139, 0.3);
+            transition: transform .2s, box-shadow .2s, background .2s;
         }
         .btn-resume:hover {
-            background: rgba(56,189,248,0.18);
-            border-color: rgba(56,189,248,0.55);
-            color: var(--text-1);
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
         }
+        html.light .btn-resume {
+            color: #ffffff;
+            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+        }
+        html.light .btn-resume:hover {
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+        }
+
         .btn-theme {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 30px; height: 30px; background: none;
-            border: 1px solid var(--border); border-radius: 6px;
-            color: var(--text-3); font-size: .85rem; cursor: pointer;
-            transition: color .2s, border-color .2s, transform .15s;
+            width: 34px; height: 34px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 8px;
+            color: var(--text-1); font-size: .9rem; cursor: pointer;
+            transition: all .2s;
         }
-        .btn-theme:hover { color: var(--accent); border-color: var(--accent-dim); transform: rotate(15deg); }
+        .btn-theme:hover { color: var(--accent); border-color: var(--accent); transform: rotate(12deg); }
         .btn-theme .icon-moon { display: none; }
         .btn-theme .icon-sun  { display: block; }
         html.light .btn-theme .icon-moon { display: block; }
         html.light .btn-theme .icon-sun  { display: none; }
+
         .nav-toggle {
-            display: flex; flex-direction: column; gap: 4px;
-            background: none; border: none; padding: .3rem; flex-shrink: 0; cursor: pointer;
+            display: flex; flex-direction: column; gap: 5px;
+            background: none; border: none; padding: .3rem; cursor: pointer;
         }
         @media (min-width: 1024px) { .nav-toggle { display: none; } }
         .nav-toggle span {
-            display: block; width: 20px; height: 1.5px;
-            background: var(--text-2); border-radius: 2px;
-            transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .2s, width .25s;
-            transform-origin: center;
+            display: block; width: 22px; height: 2px;
+            background: var(--text-1); border-radius: 2px;
+            transition: transform .3s, opacity .2s, width .25s;
         }
-        .nav-toggle span:nth-child(2) { width: 13px; }
-        .nav-open .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); width: 20px; }
-        .nav-open .nav-toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .nav-open .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); width: 20px; }
+        .nav-open .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+        .nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+        .nav-open .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
         .nav-mobile {
-            display: none; position: absolute; top: calc(100% + .6rem); left: 0; right: 0;
-            background: var(--nav-mobile-bg); backdrop-filter: blur(24px);
-            border: 1px solid var(--border); border-radius: 10px;
-            padding: 1.3rem 1.5rem; flex-direction: column; gap: 1rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: none; position: absolute; top: calc(100% + .5rem); left: 0; right: 0;
+            background: var(--nav-bg); backdrop-filter: blur(24px);
+            border: 1px solid var(--border); border-radius: 12px;
+            padding: 1.2rem 1.5rem; flex-direction: column; gap: 1rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
         .nav-open .nav-mobile { display: flex; }
-        .nav-mobile .nav-link { font-size: .85rem; }
-    </style>
-    <style>
-        /* ── PAGE WRAP ─────────────────────────────────────────── */
+
+        /* ── PAGE CONTENT WRAPPER ──────────────────────────────── */
         .page-wrap {
-            position: relative; z-index: 10;
-            padding-top: 5rem;
+            position: relative;
+            z-index: 10;
         }
-        @media (min-width: 1024px) { .page-wrap { padding-top: 6rem; } }
 
-        /* ── SCROLL REVEAL VARIANTS ─────────────────────────────
-           Each section uses a different animation class so they
-           never look copy-pasted from one template.
-        ────────────────────────────────────────────────────────── */
-
-        /* Default: fade up (hero, headings) */
-        .rv-fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .7s cubic-bezier(.22,1,.36,1),
-                        transform .7s cubic-bezier(.22,1,.36,1);
+        /* ── BI-DIRECTIONAL SCROLL REVEAL ANIMATIONS ───────────── */
+        .rv-fade {
+            opacity: 0; transform: translateY(35px);
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+            will-change: opacity, transform;
         }
-        .rv-fade-up.visible { opacity: 1; transform: translateY(0); }
+        .rv-fade.visible { opacity: 1; transform: translateY(0); }
 
-        /* About text column: slides in from left */
-        .rv-slide-left {
-            opacity: 0;
-            transform: translateX(-28px);
-            transition: opacity .65s cubic-bezier(.22,1,.36,1),
-                        transform .65s cubic-bezier(.22,1,.36,1);
-        }
-        .rv-slide-left.visible { opacity: 1; transform: translateX(0); }
-
-        /* About detail rows: clip-reveal from top */
-        .rv-clip {
-            opacity: 0;
-            clip-path: inset(0 0 100% 0);
-            transition: opacity .5s ease,
-                        clip-path .5s cubic-bezier(.22,1,.36,1);
-        }
-        .rv-clip.visible { opacity: 1; clip-path: inset(0 0 0% 0); }
-
-        /* Projects: scale up from slightly smaller */
         .rv-scale {
-            opacity: 0;
-            transform: scale(.97) translateY(18px);
-            transition: opacity .6s cubic-bezier(.22,1,.36,1),
-                        transform .6s cubic-bezier(.22,1,.36,1);
+            opacity: 0; transform: scale(0.94) translateY(20px);
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+            will-change: opacity, transform;
         }
         .rv-scale.visible { opacity: 1; transform: scale(1) translateY(0); }
 
-        /* Education timeline: slide in from right */
+        .rv-slide-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+            will-change: opacity, transform;
+        }
+        .rv-slide-left.visible { opacity: 1; transform: translateX(0); }
+
         .rv-slide-right {
-            opacity: 0;
-            transform: translateX(22px);
-            transition: opacity .6s cubic-bezier(.22,1,.36,1),
-                        transform .6s cubic-bezier(.22,1,.36,1);
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+            will-change: opacity, transform;
         }
         .rv-slide-right.visible { opacity: 1; transform: translateX(0); }
 
-        /* Contact form: rise with longer ease */
-        .rv-rise {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity .8s cubic-bezier(.16,1,.3,1),
-                        transform .8s cubic-bezier(.16,1,.3,1);
-        }
-        .rv-rise.visible { opacity: 1; transform: translateY(0); }
-
-        /* Stagger delays — intentionally irregular, not uniform */
-        .sd-1  { transition-delay: .05s; }
-        .sd-2  { transition-delay: .13s; }
-        .sd-3  { transition-delay: .22s; }
-        .sd-4  { transition-delay: .33s; }
-        .sd-5  { transition-delay: .46s; }
-        .sd-6  { transition-delay: .11s; }
-        .sd-7  { transition-delay: .27s; }
-        .sd-8  { transition-delay: .41s; }
-
-        #home, #about, #projects, #education, #contact {
-            scroll-margin-top: 76px;
-        }
-
-        /* smooth color transitions */
-        html, body, header, section, div, span, p, h1, h2, h3, a, button, input, textarea {
-            transition-property: background-color, border-color, color;
-            transition-duration: .28s;
-            transition-timing-function: ease;
-        }
-        /* override: don't let the above clobber reveal animations */
-        .rv-fade-up, .rv-slide-left, .rv-clip, .rv-scale, .rv-slide-right, .rv-rise {
-            transition-property: opacity, transform, clip-path !important;
-        }
+        /* Stagger Delays */
+        .sd-1 { transition-delay: 0.08s; }
+        .sd-2 { transition-delay: 0.16s; }
+        .sd-3 { transition-delay: 0.24s; }
+        .sd-4 { transition-delay: 0.32s; }
     </style>
 </head>
-<body>
+<body data-active-section="home">
 
+    <!-- Top Gradient Shield: Keeps elements fading out smoothly before hitting the navbar -->
+    <div class="top-scroll-shield"></div>
+
+    <!-- Ambient Animation Canvas & Texture Overlay -->
     <canvas id="bg-canvas"></canvas>
-    <div class="particles" id="particles"></div>
-    <div class="cur-dot"  id="curDot"></div>
+    <div class="bg-noise"></div>
+
+    <!-- Custom Pointer Ring & Dot -->
+    <div class="cur-dot" id="curDot"></div>
     <div class="cur-ring" id="curRing"></div>
 
+    <!-- Header Navigation -->
     <header id="siteHeader">
         <nav class="nav-inner" id="navInner">
-            <a href="#home" class="nav-logo">SP<span>.</span></a>
+            <a href="#home" class="nav-logo">Sushant<span>.</span></a>
 
             <div class="nav-links">
-                <a href="#home"      class="nav-link">Home</a>
-                <a href="#about"     class="nav-link">About</a>
-                <a href="#projects"  class="nav-link">Work</a>
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Work</a>
                 <a href="#education" class="nav-link">Education</a>
-                <a href="#contact"   class="nav-link">Contact</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
 
             <div class="nav-right">
@@ -536,11 +410,11 @@
                     <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <button class="btn-theme" id="themeToggle" aria-label="Toggle theme">
-                        <i class="fa-solid fa-moon icon-moon"></i>
-                        <i class="fa-solid fa-sun  icon-sun"></i>
-                    </button>
                 </div>
+                <button class="btn-theme" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                </button>
                 <a href="{% static 'files/sushantpaharicv.pdf' %}" target="_blank" rel="noopener noreferrer" class="btn-resume">
                     Resume ↗
                 </a>
@@ -550,337 +424,300 @@
             </div>
 
             <div class="nav-mobile">
-                <a href="#home"      class="nav-link mob-link">Home</a>
-                <a href="#about"     class="nav-link mob-link">About</a>
-                <a href="#projects"  class="nav-link mob-link">Work</a>
+                <a href="#home" class="nav-link mob-link">Home</a>
+                <a href="#about" class="nav-link mob-link">About</a>
+                <a href="#projects" class="nav-link mob-link">Work</a>
                 <a href="#education" class="nav-link mob-link">Education</a>
-                <a href="#contact"   class="nav-link mob-link">Contact</a>
-                <!-- socials + theme always inside mobile dropdown -->
-                <div class="mob-socials">
-                    <a href="https://github.com/Sushant7-codes" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/sushant-pahari-19705b371/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <button class="btn-theme" id="themeToggleDrop" aria-label="Toggle theme">
-                        <i class="fa-solid fa-moon icon-moon"></i>
-                        <i class="fa-solid fa-sun  icon-sun"></i>
-                    </button>
-                </div>
+                <a href="#contact" class="nav-link mob-link">Contact</a>
             </div>
         </nav>
     </header>
 
+    <!-- Main Section Content Wrapper -->
     <div class="page-wrap">
         {% block content %}{% endblock %}
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT ENGINE: CANVAS, SMOOTH SCROLL, SECTION SWITCHER  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <script>
-    // ═══════════════════════════════════════════════════════════
-    // TOPOLOGY GRID BACKGROUND
-    // A sparse, reactive grid of nodes + edges — like a data
-    // dependency graph or schema diagram. Mouse warps nearby nodes.
-    // Non-uniform timing: each node has its own drift speed/phase.
-    // ═══════════════════════════════════════════════════════════
+    // 1. LENIS SMOOTH SCROLL INITIALIZATION
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 1.5,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Smooth scroll for nav anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                lenis.scrollTo(targetEl, { offset: -60 });
+            }
+        });
+    });
+
+    // 2. DYNAMIC AMBIENT MESH & CONSTELLATION CANVAS ENGINE
     (function() {
         const canvas = document.getElementById('bg-canvas');
-        const ctx    = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         const isLight = () => document.documentElement.classList.contains('light');
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-        let W, H, dpr, nodes, tick = 0;
+        let W, H, dpr;
         let mouseX = -9999, mouseY = -9999;
+        let targetMouseX = -9999, targetMouseY = -9999;
 
-        const COLS = 10, ROWS = 7;
-        const CONNECT_DIST = 0; // only grid edges
-        const NODE_R = 1.5;
+        // Current Accent RGB (interpolates when switching sections)
+        let currentRGB = [56, 189, 248];
+        let targetRGB = [56, 189, 248];
 
-        function getColors() {
-            return isLight()
-                ? { grid: 'rgba(2,132,199,0.12)',  node: 'rgba(2,132,199,0.35)',  accent: '2,132,199',
-                    edgeBase: 0.10, edgeGlow: 0.18, nodeBase: 0.20, nodeGlow: 0.50 }
-                : { grid: 'rgba(56,189,248,0.035)', node: 'rgba(56,189,248,0.15)', accent: '56,189,248',
-                    edgeBase: 0.035, edgeGlow: 0.10, nodeBase: 0.10, nodeGlow: 0.45 };
-        }
+        const SECTION_COLORS = {
+            home:      [56, 189, 248],   // Cyan / Sky
+            about:     [168, 85, 247],   // Purple / Violet
+            projects:  [16, 185, 129],   // Emerald Green
+            education: [245, 158, 11],   // Warm Amber
+            contact:   [244, 63, 94]     // Coral Rose
+        };
+
+        const LIGHT_SECTION_COLORS = {
+            home:      [2, 132, 199],
+            about:     [147, 51, 234],
+            projects:  [5, 150, 105],
+            education: [217, 119, 6],
+            contact:   [225, 29, 72]
+        };
+
+        // Particles & Mesh Orbs
+        let particles = [];
+        let orbs = [];
 
         function resize() {
             dpr = Math.min(window.devicePixelRatio || 1, 2);
             W = window.innerWidth;
             H = window.innerHeight;
-            canvas.width  = W * dpr;
+            canvas.width = W * dpr;
             canvas.height = H * dpr;
-            canvas.style.width  = W + 'px';
+            canvas.style.width = W + 'px';
             canvas.style.height = H + 'px';
             ctx.scale(dpr, dpr);
-            buildNodes();
+            initElements();
         }
 
-        function buildNodes() {
-            nodes = [];
-            const cellW = W / (COLS - 1);
-            const cellH = H / (ROWS - 1);
-            for (let r = 0; r < ROWS; r++) {
-                for (let c = 0; c < COLS; c++) {
-                    const bx = c * cellW, by = r * cellH;
-                    nodes.push({
-                        bx, by,          // base position
-                        x: bx, y: by,    // current position
-                        // each node gets its own drift params — irregular, not uniform
-                        amp:   6 + Math.random() * 12,
-                        freq:  0.0004 + Math.random() * 0.0008,
-                        phase: Math.random() * Math.PI * 2,
-                        phaseY: Math.random() * Math.PI * 2,
-                        r, c,
-                        alpha: 0.4 + Math.random() * 0.6,
-                    });
-                }
+        function initElements() {
+            particles = [];
+            orbs = [];
+
+            // Floating Background Orbs for dynamic ambient gradients
+            const orbCount = 3;
+            for (let i = 0; i < orbCount; i++) {
+                orbs.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    radius: Math.random() * 200 + 180,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+
+            // Interactive Constellation Particles
+            const particleCount = Math.floor((W * H) / 18000);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    radius: Math.random() * 1.5 + 1,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
             }
         }
 
-        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-        window.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+        window.addEventListener('mousemove', e => {
+            targetMouseX = e.clientX;
+            targetMouseY = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            targetMouseX = -9999;
+            targetMouseY = -9999;
+        });
+
         window.addEventListener('resize', resize);
         resize();
 
+        // Color Interpolation Function (Smooth transitions between section colors)
+        function lerpColor() {
+            currentRGB[0] += (targetRGB[0] - currentRGB[0]) * 0.04;
+            currentRGB[1] += (targetRGB[1] - currentRGB[1]) * 0.04;
+            currentRGB[2] += (targetRGB[2] - currentRGB[2]) * 0.04;
+
+            const rgbStr = `${Math.round(currentRGB[0])}, ${Math.round(currentRGB[1])}, ${Math.round(currentRGB[2])}`;
+            document.documentElement.style.setProperty('--accent-rgb', rgbStr);
+            document.documentElement.style.setProperty('--accent', `rgb(${rgbStr})`);
+        }
+
+        window.updateCanvasTheme = function(sectionId) {
+            const palette = isLight() ? LIGHT_SECTION_COLORS : SECTION_COLORS;
+            if (palette[sectionId]) {
+                targetRGB = palette[sectionId];
+            }
+        };
+
         function drawFrame() {
-            tick++;
+            // Smooth mouse dampening
+            mouseX += (targetMouseX - mouseX) * 0.08;
+            mouseY += (targetMouseY - mouseY) * 0.08;
+
+            lerpColor();
+
             ctx.clearRect(0, 0, W, H);
-            const C = getColors();
 
-            // Update node positions with per-node irregular drift + mouse repulsion
-            for (const n of nodes) {
-                const t = tick * n.freq;
-                n.x = n.bx + Math.sin(t + n.phase)  * n.amp;
-                n.y = n.by + Math.cos(t + n.phaseY) * n.amp * 0.7;
+            const r = Math.round(currentRGB[0]);
+            const g = Math.round(currentRGB[1]);
+            const b = Math.round(currentRGB[2]);
 
-                // mouse repel — nodes near cursor drift away slightly
-                const dx = n.x - mouseX, dy = n.y - mouseY;
-                const d  = Math.sqrt(dx*dx + dy*dy);
-                if (d < 140) {
-                    const f = (1 - d / 140) * 18;
-                    n.x += (dx / d) * f;
-                    n.y += (dy / d) * f;
-                }
-            }
+            // 1. DRAW AMBIENT MESH GLOW ORBS
+            orbs.forEach((orb, i) => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
 
-            // Draw grid edges between adjacent nodes
-            ctx.lineWidth = 0.6;
-            for (const n of nodes) {
-                // right neighbour
-                if (n.c < COLS - 1) {
-                    const nb = nodes[n.r * COLS + n.c + 1];
-                    const dx = n.x - mouseX, dy = n.y - mouseY;
-                    const dMouse = Math.sqrt(dx*dx + dy*dy);
-                    const glow = dMouse < 180 ? (1 - dMouse/180) * C.edgeGlow : 0;
-                    const alpha = C.edgeBase + glow;
-                    ctx.beginPath();
-                    ctx.moveTo(n.x, n.y);
-                    ctx.lineTo(nb.x, nb.y);
-                    ctx.strokeStyle = `rgba(${C.accent},${alpha})`;
-                    ctx.stroke();
-                }
-                // down neighbour
-                if (n.r < ROWS - 1) {
-                    const nb = nodes[(n.r + 1) * COLS + n.c];
-                    const dx = n.x - mouseX, dy = n.y - mouseY;
-                    const dMouse = Math.sqrt(dx*dx + dy*dy);
-                    const glow = dMouse < 180 ? (1 - dMouse/180) * (C.edgeGlow * 0.85) : 0;
-                    const alpha = (C.edgeBase * 0.78) + glow;
-                    ctx.beginPath();
-                    ctx.moveTo(n.x, n.y);
-                    ctx.lineTo(nb.x, nb.y);
-                    ctx.strokeStyle = `rgba(${C.accent},${alpha})`;
-                    ctx.stroke();
-                }
-            }
+                if (orb.x < -100) orb.x = W + 100;
+                if (orb.x > W + 100) orb.x = -100;
+                if (orb.y < -100) orb.y = H + 100;
+                if (orb.y > H + 100) orb.y = -100;
 
-            // Draw nodes — brighter near mouse
-            for (const n of nodes) {
-                const dx = n.x - mouseX, dy = n.y - mouseY;
-                const d  = Math.sqrt(dx*dx + dy*dy);
-                const proximity = d < 120 ? (1 - d/120) : 0;
-                const alpha = C.nodeBase + proximity * C.nodeGlow;
-                const r = NODE_R + proximity * 2.5;
+                const grad = ctx.createRadialGradient(orb.x, orb.y, 10, orb.x, orb.y, orb.radius);
+                const alpha = isLight() ? 0.08 : 0.06;
+                grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
+                grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
 
                 ctx.beginPath();
-                ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${C.accent},${alpha})`;
+                ctx.fillStyle = grad;
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // 2. DRAW CONSTELLATION PARTICLES & MESH EDGES
+            const connectDist = 120;
+            const mouseDist = 150;
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+
+                // Mouse Repulsion / Interactive Wave
+                const dx = p.x - mouseX;
+                const dy = p.y - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < mouseDist) {
+                    const force = (1 - dist / mouseDist) * 12;
+                    p.x += (dx / dist) * force * 0.2;
+                    p.y += (dy / dist) * force * 0.2;
+                }
+
+                // Render Particle Dot
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                const dotAlpha = isLight() ? p.alpha * 0.6 : p.alpha;
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${dotAlpha})`;
                 ctx.fill();
 
-                if (proximity > 0.5) {
-                    ctx.beginPath();
-                    ctx.arc(n.x, n.y, r + 4, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${C.accent},${proximity * 0.08})`;
-                    ctx.fill();
+                // Connect Nearby Particles
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    const pdx = p.x - p2.x;
+                    const pdy = p.y - p2.y;
+                    const pDist = Math.sqrt(pdx * pdx + pdy * pdy);
+
+                    if (pDist < connectDist) {
+                        const edgeAlpha = (1 - pDist / connectDist) * (isLight() ? 0.12 : 0.08);
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${edgeAlpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
                 }
             }
 
             requestAnimationFrame(drawFrame);
         }
 
-        if (!reducedMotion) drawFrame();
+        drawFrame();
     })();
-    </script>
 
-    <script>
-    // ═══════════════════════════════════════════════════════════
-    // FLOATING PARTICLES WITH DEPTH
-    // Adds ambient floating particles that move with parallax
-    // Different sizes and speeds create depth perception
-    // ═══════════════════════════════════════════════════════════
-    (function() {
-        const container = document.getElementById('particles');
-        if (!container) return;
-        
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-        if (reducedMotion) return;
-        
-        const isLight = () => document.documentElement.classList.contains('light');
-        const PARTICLE_COUNT = window.innerWidth < 768 ? 15 : 25;
-        const particles = [];
-        
-        // Create particles with varying properties
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Random size (depth indicator)
-            const size = Math.random() * 3 + 1;
-            const depth = size / 4; // Larger = closer = faster
-            
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.opacity = (Math.random() * 0.3 + 0.1) * (isLight() ? 0.6 : 1);
-            
-            container.appendChild(particle);
-            
-            particles.push({
-                el: particle,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                size: size,
-                depth: depth,
-                speedX: (Math.random() - 0.5) * 0.3 * depth,
-                speedY: (Math.random() - 0.5) * 0.3 * depth,
-                angle: Math.random() * Math.PI * 2,
-                angleSpeed: (Math.random() - 0.5) * 0.02,
-                driftRadius: 20 + Math.random() * 40
-            });
-        }
-        
-        let scrollY = window.scrollY;
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-        });
-        
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        // Update particles with parallax
-        function animate() {
-            particles.forEach((p, i) => {
-                // Circular drift
-                p.angle += p.angleSpeed;
-                const driftX = Math.cos(p.angle) * p.driftRadius * p.depth;
-                const driftY = Math.sin(p.angle) * p.driftRadius * p.depth;
-                
-                // Linear movement
-                p.x += p.speedX;
-                p.y += p.speedY;
-                
-                // Parallax based on scroll and mouse
-                const parallaxScroll = scrollY * p.depth * 0.1;
-                const parallaxMouseX = (mouseX - window.innerWidth / 2) * p.depth * 0.02;
-                const parallaxMouseY = (mouseY - window.innerHeight / 2) * p.depth * 0.02;
-                
-                // Final position
-                let finalX = p.x + driftX - parallaxMouseX;
-                let finalY = p.y + driftY + parallaxScroll - parallaxMouseY;
-                
-                // Wrap around screen edges
-                if (finalX < -50) p.x = window.innerWidth + 50;
-                if (finalX > window.innerWidth + 50) p.x = -50;
-                if (finalY < -50) p.y = window.innerHeight + 50;
-                if (finalY > window.innerHeight + 50) p.y = -50;
-                
-                p.el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0)`;
-            });
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
-        
-        // Update opacity on theme change
-        const observer = new MutationObserver(() => {
-            const light = isLight();
-            particles.forEach(p => {
-                const baseOpacity = parseFloat(p.el.style.opacity);
-                p.el.style.opacity = baseOpacity * (light ? 0.6 : 1.0);
-            });
-        });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    })();
-    </script>
-
-    <script>
-    // ═══════════════════════════════════════════════════════════
-    // ENHANCED SMOOTH SCROLL WITH SECTION HIGHLIGHTING
-    // Adds visual feedback when navigating between sections
-    // ═══════════════════════════════════════════════════════════
+    // 3. INTERSECTION OBSERVERS (ACTIVE SECTION & BI-DIRECTIONAL ANIMATION REVEAL)
     (function() {
         const sections = document.querySelectorAll('section[id]');
-        let activeSection = null;
-        
-        // Observe sections entering viewport
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Section Accent Switcher
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    if (activeSection !== entry.target) {
-                        activeSection = entry.target;
-                        
-                        // Add subtle pulse animation on section enter
-                        entry.target.style.animation = 'sectionEnter 0.8s ease-out';
-                        setTimeout(() => {
-                            entry.target.style.animation = '';
-                        }, 800);
+                    const id = entry.target.id;
+                    document.body.setAttribute('data-active-section', id);
+
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+
+                    if (window.updateCanvasTheme) {
+                        window.updateCanvasTheme(id);
                     }
                 }
             });
-        }, {
-            rootMargin: '-20% 0px -20% 0px',
-            threshold: 0.1
-        });
-        
-        sections.forEach(section => sectionObserver.observe(section));
-        
-        // Add keyframe for section enter animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes sectionEnter {
-                0% { transform: translateY(10px); opacity: 0.7; }
-                100% { transform: translateY(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-    })();
-    </script>
+        }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
 
-    <script>
-    // ═══════════════════════════════════════════════════════════
-    // CURSOR — dot + ring, no trail
-    // ═══════════════════════════════════════════════════════════
+        sections.forEach(sec => sectionObserver.observe(sec));
+
+        // BI-DIRECTIONAL SCROLL REVEAL OBSERVER
+        // Adds 'visible' class when scrolling into viewport, removes it when scrolling out
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { 
+            threshold: 0.12,
+            rootMargin: '-50px 0px -50px 0px' 
+        });
+
+        document.querySelectorAll('.rv-fade, .rv-scale, .rv-slide-left, .rv-slide-right').forEach(el => {
+            revealObserver.observe(el);
+        });
+    })();
+
+    // 4. CUSTOM CURSOR TRAIL ENGINE
     (function() {
-        const dot  = document.getElementById('curDot');
+        const dot = document.getElementById('curDot');
         const ring = document.getElementById('curRing');
         if (!dot || !ring) return;
-        const isTouch = window.matchMedia('(hover:none),(pointer:coarse)').matches;
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-        if (isTouch || reducedMotion) return;
 
         let mx = -200, my = -200, rx = -200, ry = -200;
 
@@ -890,7 +727,7 @@
         });
 
         const bindHover = () => {
-            document.querySelectorAll('a,button,input,textarea,select,[role="button"]').forEach(el => {
+            document.querySelectorAll('a, button, input, textarea, select, [role="button"]').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
             });
@@ -899,83 +736,44 @@
         new MutationObserver(bindHover).observe(document.body, { childList: true, subtree: true });
 
         document.addEventListener('mousedown', () => document.body.classList.add('cur-click'));
-        document.addEventListener('mouseup',   () => document.body.classList.remove('cur-click'));
+        document.addEventListener('mouseup', () => document.body.classList.remove('cur-click'));
 
-        (function ringLoop() {
-            rx += (mx - rx) * 0.10;
-            ry += (my - ry) * 0.10;
+        function ringLoop() {
+            rx += (mx - rx) * 0.15;
+            ry += (my - ry) * 0.15;
             ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
             requestAnimationFrame(ringLoop);
-        })();
-    })();
-    </script>
-
-    <script>
-    // ═══════════════════════════════════════════════════════════
-    // NAV — mobile toggle + active section tracking
-    // ═══════════════════════════════════════════════════════════
-    (function() {
-        const toggle  = document.getElementById('navToggle');
-        const navInner = document.getElementById('navInner');
-
-        toggle.addEventListener('click', () => navInner.classList.toggle('nav-open'));
-        document.querySelectorAll('.mob-link').forEach(l =>
-            l.addEventListener('click', () => navInner.classList.remove('nav-open')));
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) navInner.classList.remove('nav-open');
-        });
-
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section[id]');
-        if (sections.length) {
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        navLinks.forEach(l => l.classList.toggle(
-                            'active', l.getAttribute('href') === '#' + e.target.id
-                        ));
-                    }
-                });
-            }, { rootMargin: '-38% 0px -38% 0px', threshold: 0 });
-            sections.forEach(s => io.observe(s));
         }
-
-        // Scroll reveal — handles all rv-* classes
-        const ro = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
-            });
-        }, { threshold: 0.06 });
-        document.querySelectorAll(
-            '.rv-fade-up,.rv-slide-left,.rv-clip,.rv-scale,.rv-slide-right,.rv-rise'
-        ).forEach(el => ro.observe(el));
+        ringLoop();
     })();
-    </script>
 
-    <script>
-    // ═══════════════════════════════════════════════════════════
-    // THEME TOGGLE
-    // ═══════════════════════════════════════════════════════════
+    // 5. THEME TOGGLE & NAV TOGGLE LOGIC
     (function() {
         const html = document.documentElement;
-        const KEY  = 'sp-theme';
+        const KEY = 'sp-theme';
 
-        function apply(t) {
+        function applyTheme(t) {
             if (t === 'light') html.classList.add('light');
             else html.classList.remove('light');
+
+            const activeSec = document.body.getAttribute('data-active-section') || 'home';
+            if (window.updateCanvasTheme) window.updateCanvasTheme(activeSec);
         }
 
-        apply(localStorage.getItem(KEY) || 'dark');
+        applyTheme(localStorage.getItem(KEY) || 'dark');
 
-        function toggle() {
+        document.getElementById('themeToggle').addEventListener('click', () => {
             const next = html.classList.contains('light') ? 'dark' : 'light';
-            apply(next); localStorage.setItem(KEY, next);
-        }
+            applyTheme(next);
+            localStorage.setItem(KEY, next);
+        });
 
-        // Wire desktop toggle and mobile-dropdown toggle
-        ['themeToggle', 'themeToggleDrop'].forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) btn.addEventListener('click', toggle);
+        // Mobile Nav Toggle
+        const toggle = document.getElementById('navToggle');
+        const navInner = document.getElementById('navInner');
+        toggle.addEventListener('click', () => navInner.classList.toggle('nav-open'));
+        document.querySelectorAll('.mob-link').forEach(l => {
+            l.addEventListener('click', () => navInner.classList.remove('nav-open'));
         });
     })();
     </script>

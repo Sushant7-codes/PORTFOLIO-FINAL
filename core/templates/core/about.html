@@ -109,22 +109,38 @@
 
     /* ── CODE SNIPPET CARD ──────────────────────────────────── */
     .code-snippet-card {
-        border: 1px solid var(--border);
-        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(132, 204, 22, 0.04) 0%, rgba(163, 230, 53, 0.06) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(132, 204, 22, 0.15);
+        border-radius: 12px;
         overflow: hidden;
-        background: var(--surface);
         font-family: 'JetBrains Mono', monospace;
         width: 100%;
-        max-width: 100%;          /* shrinks nicely on mobile */
+        max-width: 100%;
+        box-shadow: 0 4px 16px rgba(132, 204, 22, 0.06), 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    
+    html.light .code-snippet-card {
+        background: linear-gradient(135deg, rgba(132, 204, 22, 0.06) 0%, rgba(163, 230, 53, 0.08) 100%);
+        border: 1.5px solid rgba(132, 204, 22, 0.2);
+        box-shadow: 0 4px 16px rgba(132, 204, 22, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .code-header {
         display: flex;
         align-items: center;
         gap: .6rem;
-        padding: .5rem .75rem;
-        background: var(--bg-3);
-        border-bottom: 1px solid var(--border);
+        padding: .55rem .9rem;
+        background: linear-gradient(180deg, rgba(132, 204, 22, 0.06) 0%, transparent 100%);
+        border-bottom: 1.5px solid rgba(132, 204, 22, 0.12);
+    }
+    
+    html.light .code-header {
+        border-bottom: 1.5px solid rgba(132, 204, 22, 0.15);
+        background: linear-gradient(180deg, rgba(132, 204, 22, 0.08) 0%, transparent 100%);
     }
 
     .code-dots {
@@ -134,23 +150,30 @@
     }
 
     .code-dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         flex-shrink: 0;
+        transition: transform .2s;
     }
-    .code-dot.red    { background: #f87171; }
+    .code-dot:hover { transform: scale(1.2); }
+    .code-dot.red    { background: #ef4444; }
     .code-dot.yellow { background: #fbbf24; }
-    .code-dot.green  { background: #34d399; }
+    .code-dot.green  { background: #84cc16; }
 
     .code-filename {
         font-size: .65rem;
-        color: var(--text-3);
+        color: #84cc16;
+        font-weight: 600;
         letter-spacing: .02em;
+    }
+    
+    html.light .code-filename {
+        color: #65a30d;
     }
 
     .code-body {
-        padding: .75rem 0;
+        padding: .85rem 0;
         font-size: .72rem;
         line-height: 1.65;
         overflow-x: auto;
@@ -160,6 +183,8 @@
     }
 
     .code-line {
+
+        white-space: pre;
         display: flex;
         align-items: baseline;
         padding: 0 .85rem;
@@ -179,17 +204,32 @@
     }
 
     /* Syntax highlighting */
-    .kw         { color: var(--accent-2); font-weight: 500; }
-    .cls        { color: var(--accent); }
+    .kw         { color: #a78bfa; font-weight: 500; }
+    .cls        { color: #84cc16; font-weight: 600; }
     .method     { color: var(--text-1); }
-    .method-def { color: var(--accent); }
+    .method-def { color: #84cc16; }
     .attr       { color: var(--text-2); }
     .punc       { color: var(--text-3); }
     .num        { color: #fbbf24; }
-    .bool       { color: var(--accent-2); }
-    .const      { color: var(--accent); font-weight: 500; }
+    .bool       { color: #a78bfa; }
+    .const      { color: #84cc16; font-weight: 500; }
     .param      { color: var(--text-2); font-style: italic; }
-    .builtin    { color: var(--accent-2); }
+    .builtin    { color: #a78bfa; }
+    
+    /* Light mode adjustments */
+    html.light .kw { color: #7c3aed; }
+    html.light .cls { color: #65a30d; }
+    html.light .method-def { color: #65a30d; }
+    html.light .const { color: #65a30d; }
+    html.light .bool { color: #7c3aed; }
+    html.light .builtin { color: #7c3aed; }
+
+    .inline-emoji {
+    height: 1em;
+    width: 1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+}
 </style>
 
 <section id="about">
@@ -206,25 +246,29 @@
             <div class="about-left-col">
                 <div class="about-text">
                     <p class="rv-slide-left sd-1">
-                        I'm Sushant — final year <strong>B.Sc. CSIT student</strong> at
-                        Prithvi Narayan Campus, Pokhara. Most of my time goes into backend work:
+                        म Sushant, final year <strong>B.Sc. CSIT student</strong> at
+                        Prithvi Narayan Campus, Pokhara. Most of my time goes into backend stuffs:
                         Django applications that are structured well enough to maintain, with
                         databases that actually make sense.
                     </p>
                     <p class="rv-slide-left sd-3">
                         Started with C, moved to Python, and haven't looked back. What I know
-                        mostly came from building real things — a retail POS system, an
+                        mostly came from building real things - a retail POS system, an
                         e-commerce store, an event platform with teammates.
                     </p>
                     <p class="rv-slide-left sd-6">
-                        Outside code I run an
-                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">eFootball YouTube channel</a>
-                        with 22K+ subscribers. Taught me more about editing, thumbnails, and
-                        holding attention spans than any course ever could.
+                        बाहिर चाहिं, I run an
+                        <a href="https://www.youtube.com/@eFootballPlays7" target="_blank" rel="noopener noreferrer" class="link-plain">eFootball YouTube channel.</a>
+                        Sounds random next to the coding stuff, but it taught me more about editing, thumbnails, and keeping people's attention than any course did.
+                        BTW don't forget to subscribe! <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f609.svg" 
+     alt="winking face" 
+     class="inline-emoji" />
                     </p>
                     <p class="rv-slide-left sd-7">
-                        Right now I'm finishing my degree, going deeper on
-                        <strong>Django REST Framework</strong> and deployment practices, and
+                        Right now, finishing my Bachelors' degree, going deeper into
+                        <strong>Django REST Framework</strong> and deployment practices(not just localhost <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f636.svg" 
+     alt="face without mouth" 
+     class="inline-emoji" />), and
                         looking for a place to do real backend work.
                     </p>
                 </div>
@@ -241,18 +285,17 @@
                     <span class="code-filename">models.py</span>
                 </div>
                 <div class="code-body">
-                    <div class="code-line"><span class="ln">1</span><span class="kw">class</span> <span class="cls">Project</span><span class="punc">(</span><span class="cls">models</span><span class="punc">.</span><span class="cls">Model</span><span class="punc">):</span></div>
-                    <div class="code-line"><span class="ln">2</span>    <span class="attr">title</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span>max_length<span class="punc">=</span><span class="num">200</span><span class="punc">)</span></div>
-                    <div class="code-line"><span class="ln">3</span>    <span class="attr">description</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">TextField</span><span class="punc">()</span></div>
-                    <div class="code-line"><span class="ln">4</span>    <span class="attr">tech_stack</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">JSONField</span><span class="punc">(</span>default<span class="punc">=</span><span class="builtin">list</span><span class="punc">)</span></div>
-                    <div class="code-line"><span class="ln">5</span>    <span class="attr">live_url</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">URLField</span><span class="punc">(</span>blank<span class="punc">=</span><span class="bool">True</span><span class="punc">)</span></div>
-                    <div class="code-line"><span class="ln">6</span>    <span class="attr">created_by</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">ForeignKey</span><span class="punc">(</span></div>
-                    <div class="code-line"><span class="ln">7</span>        <span class="cls">User</span><span class="punc">,</span> on_delete<span class="punc">=</span>models<span class="punc">.</span><span class="const">CASCADE</span></div>
-                    <div class="code-line"><span class="ln">8</span>    <span class="punc">)</span></div>
-                    <div class="code-line"><span class="ln">9</span>    <span class="attr">is_featured</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">BooleanField</span><span class="punc">(</span>default<span class="punc">=</span><span class="bool">False</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">1</span><span class="kw">class</span> <span class="cls"> Info</span><span class="punc">(</span><span class="cls">models</span><span class="punc">.</span><span class="cls">Model</span><span class="punc">):</span></div>
+                    <div class="code-line"><span class="ln">2</span>    <span class="attr">    name</span> <span class="punc">=</span> <span class="punc"> </span>models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span>max_length<span class="punc">=</span><span class="num">100</span><span class="punc">,</span> default<span class="punc">=</span><span class="str">"Sushant Pahari"</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">3</span>    <span class="attr">    based_in</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span>max_length<span class="punc">=</span><span class="num">100</span><span class="punc">,</span> default<span class="punc">=</span><span class="str">"Pokhara, Nepal"</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">4</span>    <span class="attr">    stack</span> <span class="punc">=</span> <span class="punc"> </span>models<span class="punc">.</span><span class="method">JSONField</span><span class="punc">(</span>default<span class="punc">=</span><span class="builtin">list</span><span class="punc">)</span>  <span class="cmt"># Django, Python, PostgreSQL...</span></div>
+                    <div class="code-line"><span class="ln">5</span>    <span class="attr">    currently_building</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span>max_length<span class="punc">=</span><span class="num">200</span><span class="punc">,</span> default<span class="punc">=</span><span class="str">"Retail POS"</span><span class="punc">)</span></div>
+                    <div class="code-line"><span class="ln">6</span>    <span class="attr">    open_to</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">CharField</span><span class="punc">(</span></div>
+                    <div class="code-line"><span class="ln">7</span>        max_length<span class="punc">=</span><span class="num">50</span><span class="punc">,</span> default<span class="punc">=</span><span class="str">"internship / junior backend role"<span class="punc">)</span></span></div>
+                    <div class="code-line"><span class="ln">9</span>    <span class="attr">    still_learning</span> <span class="punc">=</span> models<span class="punc">.</span><span class="method">BooleanField</span><span class="punc">(</span>default<span class="punc">=</span><span class="bool">True</span><span class="punc">)</span></div>
                     <div class="code-line blank"><span class="ln">10</span></div>
-                    <div class="code-line"><span class="ln">11</span>    <span class="kw">def</span> <span class="method-def">__str__</span><span class="punc">(</span><span class="param">self</span><span class="punc">):</span></div>
-                    <div class="code-line"><span class="ln">12</span>        <span class="kw">return</span> <span class="param">self</span><span class="punc">.</span>title</div>
+                    <div class="code-line"><span class="ln">11</span>    <span class="kw">     def</span> <span class="method-def">__str__</span><span class="punc">(</span><span class="param">self</span><span class="punc">):</span></div>
+                    <div class="code-line"><span class="ln">12</span>        <span class="kw">         return</span> <span class="str"> f"{self.name} - still building, still figuring it out"</span></div>
                 </div>
             </div>
 
