@@ -67,6 +67,17 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+        
+        /* Page load fade-in */
+        body {
+            animation: pageLoad 0.6s ease-out;
+        }
+        
+        @keyframes pageLoad {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-1);
@@ -74,9 +85,151 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-        ::-webkit-scrollbar { width: 2px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 2px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { 
+            background: var(--bg); 
+        }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--border-hi); 
+            border-radius: 4px;
+            border: 2px solid var(--bg);
+            transition: background 0.2s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-hi) var(--bg);
+        }
+    </style>
+    <style>
+        /* ── ANIMATED GRADIENT BACKGROUND ──────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, var(--gradient-1), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 50%, var(--gradient-2), transparent),
+                radial-gradient(ellipse 100% 80% at 20% 100%, var(--gradient-3), transparent),
+                var(--bg);
+            animation: gradientShift 20s ease-in-out infinite;
+            will-change: transform;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+        
+        /* Gradient color tokens */
+        :root {
+            --gradient-1: rgba(56,189,248,0.08);
+            --gradient-2: rgba(129,140,248,0.06);
+            --gradient-3: rgba(16,185,129,0.04);
+        }
+        html.light {
+            --gradient-1: rgba(2,132,199,0.12);
+            --gradient-2: rgba(99,102,241,0.08);
+            --gradient-3: rgba(5,150,105,0.06);
+        }
+
+        /* ── FLOATING PARTICLES ────────────────────────────────── */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+            filter: blur(1px);
+        }
+
+        /* ── SECTION TRANSITIONS ───────────────────────────────── */
+        section {
+            position: relative;
+            will-change: transform;
+            transition: background-color 0.6s ease;
+        }
+        
+        /* Section-specific subtle background tints */
+        #home {
+            background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56,189,248,0.03), transparent 70%);
+        }
+        #about {
+            background: radial-gradient(ellipse 100% 60% at 0% 50%, rgba(129,140,248,0.025), transparent 70%);
+        }
+        #projects {
+            background: radial-gradient(ellipse 100% 60% at 100% 50%, rgba(16,185,129,0.025), transparent 70%);
+        }
+        #education {
+            background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(56,189,248,0.025), transparent 70%);
+        }
+        #contact {
+            background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(129,140,248,0.03), transparent 70%);
+        }
+        
+        html.light #home {
+            background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(2,132,199,0.05), transparent 70%);
+        }
+        html.light #about {
+            background: radial-gradient(ellipse 100% 60% at 0% 50%, rgba(99,102,241,0.04), transparent 70%);
+        }
+        html.light #projects {
+            background: radial-gradient(ellipse 100% 60% at 100% 50%, rgba(5,150,105,0.04), transparent 70%);
+        }
+        html.light #education {
+            background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(2,132,199,0.04), transparent 70%);
+        }
+        html.light #contact {
+            background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(99,102,241,0.05), transparent 70%);
+        }
+
+        /* Section dividers - visual separation between sections */
+        section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            max-width: 800px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            opacity: 0.5;
+        }
+        
+        section:last-of-type::after {
+            display: none;
+        }
+
+        /* Enhanced smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 76px;
+        }
+        
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            /* Momentum scrolling effect */
+            * {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
     </style>
     <style>
         /* ── TOPOLOGY GRID CANVAS ─────────────────────────────── */
@@ -84,7 +237,12 @@
             position: fixed; inset: 0;
             z-index: 1;
             pointer-events: none;
-            opacity: 1;
+            opacity: 0.6;
+            mix-blend-mode: screen;
+        }
+        html.light #bg-canvas {
+            opacity: 0.4;
+            mix-blend-mode: multiply;
         }
 
         /* ── CUSTOM CURSOR ────────────────────────────────────── */
@@ -354,6 +512,7 @@
 <body>
 
     <canvas id="bg-canvas"></canvas>
+    <div class="particles" id="particles"></div>
     <div class="cur-dot"  id="curDot"></div>
     <div class="cur-ring" id="curRing"></div>
 
@@ -435,10 +594,10 @@
 
         function getColors() {
             return isLight()
-                ? { grid: 'rgba(2,132,199,0.18)',  node: 'rgba(2,132,199,0.55)',  accent: '2,132,199',
-                    edgeBase: 0.14, edgeGlow: 0.22, nodeBase: 0.30, nodeGlow: 0.70 }
-                : { grid: 'rgba(56,189,248,0.045)', node: 'rgba(56,189,248,0.20)', accent: '56,189,248',
-                    edgeBase: 0.045, edgeGlow: 0.12, nodeBase: 0.12, nodeGlow: 0.55 };
+                ? { grid: 'rgba(2,132,199,0.12)',  node: 'rgba(2,132,199,0.35)',  accent: '2,132,199',
+                    edgeBase: 0.10, edgeGlow: 0.18, nodeBase: 0.20, nodeGlow: 0.50 }
+                : { grid: 'rgba(56,189,248,0.035)', node: 'rgba(56,189,248,0.15)', accent: '56,189,248',
+                    edgeBase: 0.035, edgeGlow: 0.10, nodeBase: 0.10, nodeGlow: 0.45 };
         }
 
         function resize() {
@@ -557,6 +716,157 @@
         }
 
         if (!reducedMotion) drawFrame();
+    })();
+    </script>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // FLOATING PARTICLES WITH DEPTH
+    // Adds ambient floating particles that move with parallax
+    // Different sizes and speeds create depth perception
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const container = document.getElementById('particles');
+        if (!container) return;
+        
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+        if (reducedMotion) return;
+        
+        const isLight = () => document.documentElement.classList.contains('light');
+        const PARTICLE_COUNT = window.innerWidth < 768 ? 15 : 25;
+        const particles = [];
+        
+        // Create particles with varying properties
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random size (depth indicator)
+            const size = Math.random() * 3 + 1;
+            const depth = size / 4; // Larger = closer = faster
+            
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.opacity = (Math.random() * 0.3 + 0.1) * (isLight() ? 0.6 : 1);
+            
+            container.appendChild(particle);
+            
+            particles.push({
+                el: particle,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: size,
+                depth: depth,
+                speedX: (Math.random() - 0.5) * 0.3 * depth,
+                speedY: (Math.random() - 0.5) * 0.3 * depth,
+                angle: Math.random() * Math.PI * 2,
+                angleSpeed: (Math.random() - 0.5) * 0.02,
+                driftRadius: 20 + Math.random() * 40
+            });
+        }
+        
+        let scrollY = window.scrollY;
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+        });
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // Update particles with parallax
+        function animate() {
+            particles.forEach((p, i) => {
+                // Circular drift
+                p.angle += p.angleSpeed;
+                const driftX = Math.cos(p.angle) * p.driftRadius * p.depth;
+                const driftY = Math.sin(p.angle) * p.driftRadius * p.depth;
+                
+                // Linear movement
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                // Parallax based on scroll and mouse
+                const parallaxScroll = scrollY * p.depth * 0.1;
+                const parallaxMouseX = (mouseX - window.innerWidth / 2) * p.depth * 0.02;
+                const parallaxMouseY = (mouseY - window.innerHeight / 2) * p.depth * 0.02;
+                
+                // Final position
+                let finalX = p.x + driftX - parallaxMouseX;
+                let finalY = p.y + driftY + parallaxScroll - parallaxMouseY;
+                
+                // Wrap around screen edges
+                if (finalX < -50) p.x = window.innerWidth + 50;
+                if (finalX > window.innerWidth + 50) p.x = -50;
+                if (finalY < -50) p.y = window.innerHeight + 50;
+                if (finalY > window.innerHeight + 50) p.y = -50;
+                
+                p.el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0)`;
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Update opacity on theme change
+        const observer = new MutationObserver(() => {
+            const light = isLight();
+            particles.forEach(p => {
+                const baseOpacity = parseFloat(p.el.style.opacity);
+                p.el.style.opacity = baseOpacity * (light ? 0.6 : 1.0);
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    })();
+    </script>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════
+    // ENHANCED SMOOTH SCROLL WITH SECTION HIGHLIGHTING
+    // Adds visual feedback when navigating between sections
+    // ═══════════════════════════════════════════════════════════
+    (function() {
+        const sections = document.querySelectorAll('section[id]');
+        let activeSection = null;
+        
+        // Observe sections entering viewport
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (activeSection !== entry.target) {
+                        activeSection = entry.target;
+                        
+                        // Add subtle pulse animation on section enter
+                        entry.target.style.animation = 'sectionEnter 0.8s ease-out';
+                        setTimeout(() => {
+                            entry.target.style.animation = '';
+                        }, 800);
+                    }
+                }
+            });
+        }, {
+            rootMargin: '-20% 0px -20% 0px',
+            threshold: 0.1
+        });
+        
+        sections.forEach(section => sectionObserver.observe(section));
+        
+        // Add keyframe for section enter animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sectionEnter {
+                0% { transform: translateY(10px); opacity: 0.7; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
     })();
     </script>
 
